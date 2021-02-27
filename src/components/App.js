@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import styles from './App.module.scss';
 
-function App() {
+export const App = () => {
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
@@ -17,11 +17,7 @@ function App() {
         >
           Learn React
         </a>
-        <div className="card" style={{ color: "black" }}>This is a test card</div>
-        <button className="btn btn-primary">Test Button</button>
       </header>
     </div>
   );
 }
-
-export default App;
