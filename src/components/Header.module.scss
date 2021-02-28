@@ -1,0 +1,32 @@
+.header {
+    height: 60px;
+    background-color: #282c34;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid silver;
+    box-sizing: border-box;
+}
+
+.header-link {
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.search-input {
+    position: absolute;
+    right: 20px;
+    height: 26px;
+    width: 160px;
+    font-size: 12px;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: silver;
+}
+
+.search-input:focus {
+    outline: none;
+}
