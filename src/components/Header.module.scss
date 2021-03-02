@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-.header-link {
+.headerLink {
     padding: 0 10px;
     font-size: 14px;
 }
@@ -16,7 +16,7 @@
     height: 40px;
 }
 
-.search-input {
+.searchInput {
     position: absolute;
     right: 20px;
     height: 26px;
@@ -27,6 +27,6 @@
     background-color: silver;
 }
 
-.search-input:focus {
+.searchInput:focus {
     outline: none;
 }
