@@ -1,14 +1,18 @@
+import { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
-import { Header } from './Header';
-import { Portfolio } from './Portfolio';
-import { Watchlist } from './Watchlist';
+import { Home } from './Home';
+import { Main } from './Main';
 
 export const App = () => {
+  const [user, setUser] = useState({})
   return (
-    <div className={styles.app}>
-      <Header />
-      <Portfolio />
-      <Watchlist />
-    </div>
+    <Router>
+      <div className={styles.app}>
+      <Switch>
+        <Route path="/">{user.uid ? <Main setUser={setUser} /> : <Home setUser={setUser} />}</Route>
+      </Switch>
+      </div>
+    </Router>
   )
 }

@@ -57,7 +57,7 @@ const renderPositions = () => data.map((position, index) => {
 
 export const Portfolio = () =>
     <div>
-        <div className={styles.balance}>$20000</div>
+        <div className={styles.balance}>$6000</div>
         {renderColumnNames()}
         {renderPositions()}
     </div>

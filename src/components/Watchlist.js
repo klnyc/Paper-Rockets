@@ -12,8 +12,8 @@ const data = [
 export const Watchlist = () =>
     <div className={styles.watchlist}>
         <div className={styles.watchlistHeader}>Watchlist</div>
-        {data.map(company => (
-            <div className={styles.watchlistRow}>
+        {data.map((company, index) => (
+            <div key={index} className={styles.watchlistRow}>
                 <div className={styles.watchlistRowSection}>{company.ticker}</div>
                 <div className={styles.watchlistRowSection}>${company.currentPrice}</div>
             </div>

@@ -25,5 +25,21 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDtyoF6ABke7GGUwqWz81tLSmrV1UQnym8",
+        authDomain: "paper-rockets.firebaseapp.com",
+        projectId: "paper-rockets",
+        storageBucket: "paper-rockets.appspot.com",
+        messagingSenderId: "238427902287",
+        appId: "1:238427902287:web:0de9ca83b5598a3766b53a",
+        measurementId: "G-EY5JBHPNMK"
+      };
+      firebase.initializeApp(firebaseConfig)
+    </script>
   </body>
 </html>
