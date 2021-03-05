@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
+import { Home } from './Home';
+import { Main } from './Main';
 
 export const App = () => {
+  const [user, setUser] = useState({})
   return (
-    <div className={styles.app}>
-      <header className={styles.appHeader}>
-        <img src={logo} className={styles.appLogo} alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className={styles.applink}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <div className={styles.app}>
+      <Switch>
+        <Route path="/">{user.uid ? <Main setUser={setUser} /> : <Home setUser={setUser} />}</Route>
+      </Switch>
+      </div>
+    </Router>
+  )
 }
