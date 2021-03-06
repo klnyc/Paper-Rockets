@@ -13,9 +13,7 @@ export const Home = (props) => {
         .then((userCredential) => {
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).get()
             .then((userData) => setUser(userData.data()))
-        }).catch((error) => {
-            setError(error.message)
-        })
+        }).catch((error) => { setError(error.message) })
     }
 
     const signUp = () => {
@@ -31,12 +29,8 @@ export const Home = (props) => {
             }
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).set(newUser)
             .then(() => setUser(newUser))
-            .catch((error) => {
-                console.log(error)
-            })
-        }).catch((error) => {
-            setError(error.message)
-        })
+            .catch((error) => { console.log(error) })
+        }).catch((error) => { setError(error.message) })
     }
 
     const handleSubmit = (event) => {
