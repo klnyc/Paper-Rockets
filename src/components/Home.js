@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { IoIosRocket } from "react-icons/io"
 import styles from './Home.module.scss'
 
@@ -13,9 +13,7 @@ export const Home = (props) => {
         .then((userCredential) => {
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).get()
             .then((userData) => setUser(userData.data()))
-        }).catch((error) => {
-            setError(error.message)
-        })
+        }).catch((error) => { setError(error.message) })
     }
 
     const signUp = () => {
@@ -31,12 +29,8 @@ export const Home = (props) => {
             }
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).set(newUser)
             .then(() => setUser(newUser))
-            .catch((error) => {
-                console.log(error)
-            })
-        }).catch((error) => {
-            setError(error.message)
-        })
+            .catch((error) => { console.log(error) })
+        }).catch((error) => { setError(error.message) })
     }
 
     const handleSubmit = (event) => {
@@ -49,7 +43,7 @@ export const Home = (props) => {
     }
 
     return (
-        <div>
+        <Fragment>
             <div className="text-center font-weight-bold p-4">Paper Rockets</div>
             <div className={styles.rocketLogo}><IoIosRocket /></div>
             
@@ -67,7 +61,7 @@ export const Home = (props) => {
                 </div>
             </form>
             <div className={styles.loginError}>{error}</div>
-        </div>
+        </Fragment>
     )
 }
     

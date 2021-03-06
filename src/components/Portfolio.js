@@ -55,9 +55,13 @@ const renderPositions = () => data.map((position, index) => {
     )
 })
 
-export const Portfolio = () =>
-    <div>
-        <div className={styles.balance}>$6000</div>
-        {renderColumnNames()}
-        {renderPositions()}
-    </div>
+export const Portfolio = (props) => {
+    const { user } = props
+    return (
+        <div>
+            <div className={styles.balance}>${user.balance}</div>
+            {renderColumnNames()}
+            {renderPositions()}
+        </div>
+    )
+}
