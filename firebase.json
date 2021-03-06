@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "build",
+    "target": "paperrockets",
     "ignore": [
       "firebase.json",
       "**/.*",
