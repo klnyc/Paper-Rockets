@@ -4,12 +4,12 @@ import { Portfolio } from './Portfolio';
 import { Watchlist } from './Watchlist';
 
 export const Main = (props) => {
-    const { setUser } = props
+    const { user, setUser } = props
     return (
         <Fragment>
             <Header setUser={setUser} />
-            <Portfolio />
-            <Watchlist />
+            <Portfolio user={user} />
+            <Watchlist user={user} />
         </Fragment>
     )
 }
