@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "paper-rockets"
+  },
+  "targets": {
+    "paper-rockets": {
+      "hosting": {
+        "paperrockets": [
+          "paperrockets"
+        ]
+      }
+    }
   }
 }

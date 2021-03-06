@@ -10,7 +10,7 @@ export const App = () => {
     <Router>
       <div className={styles.app}>
       <Switch>
-        <Route path="/">{user.uid ? <Main setUser={setUser} /> : <Home setUser={setUser} />}</Route>
+        <Route path="/">{user.userID ? <Main setUser={setUser} /> : <Home setUser={setUser} />}</Route>
       </Switch>
       </div>
     </Router>

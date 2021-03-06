@@ -11,7 +11,8 @@ export const Home = (props) => {
     const logIn = () => {
         window.firebase.auth().signInWithEmailAndPassword(input.email, input.password)
         .then((userCredential) => {
-            setUser(userCredential.user)
+            window.firebase.firestore().collection("users").doc(userCredential.user.uid).get()
+            .then((userData) => setUser(userData.data()))
         }).catch((error) => {
             setError(error.message)
         })
@@ -20,7 +21,19 @@ export const Home = (props) => {
     const signUp = () => {
         window.firebase.auth().createUserWithEmailAndPassword(input.email, input.password)
         .then((userCredential) => {
-            setUser(userCredential.user)
+            const newUser = {
+                userID: userCredential.user.uid,
+                email: input.email,
+                balance: 100000,
+                portfolio: [],
+                orders: [],
+                watchlist: []
+            }
+            window.firebase.firestore().collection("users").doc(userCredential.user.uid).set(newUser)
+            .then(() => setUser(newUser))
+            .catch((error) => {
+                console.log(error)
+            })
         }).catch((error) => {
             setError(error.message)
         })
