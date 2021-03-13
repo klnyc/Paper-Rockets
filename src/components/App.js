@@ -29,14 +29,7 @@ const portfolio = [
   }
 ]
 
-const watchlist = [
-  { ticker: "PLTR", currentPrice: 25 },
-  { ticker: "GOOG", currentPrice: 2000 },
-  { ticker: "SQ", currentPrice: 240 },
-  { ticker: "JPM", currentPrice: 150 },
-  { ticker: "DIS", currentPrice: 170 },
-  { ticker: "NIO", currentPrice: 50 }
-]
+const watchlist = ["DIS", "JPM", "GOOG"]
 
 const data =  {
   userID: "123",

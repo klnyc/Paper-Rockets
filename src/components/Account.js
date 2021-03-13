@@ -7,7 +7,7 @@ export const Account = (props) => {
     const signOut = () => {
         window.firebase.auth().signOut()
         .then(() => setUser({}))
-        .catch((error) => { console.log(error) });
+        .catch((error) => console.log(error));
     }
 
     return (

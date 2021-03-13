@@ -29,8 +29,8 @@ export const Home = (props) => {
             }
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).set(newUser)
             .then(() => setUser(newUser))
-            .catch((error) => { console.log(error) })
-        }).catch((error) => { setError(error.message) })
+            .catch((error) => console.log(error))
+        }).catch((error) => setError(error.message))
     }
 
     const handleSubmit = (event) => {
