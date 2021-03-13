@@ -45,7 +45,7 @@ export const Home = (props) => {
     return (
         <Fragment>
             <div className="text-center font-weight-bold p-4">Paper Rockets</div>
-            <div className={styles.rocketLogo}><IoIosRocket /></div>
+            <div className={styles.rocketSymbol}><IoIosRocket /></div>
             
             <div className={styles.loginTitle}>{loginState ? "Login" : "Sign Up"}</div>
             <form className={styles.loginForm} onSubmit={handleSubmit} name={loginState ? "logIn" : "signUp"}>
