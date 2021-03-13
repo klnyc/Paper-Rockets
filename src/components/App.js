@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styles from './App.module.scss'
 import { Home } from './Home'
 import { Main } from './Main'
-import { Account } from './Account'
 
 const portfolio = [
   {
@@ -43,20 +42,14 @@ const data =  {
 export const App = () => {
   const [user, setUser] = useState(data)
 
-  const userRoutes = () =>
-    <Switch>
-      <Route exact path="/account"><Account user={user} setUser={setUser} /></Route>
-      <Route path="/"><Main user={user} /></Route>
-    </Switch>
-
-  const nonUserRoutes = () =>
-    <Switch>
-      <Route path="/"><Home setUser={setUser} /></Route>
-    </Switch>
-
   return (
     <Router>
-      <div className={styles.app}>{user.userID ? userRoutes() : nonUserRoutes()}</div>
+      <div className={styles.app}>
+      <Switch>
+        <Route path="/">{user.userID ? <Main user={user} setUser={setUser} /> : <Home setUser={setUser} />}</Route>
+      </Switch>
+      </div>
+    
     </Router>
   )
 }

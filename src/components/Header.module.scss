@@ -7,27 +7,34 @@
     box-sizing: border-box;
 }
 
+.rocketSymbol {
+    height: 32px;
+    width: 80px;
+    color: deepskyblue;;
+}
+
 .headerLink {
     padding: 0 10px;
     font-size: 14px;
     color: darkorange;
 }
 
-.logo {
-    height: 40px;
-}
-
 .searchInput {
     position: absolute;
-    right: 20px;
+    right: 40px;
     height: 26px;
-    width: 160px;
+    width: 154px;
     font-size: 12px;
     border-radius: 6px;
     padding: 10px;
     background-color: silver;
+    &:focus { outline: none }
 }
 
-.searchInput:focus {
-    outline: none;
+.searchSymbol {
+    position: absolute;
+    right: 12px;
+    top: 22px;
+    cursor: pointer;
+    &:hover { color: silver }
 }
