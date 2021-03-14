@@ -2,8 +2,8 @@ import styles from './Watchlist.module.scss'
 import { useState, useEffect } from 'react'
 
 export const Watchlist = (props) => {
-    const { user } = props
     const [watchlist, setWatchlist] = useState([])
+    const { user } = props
 
     const queryWatchlist = () => {
         const version = process.env.REACT_APP_IEX_VERSION
@@ -28,7 +28,7 @@ export const Watchlist = (props) => {
             {watchlist.map((company, index) => (
                 <div key={index} className={styles.watchlistRow}>
                     <div className={styles.watchlistRowSection}>{company.symbol}</div>
-                    <div className={styles.watchlistRowSection}>${company.latestPrice}</div>
+                    <div className={styles.watchlistRowSection}>${company.latestPrice.toFixed(2)}</div>
                 </div>
             ))}
         </div>

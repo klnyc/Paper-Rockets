@@ -28,7 +28,7 @@ const portfolio = [
   }
 ]
 
-const watchlist = ["DIS", "JPM", "GOOG"]
+const watchlist = ["DIS"]
 
 const data =  {
   userID: "123",
@@ -40,7 +40,7 @@ const data =  {
 }
 
 export const App = () => {
-  const [user, setUser] = useState(data)
+  const [user, setUser] = useState({})
 
   return (
     <Router>
