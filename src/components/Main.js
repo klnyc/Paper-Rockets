@@ -16,7 +16,7 @@ export const Main = (props) => {
 
             <Switch>
                 {company.symbol && <Route exact path={`/${company.symbol}`}>
-                    <Company company={company} />
+                    <Company company={company} user={user} />
                 </Route>}
 
                 <Route exact path="/account">

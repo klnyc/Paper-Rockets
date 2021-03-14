@@ -23,14 +23,14 @@ export const Header = (props) => {
             setInput("")
             history.push(`/${companyData.symbol}`)
         })
-        .catch(() => setInput("INVALID COMPANY"))
+        .catch(() => setInput("Invalid Symbol"))
     }
 
     return (
         <div className={styles.header}>
             <div><Link to="/"><IoIosRocket className={styles.rocketSymbol} /></Link></div>
             <span className={styles.headerLink}><Link to="/account">Account</Link></span>
-            <input className={styles.searchInput} name="input" value={input} onChange={handleInputChange} />
+            <input className={styles.searchInput} name="input" value={input} onChange={handleInputChange} placeholder="Ticker Symbol" />
             <div><BsSearch className={styles.searchSymbol} onClick={() => searchCompany()} /></div>
         </div>
     )
