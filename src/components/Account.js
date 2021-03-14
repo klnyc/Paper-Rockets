@@ -11,9 +11,9 @@ export const Account = (props) => {
 
     return (
         <div>
-            <div>{user.email}</div>
-            <div onClick={() => signOut()}><Link to="/">Sign Out</Link></div>
-            <div>Reset Account</div>
+            <h5 className="p-4">{user.email}</h5>
+            <button className="btn btn-secondary btn-sm mx-4" onClick={() => signOut()}><Link to="/">Sign Out</Link></button>
+            <button className="btn btn-danger btn-sm mx-2">Reset Account</button>
         </div>
     )
 }
