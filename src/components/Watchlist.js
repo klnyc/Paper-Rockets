@@ -6,14 +6,9 @@ export const Watchlist = (props) => {
     const [watchlist, setWatchlist] = useState([])
 
     const queryWatchlist = () => {
-        // Cloud API
-        // const token = process.env.REACT_APP_IEX_CLOUD_API_KEY
-        // const companyURL = (ticker) => `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
-
-        // Sandbox API
-        const token = process.env.REACT_APP_IEX_SANDBOX_API_KEY
-        const companyURL = (ticker) => `https://sandbox.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
-        
+        const version = process.env.REACT_APP_IEX_VERSION
+        const token = process.env.REACT_APP_IEX_API_KEY
+        const companyURL = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
         const watchlistRequests = user.watchlist.map(ticker => fetch(companyURL(ticker)))
 
         Promise.all(watchlistRequests)

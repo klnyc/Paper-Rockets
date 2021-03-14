@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Account = (props) => {
@@ -11,12 +10,10 @@ export const Account = (props) => {
     }
 
     return (
-        <Fragment>
-            <div>
-                <div>{user.email}</div>
-                <div onClick={() => signOut()}><Link to="/">Sign Out</Link></div>
-                <div>Reset Account</div>
-            </div>
-        </Fragment>
+        <div>
+            <div>{user.email}</div>
+            <div onClick={() => signOut()}><Link to="/">Sign Out</Link></div>
+            <div>Reset Account</div>
+        </div>
     )
 }

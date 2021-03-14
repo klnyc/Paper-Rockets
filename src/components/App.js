@@ -49,7 +49,6 @@ export const App = () => {
         <Route path="/">{user.userID ? <Main user={user} setUser={setUser} /> : <Home setUser={setUser} />}</Route>
       </Switch>
       </div>
-    
     </Router>
   )
 }

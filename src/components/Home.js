@@ -25,7 +25,7 @@ export const Home = (props) => {
                 balance: 100000,
                 portfolio: [],
                 orders: [],
-                watchlist: []
+                watchlist: ["AAPL"]
             }
             window.firebase.firestore().collection("users").doc(userCredential.user.uid).set(newUser)
             .then(() => setUser(newUser))

@@ -10,24 +10,24 @@
 .rocketSymbol {
     height: 32px;
     width: 80px;
-    color: deepskyblue;;
+    color: darkturquoise;
 }
 
 .headerLink {
     padding: 0 10px;
     font-size: 14px;
-    color: darkorange;
+    color: salmon;
 }
 
 .searchInput {
     position: absolute;
-    right: 40px;
+    right: 36px;
     height: 26px;
-    width: 154px;
+    width: 134px;
     font-size: 12px;
     border-radius: 6px;
     padding: 10px;
-    background-color: silver;
+    background-color: ghostwhite;
     &:focus { outline: none }
 }
 

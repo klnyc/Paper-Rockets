@@ -2,11 +2,10 @@
     font-weight: bold;
     font-size: 30px;
     padding: 20px;
-    width: 80%;
 }
 
 .positionRow {
-    width: 80%;
+    width: calc(100% - 170px);
     height: 60px;
     padding: 10px;
     display: flex;
