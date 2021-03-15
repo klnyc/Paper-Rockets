@@ -1,4 +1,4 @@
-.buySellContainer {
+.buySellContainer, .positionContainer {
     width: calc(100% - 210px);
     text-align: center;
     background-color: #2b343e;
@@ -31,4 +31,19 @@
     border: none;
     border-bottom: 1px solid ghostwhite;
     padding: 10px;
+}
+
+.positionRow {
+    width: calc(100% - 170px);
+    height: 60px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 12px;
+}
+
+.positionColumn {
+    width: 100%;
+    text-align: center;
 }
