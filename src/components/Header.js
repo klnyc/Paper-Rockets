@@ -14,9 +14,9 @@ export const Header = (props) => {
     const searchCompany = () => {
         const version = process.env.REACT_APP_IEX_VERSION
         const token = process.env.REACT_APP_IEX_API_KEY
-        const companyURL = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
+        const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
 
-        fetch(companyURL(input))
+        fetch(url(input))
         .then(response => response.json())
         .then(companyData => {
             setCompany(companyData)

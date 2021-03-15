@@ -1,0 +1,34 @@
+.buySellContainer {
+    width: calc(100% - 210px);
+    text-align: center;
+    background-color: #2b343e;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 40px 0 0 20px;
+    padding: 10px;
+}
+
+.buySellTabContainer {
+    display: flex;
+}
+
+.buySellTab {
+    padding: 10px;
+    flex: 1;
+    border-bottom: 1px solid darkturquoise;
+
+    &.notActive { 
+        color: gray;
+        border-bottom: none;
+    }
+}
+
+.quantityInput {
+    margin: 40px;
+    background-color: transparent;
+    text-align: center;
+    color: ghostwhite;
+    border: none;
+    border-bottom: 1px solid ghostwhite;
+    padding: 10px;
+}
