@@ -18,14 +18,14 @@ export const Portfolio = (props) => {
 
     const renderPositions = () => user.portfolio.map((position, index) => {
         const initialEquity = position.cost
-        const currentEquity = (position.quantity * prices[index]).toFixed(2)
+        const currentEquity = (position.quantity * (prices.length ? prices[index].latestPrice : 0)).toFixed(2)
         const profit = (currentEquity - initialEquity).toFixed(2)
         const percent = (profit/initialEquity * 100).toFixed(2)
         return (
             <div key={index} className={styles.positionRow} onClick={() => goToCompany(position.ticker)}>
                 <div className={styles.positionColumn}>{position.ticker}</div>
                 <div className={styles.positionColumn}>{position.quantity}</div>
-                <div className={styles.positionColumn}>${prices[index]}</div>
+                <div className={styles.positionColumn}>${prices.length ? prices[index].latestPrice : 0}</div>
                 <div className={styles.positionColumn}>${(position.cost/position.quantity).toFixed(2)}</div>
                 <div className={styles.positionColumn}>{profit >= 0 ? `$${profit}` : `-$${profit * -1}`}</div>
                 <div className={styles.positionColumn}>{percent}%</div>
@@ -37,7 +37,7 @@ export const Portfolio = (props) => {
     const queryPrices = () => {
         const version = process.env.REACT_APP_IEX_VERSION
         const token = process.env.REACT_APP_IEX_API_KEY
-        const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/price?token=${token}`
+        const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
         const priceRequests = user.portfolio.map(position => fetch(url(position.ticker)))
 
         Promise.all(priceRequests)
