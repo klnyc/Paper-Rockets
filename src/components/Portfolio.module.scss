@@ -12,6 +12,17 @@
     justify-content: space-around;
     align-items: center;
     font-size: 12px;
+    cursor: pointer;
+
+    &.positionTableTop {
+        font-weight: bold;
+    }
+
+    &:not(.positionTableTop) {
+        &:hover { 
+            color: salmon;
+        }
+    }
 }
 
 .positionColumn {

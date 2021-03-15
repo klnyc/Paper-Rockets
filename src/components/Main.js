@@ -4,11 +4,25 @@ import { Portfolio } from './Portfolio'
 import { Watchlist } from './Watchlist'
 import { Account } from './Account'
 import { Company } from './Company'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useHistory } from 'react-router-dom'
 
 export const Main = (props) => {
     const [company, setCompany] = useState({})
     const { user, setUser } = props
+    const history = useHistory()
+
+    const goToCompany = (ticker) => {
+        const version = process.env.REACT_APP_IEX_VERSION
+        const token = process.env.REACT_APP_IEX_API_KEY
+        const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
+
+        fetch(url(ticker))
+        .then(response => response.json())
+        .then(companyData => {
+            setCompany(companyData)
+            history.push(`/${companyData.symbol}`)
+        })
+    }
 
     return (
         <Fragment>
@@ -24,11 +38,11 @@ export const Main = (props) => {
                 </Route>
 
                 <Route path="/">
-                    <Portfolio user={user} />
+                    <Portfolio user={user} goToCompany={goToCompany} />
                 </Route>
             </Switch>
 
-            <Watchlist user={user} />
+            <Watchlist user={user} setCompany={setCompany} goToCompany={goToCompany} />
         </Fragment>
     )
 }
