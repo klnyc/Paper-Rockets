@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './Portfolio.module.scss'
 
 export const Portfolio = (props) => {
-    const { user, goToCompany } = props
+    const { user, goToCompany, roundNumber } = props
     const [prices, setPrices] = useState([])
 
     const renderColumnNames = () => 
@@ -18,15 +18,16 @@ export const Portfolio = (props) => {
 
     const renderPositions = () => user.portfolio.map((position, index) => {
         const initialEquity = position.cost
-        const currentEquity = (position.quantity * (prices.length ? prices[index].latestPrice : 0)).toFixed(2)
-        const profit = (currentEquity - initialEquity).toFixed(2)
-        const percent = (profit/initialEquity * 100).toFixed(2)
+        const currentEquity = roundNumber(position.quantity * (prices.length ? prices[index].latestPrice : 0))
+        const averagePrice = roundNumber(position.cost/position.quantity)
+        const profit = roundNumber(currentEquity - initialEquity)
+        const percent = roundNumber(profit/initialEquity * 100)
         return (
             <div key={index} className={styles.positionRow} onClick={() => goToCompany(position.ticker)}>
                 <div className={styles.positionColumn}>{position.ticker}</div>
                 <div className={styles.positionColumn}>{position.quantity}</div>
                 <div className={styles.positionColumn}>${prices.length ? prices[index].latestPrice : 0}</div>
-                <div className={styles.positionColumn}>${(position.cost/position.quantity).toFixed(2)}</div>
+                <div className={styles.positionColumn}>${averagePrice}</div>
                 <div className={styles.positionColumn}>{profit >= 0 ? `$${profit}` : `-$${profit * -1}`}</div>
                 <div className={styles.positionColumn}>{percent}%</div>
                 <div className={styles.positionColumn}>${currentEquity}</div>

@@ -10,18 +10,16 @@ export const Main = (props) => {
     const [company, setCompany] = useState({})
     const { user, setUser } = props
     const history = useHistory()
+    const roundNumber = (number) => Number(number.toFixed(2))
 
-    const goToCompany = (ticker) => {
+    const goToCompany = async (ticker) => {
         const version = process.env.REACT_APP_IEX_VERSION
         const token = process.env.REACT_APP_IEX_API_KEY
         const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`
-
-        fetch(url(ticker))
-        .then(response => response.json())
-        .then(companyData => {
-            setCompany(companyData)
-            history.push(`/${companyData.symbol}`)
-        })
+        const response = await fetch(url(ticker))
+        const companyData = await response.json()
+        setCompany(companyData)
+        history.push(`/${companyData.symbol}`)
     }
 
     return (
@@ -30,7 +28,7 @@ export const Main = (props) => {
 
             <Switch>
                 {company.symbol && <Route exact path={`/${company.symbol}`}>
-                    <Company company={company} user={user} setUser={setUser} />
+                    <Company company={company} user={user} setUser={setUser} roundNumber={roundNumber} />
                 </Route>}
 
                 <Route exact path="/account">
@@ -38,7 +36,7 @@ export const Main = (props) => {
                 </Route>
 
                 <Route path="/">
-                    <Portfolio user={user} goToCompany={goToCompany} />
+                    <Portfolio user={user} goToCompany={goToCompany} roundNumber={roundNumber} />
                 </Route>
             </Switch>
 
