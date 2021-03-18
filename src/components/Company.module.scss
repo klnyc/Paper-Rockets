@@ -16,6 +16,7 @@
     padding: 10px;
     flex: 1;
     border-bottom: 1px solid darkturquoise;
+    cursor: pointer;
 
     &.notActive { 
         color: gray;
@@ -24,7 +25,7 @@
 }
 
 .quantityInput {
-    margin: 40px;
+    margin: 40px 0 0;
     background-color: transparent;
     text-align: center;
     color: ghostwhite;
