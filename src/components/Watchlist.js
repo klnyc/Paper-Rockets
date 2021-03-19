@@ -26,8 +26,8 @@ export const Watchlist = (props) => {
         <div className={styles.watchlist}>
             <div className={styles.watchlistHeader}>Watchlist</div>
             {watchlist.map((company, index) => (
-                <div key={index} className={styles.watchlistRow}>
-                    <div className={styles.watchlistRowSection} onClick={() => goToCompany(company.symbol)}>{company.symbol}</div>
+                <div key={index} className={styles.watchlistRow} onClick={() => goToCompany(company.symbol)}>
+                    <div className={styles.watchlistRowSection}>{company.symbol}</div>
                     <div className={styles.watchlistRowSection}>${company.latestPrice.toFixed(2)}</div>
                 </div>
             ))}
