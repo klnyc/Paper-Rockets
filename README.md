@@ -1,6 +1,6 @@
 # Paper Rockets
 
-Paper Rockets is a single-page application for paper trading stocks in the U.S. stock market. Users can buy/sell shares, view their orders and track publicly traded companies in their watchlist using real-time stock data.
+Paper Rockets is a single-page application for paper trading stocks in the U.S. stock market. Users can buy/sell shares and track publicly traded companies in their watchlist using real-time stock data.
 
 ## :gear: Functionality
 * Login or sign up with your email
