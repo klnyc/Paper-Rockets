@@ -6,6 +6,8 @@ export const Company = (props) => {
     const [orderMode, setOrderMode] = useState("buy")
     const [quantity, setQuantity] = useState("")
     const [position, setPosition] = useState({})
+    const cost = roundNumber(quantity * company.latestPrice)
+    const userData = window.firebase.firestore().collection("users").doc(user.userID)
 
     const handleQuantityInput = (event) => setQuantity(event.target.value)
 
@@ -20,30 +22,21 @@ export const Company = (props) => {
         if (userPosition.length) setPosition(userPosition[0])
     }
 
-    const cost = roundNumber(quantity * company.latestPrice)
-    useEffect(findPosition, [user.portfolio, company.symbol])
-
     const addToWatchlist = () => {
-        window.firebase.firestore().collection("users").doc(user.userID)
-        .update({ watchlist: window.firebase.firestore.FieldValue.arrayUnion(company.symbol) })
+        userData.update({ watchlist: window.firebase.firestore.FieldValue.arrayUnion(company.symbol) })
         .then(() => {
-            window.firebase.firestore().collection("users").doc(user.userID).get()
-            .then((userData) => setUser(userData.data()))
+            userData.get().then((userData) => setUser(userData.data()))
         })
     }
 
     const removeFromWatchlist = () => {
-        window.firebase.firestore().collection("users").doc(user.userID)
-        .update({ watchlist: window.firebase.firestore.FieldValue.arrayRemove(company.symbol) })
+        userData.update({ watchlist: window.firebase.firestore.FieldValue.arrayRemove(company.symbol) })
         .then(() => {
-            window.firebase.firestore().collection("users").doc(user.userID).get()
-            .then((userData) => setUser(userData.data()))
+            userData.get().then((userData) => setUser(userData.data()))
         })
     }
 
     const buy = () => {
-        const userData = window.firebase.firestore().collection("users").doc(user.userID)
-
         const buyOrder = { 
             ticker: company.symbol, 
             quantity: Number(quantity) + (position.quantity || 0), 
@@ -59,26 +52,52 @@ export const Company = (props) => {
                 })
             })
             .then(() => {
-                window.firebase.firestore().collection("users").doc(user.userID).get()
-                .then((userData) => setUser(userData.data()))
+                userData.get().then((userData) => setUser(userData.data()))
             })
         } else {
             userData.update({ 
                 balance: roundNumber(user.balance - cost),
                 portfolio: window.firebase.firestore.FieldValue.arrayUnion(buyOrder)
             }).then(() => {
-                window.firebase.firestore().collection("users").doc(user.userID).get()
-                .then((userData) => setUser(userData.data()))
+                userData.get().then((userData) => setUser(userData.data()))
             })
         }
     }
 
     const sell = () => {
-
+        const sellOrder = {
+            ticker: company.symbol, 
+            quantity: position.quantity - Number(quantity), 
+            cost: position.cost - cost
+        }
+        if (Number(quantity) === position.quantity) {
+            userData.update({ 
+                balance: roundNumber(user.balance + cost),
+                portfolio: window.firebase.firestore.FieldValue.arrayRemove(position) 
+            })
+            .then(() => {
+                userData.get().then((userData) => {
+                    setUser(userData.data())
+                    setPosition({})
+                })
+            })
+        } else {
+            userData.update({ portfolio: window.firebase.firestore.FieldValue.arrayRemove(position) })
+            .then(() => {
+                userData.update({ 
+                    balance: roundNumber(user.balance + cost),
+                    portfolio: window.firebase.firestore.FieldValue.arrayUnion(sellOrder)
+                })
+            })
+            .then(() => {
+                userData.get().then((userData) => setUser(userData.data()))
+            })
+        }
     }
 
     const submitOrder = () => {
         orderMode === "buy" ? buy() : sell()
+        setQuantity("")
     }
 
     const renderOrderBox = () =>
@@ -120,6 +139,8 @@ export const Company = (props) => {
             </div>
         )
     }
+
+    useEffect(findPosition, [user.portfolio, company.symbol])
 
     return (
         <div>
