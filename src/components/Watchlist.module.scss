@@ -8,7 +8,7 @@
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding-bottom: 20px;
-    min-height: 292px;
+    height: calc(100% - 80px);
 }
 
 .watchlistHeader {
