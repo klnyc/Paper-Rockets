@@ -110,7 +110,9 @@ export const Company = (props) => {
                 <input id="quantityInput" className={styles.quantityInput} type="number" value={quantity} placeholder="NUMBER" onChange={handleQuantityInput} onClick={() => selectInput()} />
                 <div className="my-3">SHARES</div>
                 <div>${cost}</div>
-                <button className="btn btn-outline-info btn-sm my-4" onClick={() => submitOrder()}>Submit Order</button>
+                {quantity > position.quantity && orderMode === "sell"
+                ? <button className="btn btn-secondary btn-sm my-4">Invalid Order</button>
+                : <button className="btn btn-outline-info btn-sm my-4" onClick={() => submitOrder()}>Submit Order</button>}
             </div>
         </div>
 
