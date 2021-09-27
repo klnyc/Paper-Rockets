@@ -4,8 +4,16 @@
     padding: 20px;
 }
 
+.portfolio {
+    background-color: #2b343e;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: calc(100% - 190px);
+    margin: 10px;
+    padding: 10px 0;
+}
+
 .positionRow {
-    width: calc(100% - 170px);
     height: 60px;
     padding: 10px;
     display: flex;
