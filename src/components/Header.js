@@ -28,7 +28,8 @@ export const Header = (props) => {
 
     return (
         <div className={styles.header}>
-            <div><Link to="/"><IoIosRocket className={styles.rocketSymbol} /></Link></div>
+            <IoIosRocket className={styles.rocketSymbol} />
+            <span className={styles.headerLink}><Link to="/">Portfolio</Link></span>
             <span className={styles.headerLink}><Link to="/account">Account</Link></span>
             <input className={styles.searchInput} name="input" value={input} onChange={handleInputChange} placeholder="Ticker Symbol" />
             <div><BsSearch className={styles.searchSymbol} onClick={() => searchCompany()} /></div>
