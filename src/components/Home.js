@@ -44,10 +44,9 @@ export const Home = (props) => {
 
     return (
         <Fragment>
-            <div className="text-center font-weight-bold p-4">Paper Rockets</div>
+            <h3 className="text-center font-weight-bold p-4">Paper Rockets</h3>
             <div className={styles.rocketSymbol}><IoIosRocket /></div>
             
-            <div className={styles.loginTitle}>{loginState ? "Login" : "Sign Up"}</div>
             <form className={styles.loginForm} onSubmit={handleSubmit} name={loginState ? "logIn" : "signUp"}>
                 <div className="form-group">
                     <input type="email" name="email" className="form-control" onChange={handleInputChange} value={input.email} placeholder="Email" />
