@@ -55,8 +55,10 @@ export const Portfolio = (props) => {
     return (
         <div>
             <div className={styles.balance}>${user.balance}</div>
+            <div className={styles.portfolio}>
             {renderColumnNames()}
             {renderPositions()}
+            </div>
         </div>
     )
 }

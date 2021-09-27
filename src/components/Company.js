@@ -108,7 +108,7 @@ export const Company = (props) => {
             </div>
             <div>
                 <input id="quantityInput" className={styles.quantityInput} type="number" value={quantity} placeholder="NUMBER" onChange={handleQuantityInput} onClick={() => selectInput()} />
-                <div className="mb-3">SHARES</div>
+                <div className="my-3">SHARES</div>
                 <div>${cost}</div>
                 <button className="btn btn-outline-info btn-sm my-4" onClick={() => submitOrder()}>Submit Order</button>
             </div>
@@ -121,7 +121,7 @@ export const Company = (props) => {
         const profit = roundNumber(currentEquity - initialEquity)
         const percent = roundNumber(profit/initialEquity * 100)
         return (
-            <div>
+            <div className={styles.positionContainer}>
                 <div className={`${styles.positionRow} font-weight-bold`}>
                     <div className={styles.positionColumn}>Quantity</div>
                     <div className={styles.positionColumn}>Average Price</div>
