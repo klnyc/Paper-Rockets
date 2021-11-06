@@ -6,24 +6,44 @@ import { Main } from './Main'
 
 export const App = () => {
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
+
+  const load = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setLoading(false)
+  }
 
   const checkSessionForUserID = () => {
     const sessionUserID = window.sessionStorage.getItem('userID')
     if (sessionUserID && !user.userID) {
-      console.log(sessionUserID)
       window.firebase.firestore().collection('users').doc(sessionUserID).get()
       .then((userData) => setUser(userData.data()))
       .catch((error) => { console.log(error.message) })
     }
   }
 
+  const renderApp = () => {
+    if (loading) {
+      return (
+        <div className={styles.reactLogo}>
+          <span className={styles.reactSpinner}><span className={styles.reactNucleus}></span></span>
+        </div>
+      )
+    } else if (user.userID) {
+      return <Main user={user} setUser={setUser} />
+    } else {
+      return <Home setUser={setUser} />
+    }
+  }
+
+  useEffect(load)
   useEffect(checkSessionForUserID, [user.userID])
 
   return (
     <Router>
       <div className={styles.app}>
       <Switch>
-        <Route path='/'>{user.userID ? <Main user={user} setUser={setUser} /> : <Home setUser={setUser} />}</Route>
+        <Route path='/'>{renderApp()}</Route>
       </Switch>
       </div>
     </Router>
