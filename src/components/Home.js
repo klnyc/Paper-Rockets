@@ -13,13 +13,14 @@ export const Home = (props) => {
         .then((userCredential) => {
             window.firebase.firestore().collection('users').doc(userCredential.user.uid).get()
             .then((userData) => setUser(userData.data()))
+            .then(() => window.sessionStorage.setItem('userID', userCredential.user.uid))
         }).catch((error) => { setError(error.message) })
     }
 
     const signUp = () => {
         window.firebase.auth().createUserWithEmailAndPassword(input.email, input.password)
         .then((userCredential) => {
-            const newUser = {
+            const user = {
                 userID: userCredential.user.uid,
                 email: input.email,
                 balance: 100000,
@@ -27,8 +28,9 @@ export const Home = (props) => {
                 orders: [],
                 watchlist: ['AAPL']
             }
-            window.firebase.firestore().collection('users').doc(userCredential.user.uid).set(newUser)
-            .then(() => setUser(newUser))
+            window.firebase.firestore().collection('users').doc(userCredential.user.uid).set(user)
+            .then(() => setUser(user))
+            .then(() => window.sessionStorage.setItem('userID', userCredential.user.uid))
             .catch((error) => console.log(error))
         }).catch((error) => setError(error.message))
     }

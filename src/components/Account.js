@@ -6,6 +6,7 @@ export const Account = (props) => {
     const signOut = () => {
         window.firebase.auth().signOut()
         .then(() => setUser({}))
+        .then(() => window.sessionStorage.removeItem('userID'))
         .catch((error) => console.log(error));
     }
 
