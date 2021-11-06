@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './Portfolio.module.scss'
+import styles from './styles/Portfolio.module.scss'
 
 export const Portfolio = (props) => {
     const { user, goToCompany, roundNumber } = props

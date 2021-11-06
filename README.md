@@ -4,6 +4,7 @@ Paper Rockets is a single-page application for paper trading stocks in the U.S. 
 
 ## :gear: Functionality
 * Login or sign up with your email
+* Search by company stock ticker symbols
 * Buy and sell shares
 * Add companies to your watchlist
 

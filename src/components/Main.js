@@ -31,11 +31,11 @@ export const Main = (props) => {
                     <Company company={company} user={user} setUser={setUser} roundNumber={roundNumber} />
                 </Route>}
 
-                <Route exact path="/account">
+                <Route exact path='/account'>
                     <Account user={user} setUser={setUser} />
                 </Route>
 
-                <Route path="/">
+                <Route path='/'>
                     <Portfolio user={user} goToCompany={goToCompany} roundNumber={roundNumber} />
                 </Route>
             </Switch>
