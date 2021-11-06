@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './Company.module.scss'
+import styles from './styles/Company.module.scss'
 
 export const Company = (props) => {
     const { company, user, setUser, roundNumber } = props

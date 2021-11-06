@@ -1,4 +1,4 @@
-import styles from './Header.module.scss'
+import styles from './styles/Header.module.scss'
 import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import { BsSearch } from 'react-icons/bs'

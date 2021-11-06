@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import styles from './App.module.scss'
+import styles from './styles/App.module.scss'
 import { Home } from './Home'
 import { Main } from './Main'
 

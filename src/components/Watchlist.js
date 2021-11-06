@@ -1,4 +1,4 @@
-import styles from './Watchlist.module.scss'
+import styles from './styles/Watchlist.module.scss'
 import { useState, useEffect } from 'react'
 
 export const Watchlist = (props) => {

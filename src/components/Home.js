@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { IoIosRocket } from 'react-icons/io'
-import styles from './Home.module.scss'
+import styles from './styles/Home.module.scss'
 
 export const Home = (props) => {
     const [input, setInput] = useState({ email: '', password: '' })
