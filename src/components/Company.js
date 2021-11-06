@@ -3,16 +3,16 @@ import styles from './Company.module.scss'
 
 export const Company = (props) => {
     const { company, user, setUser, roundNumber } = props
-    const [orderMode, setOrderMode] = useState("buy")
-    const [quantity, setQuantity] = useState("")
+    const [orderMode, setOrderMode] = useState('buy')
+    const [quantity, setQuantity] = useState('')
     const [position, setPosition] = useState({})
     const cost = roundNumber(quantity * company.latestPrice)
-    const userData = window.firebase.firestore().collection("users").doc(user.userID)
+    const userData = window.firebase.firestore().collection('users').doc(user.userID)
 
     const handleQuantityInput = (event) => setQuantity(event.target.value)
 
     const selectInput = () => {
-        const input = document.getElementById("quantityInput")
+        const input = document.getElementById('quantityInput')
         input.focus()
         input.select()
     }
@@ -96,23 +96,23 @@ export const Company = (props) => {
     }
 
     const submitOrder = () => {
-        orderMode === "buy" ? buy() : sell()
-        setQuantity("")
+        orderMode === 'buy' ? buy() : sell()
+        setQuantity('')
     }
 
     const renderOrderBox = () =>
         <div className={styles.buySellContainer}>
             <div className={styles.buySellTabContainer}>
-                <div className={orderMode === "buy" ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode("buy")}>Buy</div>
-                <div className={orderMode === "sell" ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode("sell")}>Sell</div>
+                <div className={orderMode === 'buy' ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode('buy')}>Buy</div>
+                <div className={orderMode === 'sell' ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode('sell')}>Sell</div>
             </div>
             <div>
-                <input id="quantityInput" className={styles.quantityInput} type="number" value={quantity} placeholder="NUMBER" onChange={handleQuantityInput} onClick={() => selectInput()} />
-                <div className="my-3">SHARES</div>
+                <input id='quantityInput' className={styles.quantityInput} type='number' value={quantity} placeholder='NUMBER' onChange={handleQuantityInput} onClick={() => selectInput()} />
+                <div className='my-3'>SHARES</div>
                 <div>${cost}</div>
-                {quantity > position.quantity && orderMode === "sell"
-                ? <button className="btn btn-secondary btn-sm my-4">Invalid Order</button>
-                : <button className="btn btn-outline-info btn-sm my-4" onClick={() => submitOrder()}>Submit Order</button>}
+                {quantity > position.quantity && orderMode === 'sell'
+                ? <button className='btn btn-secondary btn-sm my-4'>Invalid Order</button>
+                : <button className='btn btn-outline-info btn-sm my-4' onClick={() => submitOrder()}>Submit Order</button>}
             </div>
         </div>
 
@@ -146,13 +146,13 @@ export const Company = (props) => {
 
     return (
         <div>
-            <h4 className="p-4">{company.companyName}</h4>
-            <h5 className="px-4">${roundNumber(company.latestPrice)}</h5>
+            <h4 className='p-4'>{company.companyName}</h4>
+            <h5 className='px-4'>${roundNumber(company.latestPrice)}</h5>
             {position.ticker && renderPosition()}
             {renderOrderBox()}
             {user.watchlist.includes(company.symbol)
-            ? <button className="btn btn-outline-info btn-sm m-4" onClick={() => removeFromWatchlist()}>Remove from Watchlist</button>
-            : <button className="btn btn-outline-info btn-sm m-4" onClick={() => addToWatchlist()}>Add to Watchlist</button>}
+            ? <button className='btn btn-outline-info btn-sm m-4' onClick={() => removeFromWatchlist()}>Remove from Watchlist</button>
+            : <button className='btn btn-outline-info btn-sm m-4' onClick={() => addToWatchlist()}>Add to Watchlist</button>}
         </div>
     )
 }
