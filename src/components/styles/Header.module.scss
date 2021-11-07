@@ -37,3 +37,9 @@
     cursor: pointer;
     &:hover { color: silver }
 }
+
+@media only screen and (max-width: 767px) {
+    .rocketSymbol {
+        width: 50px;
+    }
+}
