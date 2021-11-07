@@ -151,8 +151,8 @@ export const Company = (props) => {
             {position.ticker && renderPosition()}
             {renderOrderBox()}
             {user.watchlist.includes(company.symbol)
-            ? <button className='btn btn-outline-info btn-sm m-4' onClick={() => removeFromWatchlist()}>Remove from Watchlist</button>
-            : <button className='btn btn-outline-info btn-sm m-4' onClick={() => addToWatchlist()}>Add to Watchlist</button>}
+            ? <div className={styles.watchlistButton}><button className='btn btn-outline-info btn-sm m-4' onClick={() => removeFromWatchlist()}>Remove from Watchlist</button></div>
+            : <div className={styles.watchlistButton}><button className='btn btn-outline-info btn-sm m-4' onClick={() => addToWatchlist()}>Add to Watchlist</button></div>}
         </div>
     )
 }

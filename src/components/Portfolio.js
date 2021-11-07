@@ -8,12 +8,12 @@ export const Portfolio = (props) => {
     const renderColumnNames = () => 
         <div className={`${styles.positionRow} ${styles.positionTableTop}`}>
             <div className={styles.positionColumn}>Ticker</div>
-            <div className={styles.positionColumn}>Quantity</div>
+            <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>Quantity</div>
             <div className={styles.positionColumn}>Current Price</div>
-            <div className={styles.positionColumn}>Average Price</div>
+            <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>Average Price</div>
             <div className={styles.positionColumn}>Profit</div>
-            <div className={styles.positionColumn}>Percent</div>
-            <div className={styles.positionColumn}>Equity</div>
+            <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>Percent</div>
+            <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>Equity</div>
         </div>
 
     const renderPositions = () => user.portfolio.map((position, index) => {
@@ -25,12 +25,12 @@ export const Portfolio = (props) => {
         return (
             <div key={index} className={styles.positionRow} onClick={() => goToCompany(position.ticker)}>
                 <div className={styles.positionColumn}>{position.ticker}</div>
-                <div className={styles.positionColumn}>{position.quantity}</div>
+                <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>{position.quantity}</div>
                 <div className={styles.positionColumn}>${prices.length ? prices[index].latestPrice : 0}</div>
-                <div className={styles.positionColumn}>${averagePrice}</div>
+                <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>${averagePrice}</div>
                 <div className={styles.positionColumn}>{profit >= 0 ? `$${profit}` : `-$${profit * -1}`}</div>
-                <div className={styles.positionColumn}>{percent}%</div>
-                <div className={styles.positionColumn}>${currentEquity}</div>
+                <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>{percent}%</div>
+                <div className={styles.positionColumn + ' ' + styles.positionColumnHide}>${currentEquity}</div>
             </div>
         )
     })
