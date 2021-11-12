@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Header } from './Header'
 import { Portfolio } from './Portfolio'
 import { Watchlist } from './Watchlist'
@@ -23,7 +23,7 @@ export const Main = (props) => {
     }
 
     return (
-        <Fragment>
+        <>
             <Header setUser={setUser} setCompany={setCompany} />
 
             <Switch>
@@ -41,6 +41,6 @@ export const Main = (props) => {
             </Switch>
 
             <Watchlist user={user} setCompany={setCompany} goToCompany={goToCompany} />
-        </Fragment>
+        </>
     )
 }

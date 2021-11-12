@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { IoIosRocket } from 'react-icons/io'
 import styles from './styles/Home.module.scss'
 
@@ -45,7 +45,7 @@ export const Home = (props) => {
     }
 
     return (
-        <Fragment>
+        <>
             <h3 className='text-center font-weight-bold p-4'>Paper Rockets</h3>
             <div className={styles.rocketSymbol}><IoIosRocket /></div>
             
@@ -62,7 +62,7 @@ export const Home = (props) => {
                 </div>
             </form>
             <div className={styles.loginError}>{error}</div>
-        </Fragment>
+        </>
     )
 }
     
