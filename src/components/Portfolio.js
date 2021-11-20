@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './styles/Portfolio.module.scss'
 
-export const Portfolio = (props) => {
-    const { user, goToCompany, roundNumber } = props
+export const Portfolio = ({ user, goToCompany, roundNumber }) => {
     const [prices, setPrices] = useState([])
 
     const renderColumnNames = () => 

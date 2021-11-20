@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './styles/Company.module.scss'
 
-export const Company = (props) => {
-    const { company, user, setUser, roundNumber } = props
+export const Company = ({ company, user, setUser, roundNumber }) => {
     const [orderMode, setOrderMode] = useState('buy')
     const [quantity, setQuantity] = useState('')
     const [position, setPosition] = useState({})

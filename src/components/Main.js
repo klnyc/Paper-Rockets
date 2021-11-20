@@ -6,9 +6,8 @@ import { Account } from './Account'
 import { Company } from './Company'
 import { Route, Switch, useHistory } from 'react-router-dom'
 
-export const Main = (props) => {
+export const Main = ({ user, setUser }) => {
     const [company, setCompany] = useState({})
-    const { user, setUser } = props
     const history = useHistory()
     const roundNumber = (number) => Number(number.toFixed(2))
 

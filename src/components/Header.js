@@ -4,10 +4,9 @@ import { useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { IoIosRocket } from 'react-icons/io'
 
-export const Header = (props) => {
+export const Header = ({ setCompany }) => {
     const [input, setInput] = useState('')
     const history = useHistory()
-    const { setCompany } = props
     
     const handleInputChange = (event) => setInput(event.target.value.toUpperCase())
 
