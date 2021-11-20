@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styles from './styles/App.module.scss'
 import { Home } from './Home'
 import { Main } from './Main'
+import { Loading } from './Loading'
 
 export const App = () => {
   const [user, setUser] = useState({})
@@ -24,11 +25,7 @@ export const App = () => {
 
   const renderApp = () => {
     if (loading) {
-      return (
-        <div className={styles.reactLogo}>
-          <span className={styles.reactSpinner}><span className={styles.reactNucleus}></span></span>
-        </div>
-      )
+      return <Loading />
     } else if (user.userID) {
       return <Main user={user} setUser={setUser} />
     } else {

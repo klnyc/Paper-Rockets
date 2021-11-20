@@ -2,11 +2,10 @@ import { useState } from 'react'
 import { IoIosRocket } from 'react-icons/io'
 import styles from './styles/Home.module.scss'
 
-export const Home = (props) => {
+export const Home = ({ setUser }) => {
     const [input, setInput] = useState({ email: '', password: '' })
     const [loginState, setLoginState] = useState(true)
     const [error, setError] = useState('')
-    const { setUser } = props
 
     const logIn = () => {
         window.firebase.auth().signInWithEmailAndPassword(input.email, input.password)

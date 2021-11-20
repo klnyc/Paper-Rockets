@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export const Account = (props) => {
-    const { user, setUser } = props
-
+export const Account = ({ user, setUser }) => {
     const signOut = () => {
         window.firebase.auth().signOut()
         .then(() => setUser({}))

@@ -1,9 +1,8 @@
 import styles from './styles/Watchlist.module.scss'
 import { useState, useEffect } from 'react'
 
-export const Watchlist = (props) => {
+export const Watchlist = ({ user, goToCompany }) => {
     const [watchlist, setWatchlist] = useState([])
-    const { user, goToCompany } = props
 
     const queryWatchlist = () => {
         const version = process.env.REACT_APP_IEX_VERSION
