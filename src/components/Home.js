@@ -18,7 +18,9 @@ export const Home = ({ setUser }) => {
           .doc(userCredential.user.uid)
           .get()
           .then((userData) => setUser(userData.data()))
-          .then(() => window.sessionStorage.setItem("userID", userCredential.user.uid));
+          .then(() =>
+            window.sessionStorage.setItem("userID", userCredential.user.uid)
+          );
       })
       .catch((error) => setError(error.message));
   };
@@ -63,20 +65,48 @@ export const Home = ({ setUser }) => {
   return (
     <>
       <h3 className="text-center font-weight-bold p-4">Paper Rockets</h3>
-      <div className={styles.rocketSymbol}><IoIosRocket /></div>
+      <div className={styles.rocketSymbol}>
+        <IoIosRocket />
+      </div>
 
-      <form className={styles.loginForm} onSubmit={handleSubmit} name={loginState ? 'logIn' : 'signUp'}>
-        <div className='form-group'>
-            <input type='email' name='email' className='form-control' onChange={handleInputChange} value={input.email} placeholder='Email' />
+      <form
+        className={styles.loginForm}
+        onSubmit={handleSubmit}
+        name={loginState ? "logIn" : "signUp"}
+      >
+        <div className="form-group">
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            onChange={handleInputChange}
+            value={input.email}
+            placeholder="Email"
+          />
         </div>
-        <div className='form-group'>
-            <input type='password' name='password' className='form-control' onChange={handleInputChange} value={input.password} placeholder='Password' />
+        <div className="form-group">
+          <input
+            type="password"
+            name="password"
+            className="form-control"
+            onChange={handleInputChange}
+            value={input.password}
+            placeholder="Password"
+          />
         </div>
-        <div className='text-center'>
-            <button type='submit' className='btn btn-primary'>{loginState ? 'Login' : 'Sign Up'}</button>
-            <button type='button' className='btn btn-info mx-2' onClick={() => setLoginState(!loginState)}>{loginState ? 'Create account' : 'I have an account'}</button>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary">
+            {loginState ? "Login" : "Sign Up"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-info mx-2"
+            onClick={() => setLoginState(!loginState)}
+          >
+            {loginState ? "Create account" : "I have an account"}
+          </button>
         </div>
-    </form>
+      </form>
 
       <div className={styles.loginError}>{error}</div>
     </>
