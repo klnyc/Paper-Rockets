@@ -14,7 +14,8 @@ export const Main = ({ user, setUser }) => {
   const goToCompany = async (ticker) => {
     const version = process.env.REACT_APP_IEX_VERSION;
     const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    const url = (ticker) =>
+      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
     const response = await fetch(url(ticker));
     const companyData = await response.json();
     setCompany(companyData);
@@ -28,7 +29,12 @@ export const Main = ({ user, setUser }) => {
       <Switch>
         {company.symbol && (
           <Route exact path={`/${company.symbol}`}>
-            <Company company={company} user={user} setUser={setUser} roundNumber={roundNumber} />
+            <Company
+              company={company}
+              user={user}
+              setUser={setUser}
+              roundNumber={roundNumber}
+            />
           </Route>
         )}
 
@@ -37,11 +43,19 @@ export const Main = ({ user, setUser }) => {
         </Route>
 
         <Route path="/">
-          <Portfolio user={user} goToCompany={goToCompany} roundNumber={roundNumber} />
+          <Portfolio
+            user={user}
+            goToCompany={goToCompany}
+            roundNumber={roundNumber}
+          />
         </Route>
       </Switch>
 
-      <Watchlist user={user} setCompany={setCompany} goToCompany={goToCompany} />
+      <Watchlist
+        user={user}
+        setCompany={setCompany}
+        goToCompany={goToCompany}
+      />
     </>
   );
 };

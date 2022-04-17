@@ -8,12 +8,14 @@ export const Header = ({ setCompany }) => {
   const [input, setInput] = useState("");
   const history = useHistory();
 
-  const handleInputChange = (event) => setInput(event.target.value.toUpperCase());
+  const handleInputChange = (event) =>
+    setInput(event.target.value.toUpperCase());
 
   const searchCompany = () => {
     const version = process.env.REACT_APP_IEX_VERSION;
     const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) => `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    const url = (ticker) =>
+      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
 
     fetch(url(input))
       .then((response) => response.json())
@@ -36,17 +38,33 @@ export const Header = ({ setCompany }) => {
         element.dispatchEvent(click);
       };
 
-      if (event.key === "Enter") simulateClick(document.getElementsByClassName(styles.searchSymbol)[0]);
+      if (event.key === "Enter")
+        simulateClick(document.getElementsByClassName(styles.searchSymbol)[0]);
     });
   };
 
   return (
     <div className={styles.header}>
       <IoIosRocket className={styles.rocketSymbol} />
-      <span className={styles.headerLink}><Link to="/">Portfolio</Link></span>
-      <span className={styles.headerLink}><Link to="/account">Account</Link></span>
-      <input className={styles.searchInput} name='input' value={input} onChange={handleInputChange} placeholder='Ticker Symbol' />
-      <div><BsSearch className={styles.searchSymbol} onClick={() => searchCompany()} /></div>
+      <span className={styles.headerLink}>
+        <Link to="/">Portfolio</Link>
+      </span>
+      <span className={styles.headerLink}>
+        <Link to="/account">Account</Link>
+      </span>
+      <input
+        className={styles.searchInput}
+        name="input"
+        value={input}
+        onChange={handleInputChange}
+        placeholder="Ticker Symbol"
+      />
+      <div>
+        <BsSearch
+          className={styles.searchSymbol}
+          onClick={() => searchCompany()}
+        />
+      </div>
       {input && enterKeyOnPress()}
     </div>
   );

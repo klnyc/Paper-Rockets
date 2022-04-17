@@ -20,13 +20,19 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
   };
 
   const findPosition = () => {
-    const userPosition = user.portfolio.filter((position) => position.ticker === company.symbol);
+    const userPosition = user.portfolio.filter(
+      (position) => position.ticker === company.symbol
+    );
     if (userPosition.length) setPosition(userPosition[0]);
   };
 
   const addToWatchlist = () => {
     userData
-      .update({ watchlist: window.firebase.firestore.FieldValue.arrayUnion(company.symbol) })
+      .update({
+        watchlist: window.firebase.firestore.FieldValue.arrayUnion(
+          company.symbol
+        ),
+      })
       .then(() => {
         userData.get().then((userData) => setUser(userData.data()));
       });
@@ -34,7 +40,11 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
 
   const removeFromWatchlist = () => {
     userData
-      .update({ watchlist: window.firebase.firestore.FieldValue.arrayRemove(company.symbol) })
+      .update({
+        watchlist: window.firebase.firestore.FieldValue.arrayRemove(
+          company.symbol
+        ),
+      })
       .then(() => {
         userData.get().then((userData) => setUser(userData.data()));
       });
@@ -49,11 +59,14 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
 
     if (position.ticker) {
       userData
-        .update({ portfolio: window.firebase.firestore.FieldValue.arrayRemove(position) })
+        .update({
+          portfolio: window.firebase.firestore.FieldValue.arrayRemove(position),
+        })
         .then(() => {
           userData.update({
             balance: roundNumber(user.balance - cost),
-            portfolio: window.firebase.firestore.FieldValue.arrayUnion(buyOrder),
+            portfolio:
+              window.firebase.firestore.FieldValue.arrayUnion(buyOrder),
           });
         })
         .then(() => {
@@ -92,11 +105,14 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
         });
     } else {
       userData
-        .update({ portfolio: window.firebase.firestore.FieldValue.arrayRemove(position) })
+        .update({
+          portfolio: window.firebase.firestore.FieldValue.arrayRemove(position),
+        })
         .then(() => {
           userData.update({
             balance: roundNumber(user.balance + cost),
-            portfolio: window.firebase.firestore.FieldValue.arrayUnion(sellOrder),
+            portfolio:
+              window.firebase.firestore.FieldValue.arrayUnion(sellOrder),
           });
         })
         .then(() => {
@@ -113,8 +129,26 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
   const renderOrderBox = () => (
     <div className={styles.buySellContainer}>
       <div className={styles.buySellTabContainer}>
-        <div className={orderMode === "buy" ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode("buy")}>Buy</div>
-        <div className={orderMode === "sell" ? styles.buySellTab : `${styles.buySellTab} ${styles.notActive}`} onClick={() => setOrderMode("sell")}>Sell</div>
+        <div
+          className={
+            orderMode === "buy"
+              ? styles.buySellTab
+              : `${styles.buySellTab} ${styles.notActive}`
+          }
+          onClick={() => setOrderMode("buy")}
+        >
+          Buy
+        </div>
+        <div
+          className={
+            orderMode === "sell"
+              ? styles.buySellTab
+              : `${styles.buySellTab} ${styles.notActive}`
+          }
+          onClick={() => setOrderMode("sell")}
+        >
+          Sell
+        </div>
       </div>
       <div>
         <input
@@ -128,9 +162,18 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
         />
         <div className="my-3">SHARES</div>
         <div>${cost}</div>
-        {quantity > position.quantity && orderMode === 'sell'
-        ? <button className='btn btn-secondary btn-sm my-4'>Invalid Order</button>
-        : <button className='btn btn-outline-info btn-sm my-4' onClick={() => submitOrder()}>Submit Order</button>}
+        {quantity > position.quantity && orderMode === "sell" ? (
+          <button className="btn btn-secondary btn-sm my-4">
+            Invalid Order
+          </button>
+        ) : (
+          <button
+            className="btn btn-outline-info btn-sm my-4"
+            onClick={() => submitOrder()}
+          >
+            Submit Order
+          </button>
+        )}
       </div>
     </div>
   );
@@ -171,11 +214,21 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
       {renderOrderBox()}
       {user.watchlist.includes(company.symbol) ? (
         <div className={styles.watchlistButton}>
-          <button className="btn btn-outline-info btn-sm m-4" onClick={() => removeFromWatchlist()}>Remove from Watchlist</button>
+          <button
+            className="btn btn-outline-info btn-sm m-4"
+            onClick={() => removeFromWatchlist()}
+          >
+            Remove from Watchlist
+          </button>
         </div>
       ) : (
         <div className={styles.watchlistButton}>
-          <button className="btn btn-outline-info btn-sm m-4" onClick={() => addToWatchlist()}>Add to Watchlist</button>
+          <button
+            className="btn btn-outline-info btn-sm m-4"
+            onClick={() => addToWatchlist()}
+          >
+            Add to Watchlist
+          </button>
         </div>
       )}
     </div>

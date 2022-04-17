@@ -1,45 +1,47 @@
 .header {
-    height: 60px;
-    background-color: #282c34;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid silver;
-    box-sizing: border-box;
+  height: 60px;
+  background-color: #282c34;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid silver;
+  box-sizing: border-box;
 }
 
 .rocketSymbol {
-    height: 32px;
-    width: 80px;
-    color: darkturquoise;
+  height: 32px;
+  width: 80px;
+  color: darkturquoise;
 }
 
 .headerLink {
-    padding: 0 10px;
-    font-size: 14px;
-    color: salmon;
+  padding: 0 10px;
+  font-size: 14px;
+  color: salmon;
 }
 
 .searchInput {
-    position: absolute;
-    right: 36px;
-    height: 26px;
-    width: 134px;
-    font-size: 12px;
-    border-radius: 6px;
-    padding: 10px;
-    background-color: ghostwhite;
+  position: absolute;
+  right: 36px;
+  height: 26px;
+  width: 134px;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: ghostwhite;
 }
 
 .searchSymbol {
-    position: absolute;
-    right: 12px;
-    top: 22px;
-    cursor: pointer;
-    &:hover { color: silver }
+  position: absolute;
+  right: 12px;
+  top: 22px;
+  cursor: pointer;
+  &:hover {
+    color: silver;
+  }
 }
 
 @media only screen and (max-width: 767px) {
-    .rocketSymbol {
-        width: 50px;
-    }
+  .rocketSymbol {
+    width: 50px;
+  }
 }
