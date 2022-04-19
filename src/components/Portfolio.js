@@ -93,7 +93,7 @@ export const Portfolio = ({ user, goToCompany, roundNumber }) => {
   useEffect(queryPrices, [user.portfolio]);
 
   return (
-    <div>
+    <div style={{ "overflow-y": "auto" }}>
       <div className={styles.balance}>${user.balance}</div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
