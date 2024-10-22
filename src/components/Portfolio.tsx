@@ -81,6 +81,10 @@ export const Portfolio = ({
       );
     });
 
+  const renderEmptyState = (): JSX.Element => {
+    return <div className={styles.empty}>You do not own any stocks.</div>;
+  };
+
   const queryPrices = (): void => {
     // const version = process.env.REACT_APP_IEX_VERSION;
     // const token = process.env.REACT_APP_IEX_API_KEY;
@@ -107,7 +111,7 @@ export const Portfolio = ({
       <div className={styles.balance}>${user.balance}</div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
-        {renderPositions()}
+        {user.portfolio.length ? renderPositions() : renderEmptyState()}
       </div>
     </div>
   );

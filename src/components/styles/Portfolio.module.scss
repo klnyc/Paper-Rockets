@@ -24,6 +24,7 @@
 
   &.positionTableTop {
     font-weight: bold;
+    cursor: default;
   }
 
   &:not(.positionTableTop) {
@@ -36,6 +37,12 @@
 .positionColumn {
   width: 100%;
   text-align: center;
+}
+
+.empty {
+  text-align: center;
+  font-size: 12px;
+  padding: 40px;
 }
 
 @media only screen and (max-width: 767px) {
