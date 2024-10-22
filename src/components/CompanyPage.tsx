@@ -18,7 +18,7 @@ interface CompanyPageProps {
   setUser: (user: DocumentData) => void;
 }
 
-export const CompanyPage = ({ company, user, setUser }: CompanyPageProps) => {
+export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.Element => {
   const [orderMode, setOrderMode] = useState<string>("buy");
   const [quantity, setQuantity] = useState<string>("");
   const [position, setPosition] = useState<Position | undefined>();

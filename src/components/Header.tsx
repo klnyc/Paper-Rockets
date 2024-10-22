@@ -9,7 +9,7 @@ interface HeaderProps {
   setCompany: (company: Company) => void;
 }
 
-export const Header = ({ setCompany }: HeaderProps) => {
+export const Header = ({ setCompany }: HeaderProps): JSX.Element => {
   const [input, setInput] = useState("");
   const history = useHistory();
 

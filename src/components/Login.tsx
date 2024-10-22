@@ -17,7 +17,7 @@ interface FormProps {
   password: string;
 }
 
-export const Login = ({ setUser }: HomeProps) => {
+export const Login = ({ setUser }: HomeProps): JSX.Element => {
   const [input, setInput] = useState<FormProps>({ email: "", password: "" });
   const [loginState, setLoginState] = useState<boolean>(true);
   const [error, setError] = useState<string>("");

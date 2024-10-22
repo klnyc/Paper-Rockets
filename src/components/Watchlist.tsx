@@ -1,8 +1,18 @@
+import { DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
 import { useState, useEffect } from "react";
+import { Company } from "../types";
 
-export const Watchlist = ({ user, goToCompany }) => {
-  const [watchlist, setWatchlist] = useState([]);
+interface WatchListProps {
+  user: DocumentData;
+  goToCompany: (ticker: string) => void;
+}
+
+export const Watchlist = ({
+  user,
+  goToCompany,
+}: WatchListProps): JSX.Element => {
+  const [watchlist, setWatchlist] = useState<Company[]>([]);
 
   const queryWatchlist = () => {
     // const version = process.env.REACT_APP_IEX_VERSION;
@@ -12,7 +22,6 @@ export const Watchlist = ({ user, goToCompany }) => {
     // const watchlistRequests = user.watchlist.map((ticker) =>
     //   fetch(url(ticker))
     // );
-
     // Promise.all(watchlistRequests)
     //   .then((companyPromises) => {
     //     return Promise.all(

@@ -13,7 +13,7 @@ interface MainProps {
   setUser: (user: DocumentData) => void;
 }
 
-export const Home = ({ user, setUser }: MainProps) => {
+export const Home = ({ user, setUser }: MainProps): JSX.Element => {
   const [company, setCompany] = useState<Company | undefined>();
   const history = useHistory();
 

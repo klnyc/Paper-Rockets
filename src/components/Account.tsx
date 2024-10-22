@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 import { signOut as firebaseSignOut } from "firebase/auth";
+import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
 
-export const Account = ({ user, setUser }) => {
+interface AccountProps {
+  user: DocumentData;
+  setUser: (user: DocumentData) => void;
+}
+
+export const Account = ({ user, setUser }: AccountProps): JSX.Element => {
   const signOut = () => {
     firebaseSignOut(auth)
       .then(() => setUser({}))
@@ -20,11 +26,8 @@ export const Account = ({ user, setUser }) => {
       watchlist: ["AAPL"],
     };
 
-    window.firebase
-      .firestore()
-      .collection("users")
-      .doc(user.userID)
-      .set(newUser)
+    const ref = doc(firestore, `users/${user.userID}`);
+    setDoc(ref, newUser)
       .then(() => setUser(newUser))
       .catch((error) => console.log(error));
   };

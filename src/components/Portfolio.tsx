@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from "./styles/Portfolio.module.scss";
 import { roundNumber } from "../utility";
+import { DocumentData } from "firebase/firestore";
+import { Company, Position } from "../types";
 
-export const Portfolio = ({ user, goToCompany }) => {
-  const [prices, setPrices] = useState([]);
+interface PortfolioProps {
+  user: DocumentData;
+  goToCompany: (ticker: string) => void;
+}
+
+export const Portfolio = ({
+  user,
+  goToCompany,
+}: PortfolioProps): JSX.Element => {
+  const [prices, setPrices] = useState<Company[]>([]);
 
   const renderColumnNames = () => (
     <div className={`${styles.positionRow} ${styles.positionTableTop}`}>
@@ -26,7 +36,7 @@ export const Portfolio = ({ user, goToCompany }) => {
   );
 
   const renderPositions = () =>
-    user.portfolio.map((position, index) => {
+    user.portfolio.map((position: Position, index: number) => {
       const initialEquity = position.cost;
       const currentEquity = roundNumber(
         position.quantity * (prices.length ? prices[index].latestPrice : 0)
@@ -93,7 +103,7 @@ export const Portfolio = ({ user, goToCompany }) => {
   useEffect(queryPrices, [user.portfolio]);
 
   return (
-    <div style={{ "overflow-y": "auto" }}>
+    <div style={{ overflowY: "auto" }}>
       <div className={styles.balance}>${user.balance}</div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
