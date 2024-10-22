@@ -5,23 +5,23 @@ export const Watchlist = ({ user, goToCompany }) => {
   const [watchlist, setWatchlist] = useState([]);
 
   const queryWatchlist = () => {
-    const version = process.env.REACT_APP_IEX_VERSION;
-    const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) =>
-      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
-    const watchlistRequests = user.watchlist.map((ticker) =>
-      fetch(url(ticker))
-    );
+    // const version = process.env.REACT_APP_IEX_VERSION;
+    // const token = process.env.REACT_APP_IEX_API_KEY;
+    // const url = (ticker) =>
+    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    // const watchlistRequests = user.watchlist.map((ticker) =>
+    //   fetch(url(ticker))
+    // );
 
-    Promise.all(watchlistRequests)
-      .then((companyPromises) => {
-        return Promise.all(
-          companyPromises.map((companyPromise) => {
-            return companyPromise.json().then((data) => data);
-          })
-        );
-      })
-      .then((companyData) => setWatchlist(companyData));
+    // Promise.all(watchlistRequests)
+    //   .then((companyPromises) => {
+    //     return Promise.all(
+    //       companyPromises.map((companyPromise) => {
+    //         return companyPromise.json().then((data) => data);
+    //       })
+    //     );
+    //   })
+    //   .then((companyData) => setWatchlist(companyData));
   };
 
   useEffect(queryWatchlist, [user.watchlist]);

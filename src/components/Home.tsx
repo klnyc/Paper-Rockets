@@ -1,37 +1,53 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
+import { auth, firestore } from "../firebase";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
 import { IoIosRocket } from "react-icons/io";
 import styles from "./styles/Home.module.scss";
 
-export const Home = ({ setUser }) => {
-  const [input, setInput] = useState({ email: "", password: "" });
-  const [loginState, setLoginState] = useState(true);
-  const [error, setError] = useState("");
+interface HomeProps {
+  setUser: (user: DocumentData) => void;
+}
+
+interface FormProps {
+  email: string;
+  password: string;
+}
+
+export const Home = ({ setUser }: HomeProps) => {
+  const [input, setInput] = useState<FormProps>({ email: "", password: "" });
+  const [loginState, setLoginState] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   const logIn = () => {
-    window.firebase
-      .auth()
-      .signInWithEmailAndPassword(input.email, input.password)
+    signInWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
-        window.firebase
-          .firestore()
-          .collection("users")
-          .doc(userCredential.user.uid)
-          .get()
-          .then((userData) => setUser(userData.data()))
+        if (!userCredential) return;
+        const ref = doc(firestore, `users/${userCredential.user.uid}`);
+        getDoc(ref)
+          .then((userData: DocumentData) => {
+            if (userData) {
+              setUser(userData.data());
+            }
+          })
           .then(() =>
-            window.sessionStorage.setItem("userID", userCredential.user.uid)
+            window.sessionStorage.setItem(
+              "userID",
+              userCredential.user.uid || ""
+            )
           );
       })
       .catch((error) => setError(error.message));
   };
 
   const signUp = () => {
-    window.firebase
-      .auth()
-      .createUserWithEmailAndPassword(input.email, input.password)
+    createUserWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
         const user = {
-          userID: userCredential.user.uid,
+          userID: userCredential.user?.uid,
           email: input.email,
           balance: 100000,
           portfolio: [],
@@ -39,26 +55,27 @@ export const Home = ({ setUser }) => {
           watchlist: ["AAPL"],
         };
 
-        window.firebase
-          .firestore()
-          .collection("users")
-          .doc(userCredential.user.uid)
-          .set(user)
+        const ref = doc(firestore, `users/${userCredential.user.uid}`);
+        setDoc(ref, user)
           .then(() => setUser(user))
           .then(() =>
-            window.sessionStorage.setItem("userID", userCredential.user.uid)
+            window.sessionStorage.setItem(
+              "userID",
+              userCredential.user?.uid || ""
+            )
           )
           .catch((error) => console.log(error));
       })
       .catch((error) => setError(error.message));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    event.target.name === "logIn" ? logIn() : signUp();
+    const loginState = event.target.name;
+    loginState === "logIn" ? logIn() : signUp();
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 

@@ -12,14 +12,14 @@ export const Main = ({ user, setUser }) => {
   const roundNumber = (number) => Number(number.toFixed(2));
 
   const goToCompany = async (ticker) => {
-    const version = process.env.REACT_APP_IEX_VERSION;
-    const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) =>
-      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
-    const response = await fetch(url(ticker));
-    const companyData = await response.json();
-    setCompany(companyData);
-    history.push(`/${companyData.symbol}`);
+    // const version = process.env.REACT_APP_IEX_VERSION;
+    // const token = process.env.REACT_APP_IEX_API_KEY;
+    // const url = (ticker) =>
+    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    // const response = await fetch(url(ticker));
+    // const companyData = await response.json();
+    // setCompany(companyData);
+    // history.push(`/${companyData.symbol}`);
   };
 
   return (

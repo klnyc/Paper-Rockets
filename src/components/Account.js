@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { signOut as firebaseSignOut } from "firebase/auth";
 
 export const Account = ({ user, setUser }) => {
   const signOut = () => {
-    window.firebase
-      .auth()
-      .signOut()
+    firebaseSignOut(auth)
       .then(() => setUser({}))
       .then(() => window.sessionStorage.removeItem("userID"))
       .catch((error) => console.log(error));

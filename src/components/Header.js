@@ -12,19 +12,19 @@ export const Header = ({ setCompany }) => {
     setInput(event.target.value.toUpperCase());
 
   const searchCompany = () => {
-    const version = process.env.REACT_APP_IEX_VERSION;
-    const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) =>
-      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    // const version = process.env.REACT_APP_IEX_VERSION;
+    // const token = process.env.REACT_APP_IEX_API_KEY;
+    // const url = (ticker) =>
+    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
 
-    fetch(url(input))
-      .then((response) => response.json())
-      .then((companyData) => {
-        setCompany(companyData);
-        setInput("");
-        history.push(`/${companyData.symbol}`);
-      })
-      .catch(() => setInput("Invalid Symbol"));
+    // fetch(url(input))
+    //   .then((response) => response.json())
+    //   .then((companyData) => {
+    //     setCompany(companyData);
+    //     setInput("");
+    //     history.push(`/${companyData.symbol}`);
+    //   })
+    //   .catch(() => setInput("Invalid Symbol"));
   };
 
   const enterKeyOnPress = () => {

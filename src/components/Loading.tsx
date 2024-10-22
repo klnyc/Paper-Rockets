@@ -1,6 +1,6 @@
 import styles from "./styles/Loading.module.scss";
 
-export const Loading = () => {
+export const Loading = (): JSX.Element => {
   return (
     <div className={styles.reactLogo}>
       <span className={styles.reactSpinner}>

@@ -71,23 +71,23 @@ export const Portfolio = ({ user, goToCompany, roundNumber }) => {
     });
 
   const queryPrices = () => {
-    const version = process.env.REACT_APP_IEX_VERSION;
-    const token = process.env.REACT_APP_IEX_API_KEY;
-    const url = (ticker) =>
-      `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
-    const priceRequests = user.portfolio.map((position) =>
-      fetch(url(position.ticker))
-    );
+    // const version = process.env.REACT_APP_IEX_VERSION;
+    // const token = process.env.REACT_APP_IEX_API_KEY;
+    // const url = (ticker) =>
+    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    // const priceRequests = user.portfolio.map((position) =>
+    //   fetch(url(position.ticker))
+    // );
 
-    Promise.all(priceRequests)
-      .then((pricePromises) => {
-        return Promise.all(
-          pricePromises.map((pricePromise) => {
-            return pricePromise.json().then((data) => data);
-          })
-        );
-      })
-      .then((priceData) => setPrices(priceData));
+    // Promise.all(priceRequests)
+    //   .then((pricePromises) => {
+    //     return Promise.all(
+    //       pricePromises.map((pricePromise) => {
+    //         return pricePromise.json().then((data) => data);
+    //       })
+    //     );
+    //   })
+    //   .then((priceData) => setPrices(priceData));
   };
 
   useEffect(queryPrices, [user.portfolio]);
