@@ -3,10 +3,10 @@ import { Header } from "./Header";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
-import { CompanyPage } from "./CompanyPage";
+import { Company } from "./Company";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
-import { Company } from "../types";
+import { Stock } from "../types";
 
 interface MainProps {
   user: DocumentData;
@@ -14,7 +14,7 @@ interface MainProps {
 }
 
 export const Home = ({ user, setUser }: MainProps): JSX.Element => {
-  const [company, setCompany] = useState<Company | undefined>();
+  const [company, setCompany] = useState<Stock | undefined>();
   const history = useHistory();
 
   const goToCompany = async (ticker: string) => {
@@ -35,7 +35,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
       <Switch>
         {company?.ticker && (
           <Route exact path={`/${company.ticker}`}>
-            <CompanyPage company={company} user={user} setUser={setUser} />
+            <Company company={company} user={user} setUser={setUser} />
           </Route>
         )}
 

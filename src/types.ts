@@ -13,7 +13,7 @@ export interface User {
   watchlist: string[];
 }
 
-export interface Company {
+export interface Stock {
   ticker: string;
   latestPrice: number;
   name: string;

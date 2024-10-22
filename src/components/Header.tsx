@@ -3,10 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
-import { Company } from "../types";
+import { Stock } from "../types";
 
 interface HeaderProps {
-  setCompany: (company: Company) => void;
+  setCompany: (company: Stock) => void;
 }
 
 export const Header = ({ setCompany }: HeaderProps): JSX.Element => {

@@ -22,7 +22,7 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
   const [loginState, setLoginState] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const logIn = () => {
+  const logIn = (): void => {
     signInWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
         if (!userCredential) return;
@@ -43,7 +43,7 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
       .catch((error) => setError(error.message));
   };
 
-  const signUp = () => {
+  const signUp = (): void => {
     createUserWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
         const user = {
@@ -69,13 +69,13 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
       .catch((error) => setError(error.message));
   };
 
-  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const loginState = event.target.name;
     loginState === "logIn" ? logIn() : signUp();
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 

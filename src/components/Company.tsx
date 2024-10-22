@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import styles from "./styles/CompanyPage.module.scss";
-import { Company, Position } from "../types";
+import styles from "./styles/Company.module.scss";
+import { Stock, Position } from "../types";
 import { firestore } from "../firebase";
 import {
   doc,
@@ -11,15 +11,20 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { roundNumber } from "../utility";
+import { Order } from "../constants";
 
-interface CompanyPageProps {
-  company: Company;
+interface CompanyProps {
+  company: Stock;
   user: DocumentData;
   setUser: (user: DocumentData) => void;
 }
 
-export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.Element => {
-  const [orderMode, setOrderMode] = useState<string>("buy");
+export const Company = ({
+  company,
+  user,
+  setUser,
+}: CompanyProps): JSX.Element => {
+  const [orderMode, setOrderMode] = useState<Order>(Order.BUY);
   const [quantity, setQuantity] = useState<string>("");
   const [position, setPosition] = useState<Position | undefined>();
 
@@ -27,7 +32,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
 
   const userRef = doc(firestore, `users/${user.userID}`);
 
-  const handleQuantityInput = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleQuantityInput = (event: ChangeEvent<HTMLInputElement>): void =>
     setQuantity(event.target.value);
 
   const selectInput = () => {
@@ -36,14 +41,14 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     // input?.select();
   };
 
-  const findPosition = () => {
-    const userPosition = user.portfolio.filter(
+  const findPosition = (): void => {
+    const userPosition = user.portfolio.find(
       (position: Position) => position.ticker === company.ticker
     );
-    if (userPosition.length) setPosition(userPosition[0]);
+    if (userPosition) setPosition(userPosition);
   };
 
-  const addToWatchlist = () => {
+  const addToWatchlist = (): void => {
     updateDoc(userRef, {
       watchlist: arrayUnion(company.ticker),
     }).then(() => {
@@ -56,7 +61,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     });
   };
 
-  const removeFromWatchlist = () => {
+  const removeFromWatchlist = (): void => {
     updateDoc(userRef, {
       watchlist: arrayRemove(company.ticker),
     }).then(() => {
@@ -69,7 +74,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     });
   };
 
-  const buy = () => {
+  const buy = (): void => {
     const buyOrder = {
       ticker: company.ticker,
       quantity: Number(quantity) + (position?.quantity || 0),
@@ -110,7 +115,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     }
   };
 
-  const sell = () => {
+  const sell = (): void => {
     if (!position) return;
 
     const sellOrder = {
@@ -154,31 +159,31 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     }
   };
 
-  const submitOrder = () => {
-    orderMode === "buy" ? buy() : sell();
+  const submitOrder = (): void => {
+    orderMode === Order.BUY ? buy() : sell();
     setQuantity("");
   };
 
-  const renderOrderBox = () => (
+  const renderOrderBox = (): JSX.Element => (
     <div className={styles.buySellContainer}>
       <div className={styles.buySellTabContainer}>
         <div
           className={
-            orderMode === "buy"
+            orderMode === Order.BUY
               ? styles.buySellTab
               : `${styles.buySellTab} ${styles.notActive}`
           }
-          onClick={() => setOrderMode("buy")}
+          onClick={() => setOrderMode(Order.BUY)}
         >
           Buy
         </div>
         <div
           className={
-            orderMode === "sell"
+            orderMode === Order.SELL
               ? styles.buySellTab
               : `${styles.buySellTab} ${styles.notActive}`
           }
-          onClick={() => setOrderMode("sell")}
+          onClick={() => setOrderMode(Order.SELL)}
         >
           Sell
         </div>
@@ -197,7 +202,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
         <div>${cost}</div>
         {position?.quantity !== undefined &&
         Number(quantity) > position.quantity &&
-        orderMode === "sell" ? (
+        orderMode === Order.SELL ? (
           <button className="btn btn-secondary btn-sm my-4">
             Invalid Order
           </button>
@@ -213,7 +218,7 @@ export const CompanyPage = ({ company, user, setUser }: CompanyPageProps): JSX.E
     </div>
   );
 
-  const renderPosition = () => {
+  const renderPosition = (): JSX.Element => {
     if (!position) return <></>;
     const initialEquity = position.cost;
     const currentEquity = roundNumber(position.quantity * company.latestPrice);

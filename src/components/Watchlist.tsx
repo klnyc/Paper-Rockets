@@ -1,7 +1,7 @@
 import { DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
 import { useState, useEffect } from "react";
-import { Company } from "../types";
+import { Stock } from "../types";
 
 interface WatchListProps {
   user: DocumentData;
@@ -12,7 +12,7 @@ export const Watchlist = ({
   user,
   goToCompany,
 }: WatchListProps): JSX.Element => {
-  const [watchlist, setWatchlist] = useState<Company[]>([]);
+  const [watchlist, setWatchlist] = useState<Stock[]>([]);
 
   const queryWatchlist = () => {
     // const version = process.env.REACT_APP_IEX_VERSION;

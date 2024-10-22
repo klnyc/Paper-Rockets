@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { auth, firestore } from "../firebase";
 import { signOut as firebaseSignOut } from "firebase/auth";
-import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
+import { doc, setDoc, DocumentData } from "firebase/firestore";
 
 interface AccountProps {
   user: DocumentData;
@@ -9,14 +9,14 @@ interface AccountProps {
 }
 
 export const Account = ({ user, setUser }: AccountProps): JSX.Element => {
-  const signOut = () => {
+  const signOut = (): void => {
     firebaseSignOut(auth)
       .then(() => setUser({}))
       .then(() => window.sessionStorage.removeItem("userID"))
       .catch((error) => console.log(error));
   };
 
-  const reset = () => {
+  const reset = (): void => {
     const newUser = {
       userID: user.userID,
       email: user.email,

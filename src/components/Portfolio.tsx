@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./styles/Portfolio.module.scss";
 import { roundNumber } from "../utility";
 import { DocumentData } from "firebase/firestore";
-import { Company, Position } from "../types";
+import { Stock, Position } from "../types";
 
 interface PortfolioProps {
   user: DocumentData;
@@ -13,9 +13,9 @@ export const Portfolio = ({
   user,
   goToCompany,
 }: PortfolioProps): JSX.Element => {
-  const [prices, setPrices] = useState<Company[]>([]);
+  const [prices, setPrices] = useState<Stock[]>([]);
 
-  const renderColumnNames = () => (
+  const renderColumnNames = (): JSX.Element => (
     <div className={`${styles.positionRow} ${styles.positionTableTop}`}>
       <div className={styles.positionColumn}>Ticker</div>
       <div className={styles.positionColumn + " " + styles.positionColumnHide}>
@@ -35,7 +35,7 @@ export const Portfolio = ({
     </div>
   );
 
-  const renderPositions = () =>
+  const renderPositions = (): JSX.Element =>
     user.portfolio.map((position: Position, index: number) => {
       const initialEquity = position.cost;
       const currentEquity = roundNumber(
@@ -81,7 +81,7 @@ export const Portfolio = ({
       );
     });
 
-  const queryPrices = () => {
+  const queryPrices = (): void => {
     // const version = process.env.REACT_APP_IEX_VERSION;
     // const token = process.env.REACT_APP_IEX_API_KEY;
     // const url = (ticker) =>
