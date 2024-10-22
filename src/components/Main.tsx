@@ -3,15 +3,22 @@ import { Header } from "./Header";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
-import { Company } from "./Company";
+import { CompanyPage } from "./CompanyPage";
 import { Route, Switch, useHistory } from "react-router-dom";
+import { DocumentData } from "firebase/firestore";
+import { Company } from "../types";
 
-export const Main = ({ user, setUser }) => {
-  const [company, setCompany] = useState({});
+interface MainProps {
+  user: DocumentData;
+  setUser: (user: DocumentData) => void;
+}
+
+export const Main = ({ user, setUser }: MainProps) => {
+  const [company, setCompany] = useState<Company | undefined>();
   const history = useHistory();
-  const roundNumber = (number) => Number(number.toFixed(2));
+  const roundNumber = (number: number) => Number(number.toFixed(2));
 
-  const goToCompany = async (ticker) => {
+  const goToCompany = async (ticker: string) => {
     // const version = process.env.REACT_APP_IEX_VERSION;
     // const token = process.env.REACT_APP_IEX_API_KEY;
     // const url = (ticker) =>
@@ -24,12 +31,12 @@ export const Main = ({ user, setUser }) => {
 
   return (
     <>
-      <Header setUser={setUser} setCompany={setCompany} />
+      <Header setCompany={setCompany} />
 
       <Switch>
-        {company.symbol && (
-          <Route exact path={`/${company.symbol}`}>
-            <Company
+        {company?.ticker && (
+          <Route exact path={`/${company.ticker}`}>
+            <CompanyPage
               company={company}
               user={user}
               setUser={setUser}
@@ -51,11 +58,7 @@ export const Main = ({ user, setUser }) => {
         </Route>
       </Switch>
 
-      <Watchlist
-        user={user}
-        setCompany={setCompany}
-        goToCompany={goToCompany}
-      />
+      <Watchlist user={user} goToCompany={goToCompany} />
     </>
   );
 };

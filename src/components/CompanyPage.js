@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import styles from "./styles/Company.module.scss";
+import styles from "./styles/CompanyPage.module.scss";
 
-export const Company = ({ company, user, setUser, roundNumber }) => {
+export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
   const [orderMode, setOrderMode] = useState("buy");
   const [quantity, setQuantity] = useState("");
   const [position, setPosition] = useState({});
@@ -21,7 +21,7 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
 
   const findPosition = () => {
     const userPosition = user.portfolio.filter(
-      (position) => position.ticker === company.symbol
+      (position) => position.ticker === company.ticker
     );
     if (userPosition.length) setPosition(userPosition[0]);
   };
@@ -30,7 +30,7 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
     userData
       .update({
         watchlist: window.firebase.firestore.FieldValue.arrayUnion(
-          company.symbol
+          company.ticker
         ),
       })
       .then(() => {
@@ -42,7 +42,7 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
     userData
       .update({
         watchlist: window.firebase.firestore.FieldValue.arrayRemove(
-          company.symbol
+          company.ticker
         ),
       })
       .then(() => {
@@ -52,7 +52,7 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
 
   const buy = () => {
     const buyOrder = {
-      ticker: company.symbol,
+      ticker: company.ticker,
       quantity: Number(quantity) + (position.quantity || 0),
       cost: cost + (position.cost || 0),
     };
@@ -86,7 +86,7 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
 
   const sell = () => {
     const sellOrder = {
-      ticker: company.symbol,
+      ticker: company.ticker,
       quantity: position.quantity - Number(quantity),
       cost: position.cost - cost,
     };
@@ -204,15 +204,15 @@ export const Company = ({ company, user, setUser, roundNumber }) => {
     );
   };
 
-  useEffect(findPosition, [user.portfolio, company.symbol]);
+  useEffect(findPosition, [user.portfolio, company.ticker]);
 
   return (
     <div>
-      <h4 className="p-4">{company.companyName}</h4>
+      <h4 className="p-4">{company.name}</h4>
       <h5 className="px-4">${roundNumber(company.latestPrice)}</h5>
       {position.ticker && renderPosition()}
       {renderOrderBox()}
-      {user.watchlist.includes(company.symbol) ? (
+      {user.watchlist.includes(company.ticker) ? (
         <div className={styles.watchlistButton}>
           <button
             className="btn btn-outline-info btn-sm m-4"

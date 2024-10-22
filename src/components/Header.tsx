@@ -1,14 +1,19 @@
 import styles from "./styles/Header.module.scss";
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
+import { Company } from "../types";
 
-export const Header = ({ setCompany }) => {
+interface HeaderProps {
+  setCompany: (company: Company) => void;
+}
+
+export const Header = ({ setCompany }: HeaderProps) => {
   const [input, setInput] = useState("");
   const history = useHistory();
 
-  const handleInputChange = (event) =>
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) =>
     setInput(event.target.value.toUpperCase());
 
   const searchCompany = () => {
@@ -16,7 +21,6 @@ export const Header = ({ setCompany }) => {
     // const token = process.env.REACT_APP_IEX_API_KEY;
     // const url = (ticker) =>
     //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
-
     // fetch(url(input))
     //   .then((response) => response.json())
     //   .then((companyData) => {
@@ -29,7 +33,7 @@ export const Header = ({ setCompany }) => {
 
   const enterKeyOnPress = () => {
     document.addEventListener("keydown", function (event) {
-      const simulateClick = (element) => {
+      const simulateClick = (element: any) => {
         const click = new MouseEvent("click", {
           bubbles: true,
           cancelable: true,
@@ -42,6 +46,12 @@ export const Header = ({ setCompany }) => {
         simulateClick(document.getElementsByClassName(styles.searchSymbol)[0]);
     });
   };
+
+  useEffect(() => {
+    if (input) {
+      enterKeyOnPress();
+    }
+  }, [input]);
 
   return (
     <div className={styles.header}>
@@ -65,7 +75,6 @@ export const Header = ({ setCompany }) => {
           onClick={() => searchCompany()}
         />
       </div>
-      {input && enterKeyOnPress()}
     </div>
   );
 };

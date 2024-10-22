@@ -33,9 +33,9 @@ export const Watchlist = ({ user, goToCompany }) => {
         <div
           key={index}
           className={styles.watchlistRow}
-          onClick={() => goToCompany(company.symbol)}
+          onClick={() => goToCompany(company.ticker)}
         >
-          <div className={styles.watchlistRowSection}>{company.symbol}</div>
+          <div className={styles.watchlistRowSection}>{company.ticker}</div>
           <div className={styles.watchlistRowSection}>
             ${company.latestPrice.toFixed(2)}
           </div>
