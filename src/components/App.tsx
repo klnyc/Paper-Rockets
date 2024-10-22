@@ -4,7 +4,7 @@ import { firestore } from "../firebase";
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import styles from "./styles/App.module.scss";
 import { Login } from "./Login";
-import { Main } from "./Main";
+import { Home } from "./Home";
 import { Loading } from "./Loading";
 
 export const App = (): JSX.Element => {
@@ -33,7 +33,7 @@ export const App = (): JSX.Element => {
     if (loading) {
       return <Loading />;
     } else if (user?.userID) {
-      return <Main user={user} setUser={setUser} />;
+      return <Home user={user} setUser={setUser} />;
     } else {
       return <Login setUser={setUser} />;
     }

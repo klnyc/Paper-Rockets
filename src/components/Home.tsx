@@ -13,10 +13,9 @@ interface MainProps {
   setUser: (user: DocumentData) => void;
 }
 
-export const Main = ({ user, setUser }: MainProps) => {
+export const Home = ({ user, setUser }: MainProps) => {
   const [company, setCompany] = useState<Company | undefined>();
   const history = useHistory();
-  const roundNumber = (number: number) => Number(number.toFixed(2));
 
   const goToCompany = async (ticker: string) => {
     // const version = process.env.REACT_APP_IEX_VERSION;
@@ -36,12 +35,7 @@ export const Main = ({ user, setUser }: MainProps) => {
       <Switch>
         {company?.ticker && (
           <Route exact path={`/${company.ticker}`}>
-            <CompanyPage
-              company={company}
-              user={user}
-              setUser={setUser}
-              roundNumber={roundNumber}
-            />
+            <CompanyPage company={company} user={user} setUser={setUser} />
           </Route>
         )}
 
@@ -50,11 +44,7 @@ export const Main = ({ user, setUser }: MainProps) => {
         </Route>
 
         <Route path="/">
-          <Portfolio
-            user={user}
-            goToCompany={goToCompany}
-            roundNumber={roundNumber}
-          />
+          <Portfolio user={user} goToCompany={goToCompany} />
         </Route>
       </Switch>
 

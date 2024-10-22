@@ -18,3 +18,9 @@ export interface Company {
   latestPrice: number;
   name: string;
 }
+
+export interface Position {
+  cost: number;
+  quantity: number;
+  ticker: string;
+}

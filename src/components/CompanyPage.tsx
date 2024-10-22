@@ -1,90 +1,118 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./styles/CompanyPage.module.scss";
+import { Company, Position } from "../types";
+import { firestore } from "../firebase";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  DocumentData,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import { roundNumber } from "../utility";
 
-export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
-  const [orderMode, setOrderMode] = useState("buy");
-  const [quantity, setQuantity] = useState("");
-  const [position, setPosition] = useState({});
-  const cost = roundNumber(quantity * company.latestPrice);
-  const userData = window.firebase
-    .firestore()
-    .collection("users")
-    .doc(user.userID);
+interface CompanyPageProps {
+  company: Company;
+  user: DocumentData;
+  setUser: (user: DocumentData) => void;
+}
 
-  const handleQuantityInput = (event) => setQuantity(event.target.value);
+export const CompanyPage = ({ company, user, setUser }: CompanyPageProps) => {
+  const [orderMode, setOrderMode] = useState<string>("buy");
+  const [quantity, setQuantity] = useState<string>("");
+  const [position, setPosition] = useState<Position | undefined>();
+
+  const cost = roundNumber(Number(quantity) * company.latestPrice);
+
+  const userRef = doc(firestore, `users/${user.userID}`);
+
+  const handleQuantityInput = (event: ChangeEvent<HTMLInputElement>) =>
+    setQuantity(event.target.value);
 
   const selectInput = () => {
     const input = document.getElementById("quantityInput");
-    input.focus();
-    input.select();
+    input?.focus();
+    // input?.select();
   };
 
   const findPosition = () => {
     const userPosition = user.portfolio.filter(
-      (position) => position.ticker === company.ticker
+      (position: Position) => position.ticker === company.ticker
     );
     if (userPosition.length) setPosition(userPosition[0]);
   };
 
   const addToWatchlist = () => {
-    userData
-      .update({
-        watchlist: window.firebase.firestore.FieldValue.arrayUnion(
-          company.ticker
-        ),
-      })
-      .then(() => {
-        userData.get().then((userData) => setUser(userData.data()));
+    updateDoc(userRef, {
+      watchlist: arrayUnion(company.ticker),
+    }).then(() => {
+      const ref = doc(firestore, `users/${user.userID}`);
+      getDoc(ref).then((userData: DocumentData) => {
+        if (userData) {
+          setUser(userData.data());
+        }
       });
+    });
   };
 
   const removeFromWatchlist = () => {
-    userData
-      .update({
-        watchlist: window.firebase.firestore.FieldValue.arrayRemove(
-          company.ticker
-        ),
-      })
-      .then(() => {
-        userData.get().then((userData) => setUser(userData.data()));
+    updateDoc(userRef, {
+      watchlist: arrayRemove(company.ticker),
+    }).then(() => {
+      const ref = doc(firestore, `users/${user.userID}`);
+      getDoc(ref).then((userData: DocumentData) => {
+        if (userData) {
+          setUser(userData.data());
+        }
       });
+    });
   };
 
   const buy = () => {
     const buyOrder = {
       ticker: company.ticker,
-      quantity: Number(quantity) + (position.quantity || 0),
-      cost: cost + (position.cost || 0),
+      quantity: Number(quantity) + (position?.quantity || 0),
+      cost: cost + (position?.cost || 0),
     };
 
-    if (position.ticker) {
-      userData
-        .update({
-          portfolio: window.firebase.firestore.FieldValue.arrayRemove(position),
-        })
+    if (position) {
+      updateDoc(userRef, {
+        watchlist: arrayRemove(position),
+      })
         .then(() => {
-          userData.update({
+          const ref = doc(firestore, `users/${user.userID}`);
+          updateDoc(ref, {
             balance: roundNumber(user.balance - cost),
-            portfolio:
-              window.firebase.firestore.FieldValue.arrayUnion(buyOrder),
+            portfolio: arrayUnion(buyOrder),
           });
         })
         .then(() => {
-          userData.get().then((userData) => setUser(userData.data()));
+          const ref = doc(firestore, `users/${user.userID}`);
+          getDoc(ref).then((userData: DocumentData) => {
+            if (userData) {
+              setUser(userData.data());
+            }
+          });
         });
     } else {
-      userData
-        .update({
-          balance: roundNumber(user.balance - cost),
-          portfolio: window.firebase.firestore.FieldValue.arrayUnion(buyOrder),
-        })
-        .then(() => {
-          userData.get().then((userData) => setUser(userData.data()));
+      updateDoc(userRef, {
+        balance: roundNumber(user.balance - cost),
+        portfolio: arrayUnion(buyOrder),
+      }).then(() => {
+        const ref = doc(firestore, `users/${user.userID}`);
+        getDoc(ref).then((userData: DocumentData) => {
+          if (userData) {
+            setUser(userData.data());
+          }
         });
+      });
     }
   };
 
   const sell = () => {
+    if (!position) return;
+
     const sellOrder = {
       ticker: company.ticker,
       quantity: position.quantity - Number(quantity),
@@ -92,31 +120,36 @@ export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
     };
 
     if (Number(quantity) === position.quantity) {
-      userData
-        .update({
-          balance: roundNumber(user.balance + cost),
-          portfolio: window.firebase.firestore.FieldValue.arrayRemove(position),
-        })
-        .then(() => {
-          userData.get().then((userData) => {
+      updateDoc(userRef, {
+        balance: roundNumber(user.balance + cost),
+        portfolio: arrayRemove(position),
+      }).then(() => {
+        const ref = doc(firestore, `users/${user.userID}`);
+        getDoc(ref).then((userData: DocumentData) => {
+          if (userData) {
             setUser(userData.data());
-            setPosition({});
-          });
+            setPosition(undefined);
+          }
         });
+      });
     } else {
-      userData
-        .update({
-          portfolio: window.firebase.firestore.FieldValue.arrayRemove(position),
-        })
+      updateDoc(userRef, {
+        portfolio: arrayRemove(position),
+      })
         .then(() => {
-          userData.update({
+          const ref = doc(firestore, `users/${user.userID}`);
+          updateDoc(ref, {
             balance: roundNumber(user.balance + cost),
-            portfolio:
-              window.firebase.firestore.FieldValue.arrayUnion(sellOrder),
+            portfolio: arrayUnion(sellOrder),
           });
         })
         .then(() => {
-          userData.get().then((userData) => setUser(userData.data()));
+          const ref = doc(firestore, `users/${user.userID}`);
+          getDoc(ref).then((userData: DocumentData) => {
+            if (userData) {
+              setUser(userData.data());
+            }
+          });
         });
     }
   };
@@ -162,7 +195,9 @@ export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
         />
         <div className="my-3">SHARES</div>
         <div>${cost}</div>
-        {quantity > position.quantity && orderMode === "sell" ? (
+        {position?.quantity !== undefined &&
+        Number(quantity) > position.quantity &&
+        orderMode === "sell" ? (
           <button className="btn btn-secondary btn-sm my-4">
             Invalid Order
           </button>
@@ -179,6 +214,7 @@ export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
   );
 
   const renderPosition = () => {
+    if (!position) return <></>;
     const initialEquity = position.cost;
     const currentEquity = roundNumber(position.quantity * company.latestPrice);
     const averagePrice = roundNumber(position.cost / position.quantity);
@@ -210,7 +246,7 @@ export const CompanyPage = ({ company, user, setUser, roundNumber }) => {
     <div>
       <h4 className="p-4">{company.name}</h4>
       <h5 className="px-4">${roundNumber(company.latestPrice)}</h5>
-      {position.ticker && renderPosition()}
+      {position?.ticker && renderPosition()}
       {renderOrderBox()}
       {user.watchlist.includes(company.ticker) ? (
         <div className={styles.watchlistButton}>

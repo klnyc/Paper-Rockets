@@ -1,0 +1,1 @@
+export const roundNumber = (number: number): number => Number(number.toFixed(2));

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./styles/Portfolio.module.scss";
+import { roundNumber } from "../utility";
 
-export const Portfolio = ({ user, goToCompany, roundNumber }) => {
+export const Portfolio = ({ user, goToCompany }) => {
   const [prices, setPrices] = useState([]);
 
   const renderColumnNames = () => (
@@ -78,7 +79,6 @@ export const Portfolio = ({ user, goToCompany, roundNumber }) => {
     // const priceRequests = user.portfolio.map((position) =>
     //   fetch(url(position.ticker))
     // );
-
     // Promise.all(priceRequests)
     //   .then((pricePromises) => {
     //     return Promise.all(
