@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { firestore } from "../firebase";
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import styles from "./styles/App.module.scss";
-import { Home } from "./Home";
+import { Login } from "./Login";
 import { Main } from "./Main";
 import { Loading } from "./Loading";
 
@@ -35,7 +35,7 @@ export const App = (): JSX.Element => {
     } else if (user?.userID) {
       return <Main user={user} setUser={setUser} />;
     } else {
-      return <Home setUser={setUser} />;
+      return <Login setUser={setUser} />;
     }
   };
 

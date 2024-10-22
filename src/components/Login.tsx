@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
 import { IoIosRocket } from "react-icons/io";
-import styles from "./styles/Home.module.scss";
+import styles from "./styles/Login.module.scss";
 
 interface HomeProps {
   setUser: (user: DocumentData) => void;
@@ -17,7 +17,7 @@ interface FormProps {
   password: string;
 }
 
-export const Home = ({ setUser }: HomeProps) => {
+export const Login = ({ setUser }: HomeProps) => {
   const [input, setInput] = useState<FormProps>({ email: "", password: "" });
   const [loginState, setLoginState] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
