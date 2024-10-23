@@ -60,11 +60,19 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
     // const companyData = await response.json();
     // setCompany(companyData);
     // history.push(`/${companyData.symbol}`);
+
+    if (!stockList) return;
+    if (!stockList[ticker]) {
+      console.log("Stock not found");
+      return;
+    }
+    setCompany(stockList[ticker]);
+    history.push(`/${ticker}`);
   };
 
   return (
     <>
-      <Header setCompany={setCompany} />
+      <Header stockList={stockList} setCompany={setCompany} />
 
       <Switch>
         {company?.ticker && (
@@ -78,11 +86,15 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
         </Route>
 
         <Route path="/">
-          <Portfolio user={user} goToCompany={goToCompany} />
+          <Portfolio
+            user={user}
+            goToCompany={goToCompany}
+            stockList={stockList}
+          />
         </Route>
       </Switch>
 
-      <Watchlist user={user} goToCompany={goToCompany} />
+      <Watchlist user={user} goToCompany={goToCompany} stockList={stockList} />
     </>
   );
 };

@@ -3,13 +3,14 @@ import { Link, useHistory } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
-import { Stock } from "../types";
+import { Stock, Stocks } from "../types";
 
 interface HeaderProps {
+  stockList?: Stocks;
   setCompany: (company: Stock) => void;
 }
 
-export const Header = ({ setCompany }: HeaderProps): JSX.Element => {
+export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
   const [input, setInput] = useState("");
   const history = useHistory();
 
@@ -29,6 +30,14 @@ export const Header = ({ setCompany }: HeaderProps): JSX.Element => {
     //     history.push(`/${companyData.symbol}`);
     //   })
     //   .catch(() => setInput("Invalid Symbol"));
+
+    if (!stockList) return;
+    if (!stockList[input]) {
+      console.log("Stock not found");
+      return;
+    }
+    setCompany(stockList[input]);
+    history.push(`/${input}`);
   };
 
   const enterKeyOnPress = () => {

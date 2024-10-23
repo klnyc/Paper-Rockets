@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import styles from "./styles/Portfolio.module.scss";
 import { roundNumber } from "../utility";
 import { DocumentData } from "firebase/firestore";
-import { Stock, Position } from "../types";
+import { Stock, Position, Stocks } from "../types";
 
 interface PortfolioProps {
   user: DocumentData;
   goToCompany: (ticker: string) => void;
+  stockList?: Stocks;
 }
 
 export const Portfolio = ({
   user,
   goToCompany,
+  stockList,
 }: PortfolioProps): JSX.Element => {
   const [prices, setPrices] = useState<Stock[]>([]);
 
@@ -102,9 +104,15 @@ export const Portfolio = ({
     //     );
     //   })
     //   .then((priceData) => setPrices(priceData));
+
+    if (!stockList || !user.portfolio?.length) return;
+    const portfolioPrices: Stock[] = user.portfolio.map(
+      (position: Position) => stockList[position.ticker]
+    );
+    setPrices(portfolioPrices);
   };
 
-  useEffect(queryPrices, [user.portfolio]);
+  useEffect(queryPrices, [user.portfolio, stockList]);
 
   return (
     <div style={{ overflowY: "auto" }}>

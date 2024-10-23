@@ -1,16 +1,18 @@
 import { DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
 import { useState, useEffect } from "react";
-import { Stock } from "../types";
+import { Stock, Stocks } from "../types";
 
 interface WatchListProps {
   user: DocumentData;
   goToCompany: (ticker: string) => void;
+  stockList?: Stocks;
 }
 
 export const Watchlist = ({
   user,
   goToCompany,
+  stockList,
 }: WatchListProps): JSX.Element => {
   const [watchlist, setWatchlist] = useState<Stock[]>([]);
 
@@ -31,9 +33,15 @@ export const Watchlist = ({
     //     );
     //   })
     //   .then((companyData) => setWatchlist(companyData));
+
+    if (!stockList || !user.watchlist.length) return;
+    const watchlistPrices: Stock[] = user.watchlist.map(
+      (ticker: string) => stockList[ticker]
+    );
+    setWatchlist(watchlistPrices);
   };
 
-  useEffect(queryWatchlist, [user.watchlist]);
+  useEffect(queryWatchlist, [user.watchlist, stockList]);
 
   return (
     <div className={styles.watchlist}>

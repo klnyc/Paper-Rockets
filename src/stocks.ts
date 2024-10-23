@@ -19,39 +19,74 @@ export const generatePriceChange = (): number => {
 };
 
 export const stocks: Stocks = {
-  tesla: {
+  TSLA: {
     ticker: "TSLA",
     latestPrice: 260,
     name: "Tesla",
   },
-  apple: {
+  AAPL: {
     ticker: "AAPL",
     latestPrice: 262,
     name: "Apple",
   },
-  google: {
+  GOOGL: {
     ticker: "GOOGL",
     latestPrice: 158,
     name: "Google",
   },
-  microsoft: {
+  MSFT: {
     ticker: "MSFT",
     latestPrice: 228,
     name: "Microsoft",
   },
-  nvidia: {
+  NVDA: {
     ticker: "NVDA",
     latestPrice: 142,
     name: "Nvidia",
   },
-  sofi: {
+  SOFI: {
     ticker: "SOFI",
     latestPrice: 11,
     name: "Sofi",
   },
-  spy: {
+  SPY: {
     ticker: "SPY",
     latestPrice: 584,
     name: "S&P 500",
+  },
+  DIS: {
+    ticker: "DIS",
+    latestPrice: 108,
+    name: "Disney",
+  },
+  AMC: {
+    ticker: "AMC",
+    latestPrice: 5,
+    name: "AMC Entertainment",
+  },
+  FB: {
+    ticker: "FB",
+    latestPrice: 574,
+    name: "Facebook",
+  },
+  JPM: {
+    ticker: "JPM",
+    latestPrice: 192,
+    name: "JP Morgan & Chase",
+  },
+  VZ: {
+    ticker: "VZ",
+    latestPrice: 42,
+    name: "Verizon",
+  },
+  NIO: {
+    ticker: "NIO",
+    latestPrice: 5,
+    name: "Nio",
+  },
+  LCID: {
+    ticker: "LCID",
+    latestPrice: 6,
+    name: "Lucid",
   },
 };
