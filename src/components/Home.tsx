@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { Header } from "./Header";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
 import { Company } from "./Company";
-import { Route, Switch, useHistory } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
-import { Stock } from "../types";
+import { Stock, Stocks } from "../types";
+import { priceChangeInterval } from "../constants";
+import {
+  generateInitialPrice,
+  stocks as defaultStocks,
+  generatePriceChange,
+} from "../stocks";
 
 interface MainProps {
   user: DocumentData;
@@ -14,8 +20,36 @@ interface MainProps {
 }
 
 export const Home = ({ user, setUser }: MainProps): JSX.Element => {
+  const [stockList, setStockList] = useState<Stocks | undefined>();
+  const [stocksLoaded, setStocksLoaded] = useState<boolean>(false);
   const [company, setCompany] = useState<Stock | undefined>();
   const history = useHistory();
+
+  useEffect(() => {
+    const stocks = { ...defaultStocks };
+    for (const stock in stocks) {
+      const defaultPrice = stocks[stock].latestPrice;
+      stocks[stock].latestPrice = generateInitialPrice(defaultPrice);
+    }
+    setStockList(stocks);
+    setStocksLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    const updatePrices = () => {
+      const stocks = { ...stockList };
+      for (const stock in stocks) {
+        stocks[stock].latestPrice += generatePriceChange();
+      }
+      setStockList(stocks);
+    };
+
+    if (stocksLoaded) {
+      setTimeout(() => {
+        setInterval(updatePrices, priceChangeInterval);
+      }, priceChangeInterval);
+    }
+  }, [stocksLoaded]);
 
   const goToCompany = async (ticker: string) => {
     // const version = process.env.REACT_APP_IEX_VERSION;
