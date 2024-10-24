@@ -28,18 +28,11 @@ export const Company = ({
   const [quantity, setQuantity] = useState<string>("");
   const [position, setPosition] = useState<Position | undefined>();
 
-  const cost = Number(quantity) * company.latestPrice;
-
+  const cost: number = Number(quantity) * company.latestPrice;
   const userRef = doc(firestore, `users/${user.userID}`);
 
   const handleQuantityInput = (event: ChangeEvent<HTMLInputElement>): void =>
     setQuantity(event.target.value);
-
-  const selectInput = () => {
-    const input = document.getElementById("quantityInput");
-    input?.focus();
-    // input?.select();
-  };
 
   const findPosition = (): void => {
     const userPosition = user.portfolio.find(
@@ -52,8 +45,7 @@ export const Company = ({
     updateDoc(userRef, {
       watchlist: arrayUnion(company.ticker),
     }).then(() => {
-      const ref = doc(firestore, `users/${user.userID}`);
-      getDoc(ref).then((userData: DocumentData) => {
+      getDoc(userRef).then((userData: DocumentData) => {
         if (userData) {
           setUser(userData.data());
         }
@@ -65,8 +57,7 @@ export const Company = ({
     updateDoc(userRef, {
       watchlist: arrayRemove(company.ticker),
     }).then(() => {
-      const ref = doc(firestore, `users/${user.userID}`);
-      getDoc(ref).then((userData: DocumentData) => {
+      getDoc(userRef).then((userData: DocumentData) => {
         if (userData) {
           setUser(userData.data());
         }
@@ -83,18 +74,16 @@ export const Company = ({
 
     if (position) {
       updateDoc(userRef, {
-        watchlist: arrayRemove(position),
+        portfolio: arrayRemove(position),
       })
         .then(() => {
-          const ref = doc(firestore, `users/${user.userID}`);
-          updateDoc(ref, {
+          updateDoc(userRef, {
             balance: user.balance - cost,
             portfolio: arrayUnion(buyOrder),
           });
         })
         .then(() => {
-          const ref = doc(firestore, `users/${user.userID}`);
-          getDoc(ref).then((userData: DocumentData) => {
+          getDoc(userRef).then((userData: DocumentData) => {
             if (userData) {
               setUser(userData.data());
             }
@@ -105,8 +94,7 @@ export const Company = ({
         balance: user.balance - cost,
         portfolio: arrayUnion(buyOrder),
       }).then(() => {
-        const ref = doc(firestore, `users/${user.userID}`);
-        getDoc(ref).then((userData: DocumentData) => {
+        getDoc(userRef).then((userData: DocumentData) => {
           if (userData) {
             setUser(userData.data());
           }
@@ -129,8 +117,7 @@ export const Company = ({
         balance: user.balance + cost,
         portfolio: arrayRemove(position),
       }).then(() => {
-        const ref = doc(firestore, `users/${user.userID}`);
-        getDoc(ref).then((userData: DocumentData) => {
+        getDoc(userRef).then((userData: DocumentData) => {
           if (userData) {
             setUser(userData.data());
             setPosition(undefined);
@@ -142,15 +129,13 @@ export const Company = ({
         portfolio: arrayRemove(position),
       })
         .then(() => {
-          const ref = doc(firestore, `users/${user.userID}`);
-          updateDoc(ref, {
+          updateDoc(userRef, {
             balance: user.balance + cost,
             portfolio: arrayUnion(sellOrder),
           });
         })
         .then(() => {
-          const ref = doc(firestore, `users/${user.userID}`);
-          getDoc(ref).then((userData: DocumentData) => {
+          getDoc(userRef).then((userData: DocumentData) => {
             if (userData) {
               setUser(userData.data());
             }
@@ -196,14 +181,13 @@ export const Company = ({
           value={quantity}
           placeholder="NUMBER"
           onChange={handleQuantityInput}
-          onClick={() => selectInput()}
         />
         <div className="my-3">SHARES</div>
-        <div>${cost}</div>
+        <div>${displayNumber(cost)}</div>
         {position?.quantity !== undefined &&
         Number(quantity) > position.quantity &&
         orderMode === Order.SELL ? (
-          <button className="btn btn-secondary btn-sm my-4">
+          <button className="btn btn-secondary btn-sm my-4" disabled>
             Invalid Order
           </button>
         ) : (
@@ -237,10 +221,14 @@ export const Company = ({
         </div>
         <div className={styles.positionRow}>
           <div className={styles.positionColumn}>{position.quantity}</div>
-          <div className={styles.positionColumn}>{averagePrice}</div>
-          <div className={styles.positionColumn}>{profit}</div>
-          <div className={styles.positionColumn}>{percent}</div>
-          <div className={styles.positionColumn}>{currentEquity}</div>
+          <div className={styles.positionColumn}>
+            {displayNumber(averagePrice)}
+          </div>
+          <div className={styles.positionColumn}>{displayNumber(profit)}</div>
+          <div className={styles.positionColumn}>{displayNumber(percent)}</div>
+          <div className={styles.positionColumn}>
+            {displayNumber(currentEquity)}
+          </div>
         </div>
       </div>
     );

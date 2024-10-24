@@ -115,7 +115,7 @@ export const Portfolio = ({
 
   return (
     <div style={{ overflowY: "auto" }}>
-      <div className={styles.balance}>${user.balance}</div>
+      <div className={styles.balance}>${displayNumber(user.balance)}</div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
         {user.portfolio.length ? renderPositions() : renderEmptyState()}
