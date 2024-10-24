@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
+import styles from "./styles/Home.module.scss";
 import { Header } from "./Header";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
@@ -74,32 +75,37 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
   return (
     <>
       <Header stockList={stockList} setCompany={setCompany} />
+      <div className={styles.home}>
+        <Switch>
+          {company?.ticker && (
+            <Route exact path={`/${company.ticker}`}>
+              <Company company={company} user={user} setUser={setUser} />
+            </Route>
+          )}
 
-      <Switch>
-        {company?.ticker && (
-          <Route exact path={`/${company.ticker}`}>
-            <Company company={company} user={user} setUser={setUser} />
+          <Route exact path="/account">
+            <Account user={user} setUser={setUser} />
           </Route>
-        )}
 
-        <Route exact path="/account">
-          <Account user={user} setUser={setUser} />
-        </Route>
+          <Route exact path="/portfolio">
+            <Portfolio
+              user={user}
+              goToCompany={goToCompany}
+              stockList={stockList}
+            />
+          </Route>
 
-        <Route path="/portfolio">
-          <Portfolio
-            user={user}
-            goToCompany={goToCompany}
-            stockList={stockList}
-          />
-        </Route>
+          <Route path="/">
+            <Market stockList={stockList} goToCompany={goToCompany} />
+          </Route>
+        </Switch>
 
-        <Route path="/">
-          <Market stockList={stockList} goToCompany={goToCompany} />
-        </Route>
-      </Switch>
-
-      <Watchlist user={user} goToCompany={goToCompany} stockList={stockList} />
+        <Watchlist
+          user={user}
+          goToCompany={goToCompany}
+          stockList={stockList}
+        />
+      </div>
     </>
   );
 };
