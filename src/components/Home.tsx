@@ -13,6 +13,7 @@ import {
   stocks as defaultStocks,
   generatePriceChange,
 } from "../stocks";
+import { Market } from "./Market";
 
 interface MainProps {
   user: DocumentData;
@@ -85,12 +86,16 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
           <Account user={user} setUser={setUser} />
         </Route>
 
-        <Route path="/">
+        <Route path="/portfolio">
           <Portfolio
             user={user}
             goToCompany={goToCompany}
             stockList={stockList}
           />
+        </Route>
+
+        <Route path="/">
+          <Market stockList={stockList} goToCompany={goToCompany} />
         </Route>
       </Switch>
 

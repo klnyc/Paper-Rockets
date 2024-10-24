@@ -33,7 +33,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
 
     if (!stockList) return;
     if (!stockList[input]) {
-      console.log("Stock not found");
+      alert(`This stock ${input} is not supported!`);
       return;
     }
     setCompany(stockList[input]);
@@ -66,7 +66,10 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
     <div className={styles.header}>
       <IoIosRocket className={styles.rocketSymbol} />
       <span className={styles.headerLink}>
-        <Link to="/">Portfolio</Link>
+        <Link to="/">Market</Link>
+      </span>
+      <span className={styles.headerLink}>
+        <Link to="/portfolio">Portfolio</Link>
       </span>
       <span className={styles.headerLink}>
         <Link to="/account">Account</Link>

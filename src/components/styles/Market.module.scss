@@ -1,0 +1,40 @@
+.market {
+  background-color: #2b343e;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: calc(100% - 190px);
+  margin: 10px;
+  padding: 10px 0;
+}
+
+.stockRow {
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+
+  &.stockTableTop {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  &:not(.stockTableTop) {
+    &:hover {
+      color: salmon;
+    }
+  }
+}
+
+.stockColumn {
+  width: 100%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .market {
+    width: auto;
+  }
+}
