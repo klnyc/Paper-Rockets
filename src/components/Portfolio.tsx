@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./styles/Portfolio.module.scss";
-import { roundNumber } from "../utility";
+import { displayNumber } from "../utility";
 import { DocumentData } from "firebase/firestore";
 import { Stock, Position, Stocks } from "../types";
 
@@ -37,15 +37,15 @@ export const Portfolio = ({
     </div>
   );
 
-  const renderPositions = (): JSX.Element =>
-    user.portfolio.map((position: Position, index: number) => {
+  const renderPositions = (): JSX.Element => {
+    if (!prices.length) return <></>;
+    return user.portfolio.map((position: Position, index: number) => {
       const initialEquity = position.cost;
-      const currentEquity = roundNumber(
-        position.quantity * (prices.length ? prices[index].latestPrice : 0)
-      );
-      const averagePrice = roundNumber(position.cost / position.quantity);
-      const profit = roundNumber(currentEquity - initialEquity);
-      const percent = roundNumber((profit / initialEquity) * 100);
+      const currentEquity = position.quantity * prices[index].latestPrice;
+      const averagePrice = position.cost / position.quantity;
+      const profit = currentEquity - initialEquity;
+      const percent = (profit / initialEquity) * 100;
+
       return (
         <div
           key={index}
@@ -59,29 +59,28 @@ export const Portfolio = ({
             {position.quantity}
           </div>
           <div className={styles.positionColumn}>
-            ${prices.length ? prices[index].latestPrice : 0}
+            ${displayNumber(prices[index].latestPrice)}
           </div>
           <div
             className={styles.positionColumn + " " + styles.positionColumnHide}
           >
-            ${averagePrice}
+            ${displayNumber(averagePrice)}
           </div>
-          <div className={styles.positionColumn}>
-            {profit >= 0 ? `$${profit}` : `-$${profit * -1}`}
+          <div className={styles.positionColumn}>${displayNumber(profit)}</div>
+          <div
+            className={styles.positionColumn + " " + styles.positionColumnHide}
+          >
+            {displayNumber(percent)}%
           </div>
           <div
             className={styles.positionColumn + " " + styles.positionColumnHide}
           >
-            {percent}%
-          </div>
-          <div
-            className={styles.positionColumn + " " + styles.positionColumnHide}
-          >
-            ${currentEquity}
+            ${displayNumber(currentEquity)}
           </div>
         </div>
       );
     });
+  };
 
   const renderEmptyState = (): JSX.Element => {
     return <div className={styles.empty}>You do not own any stocks.</div>;

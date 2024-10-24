@@ -10,7 +10,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-import { roundNumber } from "../utility";
+import { displayNumber } from "../utility";
 import { Order } from "../constants";
 
 interface CompanyProps {
@@ -28,7 +28,7 @@ export const Company = ({
   const [quantity, setQuantity] = useState<string>("");
   const [position, setPosition] = useState<Position | undefined>();
 
-  const cost = roundNumber(Number(quantity) * company.latestPrice);
+  const cost = Number(quantity) * company.latestPrice;
 
   const userRef = doc(firestore, `users/${user.userID}`);
 
@@ -88,7 +88,7 @@ export const Company = ({
         .then(() => {
           const ref = doc(firestore, `users/${user.userID}`);
           updateDoc(ref, {
-            balance: roundNumber(user.balance - cost),
+            balance: user.balance - cost,
             portfolio: arrayUnion(buyOrder),
           });
         })
@@ -102,7 +102,7 @@ export const Company = ({
         });
     } else {
       updateDoc(userRef, {
-        balance: roundNumber(user.balance - cost),
+        balance: user.balance - cost,
         portfolio: arrayUnion(buyOrder),
       }).then(() => {
         const ref = doc(firestore, `users/${user.userID}`);
@@ -126,7 +126,7 @@ export const Company = ({
 
     if (Number(quantity) === position.quantity) {
       updateDoc(userRef, {
-        balance: roundNumber(user.balance + cost),
+        balance: user.balance + cost,
         portfolio: arrayRemove(position),
       }).then(() => {
         const ref = doc(firestore, `users/${user.userID}`);
@@ -144,7 +144,7 @@ export const Company = ({
         .then(() => {
           const ref = doc(firestore, `users/${user.userID}`);
           updateDoc(ref, {
-            balance: roundNumber(user.balance + cost),
+            balance: user.balance + cost,
             portfolio: arrayUnion(sellOrder),
           });
         })
@@ -221,10 +221,11 @@ export const Company = ({
   const renderPosition = (): JSX.Element => {
     if (!position) return <></>;
     const initialEquity = position.cost;
-    const currentEquity = roundNumber(position.quantity * company.latestPrice);
-    const averagePrice = roundNumber(position.cost / position.quantity);
-    const profit = roundNumber(currentEquity - initialEquity);
-    const percent = roundNumber((profit / initialEquity) * 100);
+    const currentEquity = position.quantity * company.latestPrice;
+    const averagePrice = position.cost / position.quantity;
+    const profit = currentEquity - initialEquity;
+    const percent = (profit / initialEquity) * 100;
+
     return (
       <div className={styles.positionContainer}>
         <div className={`${styles.positionRow} font-weight-bold`}>
@@ -250,7 +251,7 @@ export const Company = ({
   return (
     <div>
       <h4 className="p-4">{company.name}</h4>
-      <h5 className="px-4">${roundNumber(company.latestPrice)}</h5>
+      <h5 className="px-4">${displayNumber(company.latestPrice)}</h5>
       {position?.ticker && renderPosition()}
       {renderOrderBox()}
       {user.watchlist.includes(company.ticker) ? (
