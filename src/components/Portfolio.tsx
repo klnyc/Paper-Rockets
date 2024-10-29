@@ -16,6 +16,19 @@ export const Portfolio = ({
   stockList,
 }: PortfolioProps): JSX.Element => {
   const [prices, setPrices] = useState<Stock[]>([]);
+  const [totalProfit, setTotalProfit] = useState<number>(0);
+
+  useEffect(() => {
+    if (!prices.length) return;
+    let portfolioProfit: number = 0;
+    user.portfolio.forEach((position: Position, index: number) => {
+      const initialEquity = position.cost;
+      const currentEquity = position.quantity * prices[index].latestPrice;
+      const profit = currentEquity - initialEquity;
+      portfolioProfit += profit;
+      setTotalProfit(portfolioProfit);
+    });
+  }, [prices]);
 
   const renderColumnNames = (): JSX.Element => (
     <div className={`${styles.positionRow} ${styles.positionTableTop}`}>
@@ -39,6 +52,7 @@ export const Portfolio = ({
 
   const renderPositions = (): JSX.Element => {
     if (!prices.length) return <></>;
+
     return user.portfolio.map((position: Position, index: number) => {
       const initialEquity = position.cost;
       const currentEquity = position.quantity * prices[index].latestPrice;
@@ -115,7 +129,9 @@ export const Portfolio = ({
 
   return (
     <div style={{ overflowY: "auto" }}>
-      <div className={styles.balance}>${displayNumber(user.balance)}</div>
+      <div className={styles.balance}>
+        ${displayNumber(user.balance + totalProfit)}
+      </div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
         {user.portfolio.length ? renderPositions() : renderEmptyState()}
