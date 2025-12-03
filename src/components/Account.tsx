@@ -1,7 +1,8 @@
+import type { JSX } from "react";
 import { Link } from "react-router-dom";
 import { auth, firestore } from "../firebase";
 import { signOut as firebaseSignOut } from "firebase/auth";
-import { doc, setDoc, DocumentData } from "firebase/firestore";
+import { doc, setDoc, type DocumentData } from "firebase/firestore";
 
 interface AccountProps {
   user: DocumentData;

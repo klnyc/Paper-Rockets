@@ -1,9 +1,9 @@
 import styles from "./styles/Header.module.scss";
-import { Link, useHistory } from "react-router-dom";
-import { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { type ChangeEvent, type JSX, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
-import { Stock, Stocks } from "../types";
+import { type Stock, type Stocks } from "../types";
 
 interface HeaderProps {
   stockList?: Stocks;
@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
   const [input, setInput] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) =>
     setInput(event.target.value.toUpperCase());
@@ -27,7 +27,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
     //   .then((companyData) => {
     //     setCompany(companyData);
     //     setInput("");
-    //     history.push(`/${companyData.symbol}`);
+    //     navigate(`/${companyData.symbol}`);
     //   })
     //   .catch(() => setInput("Invalid Symbol"));
 
@@ -37,7 +37,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
       return;
     }
     setCompany(stockList[input]);
-    history.push(`/${input}`);
+    navigate(`/${input}`);
   };
 
   const enterKeyOnPress = () => {

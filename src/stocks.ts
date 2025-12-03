@@ -1,4 +1,4 @@
-import { Stocks } from "./types";
+import { type Stocks } from "./types";
 
 export const generateInitialPrice = (price: number): number => {
   const randomNumber = Math.random();

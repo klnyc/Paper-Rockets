@@ -1,10 +1,10 @@
-import { useState, ChangeEvent } from "react";
+import { useState, type ChangeEvent, type JSX } from "react";
 import { auth, firestore } from "../firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
+import { doc, getDoc, setDoc, type DocumentData } from "firebase/firestore";
 import { IoIosRocket } from "react-icons/io";
 import styles from "./styles/Login.module.scss";
 

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { useEffect, useState, type JSX } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import styles from "./styles/Home.module.scss";
 import { Header } from "./Header";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
 import { Company } from "./Company";
-import { DocumentData } from "firebase/firestore";
-import { Stock, Stocks } from "../types";
+import { type DocumentData } from "firebase/firestore";
+import { type Stock, type Stocks } from "../types";
 import { priceChangeInterval } from "../constants";
 import {
   generateInitialPrice,
@@ -25,7 +25,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
   const [stockList, setStockList] = useState<Stocks | undefined>();
   const [stocksLoaded, setStocksLoaded] = useState<boolean>(false);
   const [company, setCompany] = useState<Stock | undefined>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const stocks = { ...defaultStocks };
@@ -61,7 +61,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
     // const response = await fetch(url(ticker));
     // const companyData = await response.json();
     // setCompany(companyData);
-    // history.push(`/${companyData.symbol}`);
+    // navigate(`/${companyData.symbol}`);
 
     if (!stockList) return;
     if (!stockList[ticker]) {
@@ -69,36 +69,44 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
       return;
     }
     setCompany(stockList[ticker]);
-    history.push(`/${ticker}`);
+    navigate(`/${ticker}`);
   };
 
   return (
     <>
       <Header stockList={stockList} setCompany={setCompany} />
       <div className={styles.home}>
-        <Switch>
+        <Routes>
           {company?.ticker && (
-            <Route exact path={`/${company.ticker}`}>
-              <Company company={company} user={user} setUser={setUser} />
-            </Route>
+            <Route
+              path={`/${company.ticker}`}
+              element={
+                <Company company={company} user={user} setUser={setUser} />
+              }
+            />
           )}
 
-          <Route exact path="/account">
-            <Account user={user} setUser={setUser} />
-          </Route>
+          <Route
+            path="/account"
+            element={<Account user={user} setUser={setUser} />}
+          />
 
-          <Route exact path="/portfolio">
-            <Portfolio
-              user={user}
-              goToCompany={goToCompany}
-              stockList={stockList}
-            />
-          </Route>
+          <Route
+            path="/portfolio"
+            element={
+              <Portfolio
+                user={user}
+                goToCompany={goToCompany}
+                stockList={stockList}
+              />
+            }
+          />
 
-          <Route path="/">
-            <Market stockList={stockList} goToCompany={goToCompany} />
-          </Route>
-        </Switch>
+          <Route
+            path="*"
+            element={<Market stockList={stockList} goToCompany={goToCompany} />}
+          />
+        </Routes>
 
         <Watchlist
           user={user}

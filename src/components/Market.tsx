@@ -1,6 +1,6 @@
 import styles from "./styles/Market.module.scss";
-import { Stock, Stocks } from "../types";
-import { useEffect, useState } from "react";
+import { type Stock, type Stocks } from "../types";
+import { useEffect, useState, type JSX } from "react";
 import { displayNumber } from "../utility";
 
 interface MarketProps {

@@ -1,7 +1,7 @@
-import { DocumentData } from "firebase/firestore";
+import { type DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
-import { useState, useEffect } from "react";
-import { Stock, Stocks } from "../types";
+import { useState, useEffect, type JSX } from "react";
+import { type Stock, type Stocks } from "../types";
 
 interface WatchListProps {
   user: DocumentData;

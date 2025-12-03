@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import styles from "./styles/Loading.module.scss";
 
 export const Loading = (): JSX.Element => {

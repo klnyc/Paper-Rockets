@@ -10,19 +10,12 @@ Paper Rockets is a single-page application for paper trading stocks in the U.S. 
 
 ## :hammer_and_pick: Technology Stack
 
-Front End
+* Typescript
 * React
+* Vite
 * Sass
 * Bootstrap
-* HTML
-
-Back End
 * Firebase
-* IEX Cloud API
-
-Other
-* Node.js
-* Git
 
 ## :rocket: Deployment
 https://paperrockets.web.app/

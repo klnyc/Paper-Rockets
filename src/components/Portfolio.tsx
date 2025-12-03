@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import styles from "./styles/Portfolio.module.scss";
 import { displayNumber } from "../utility";
-import { DocumentData } from "firebase/firestore";
-import { Stock, Position, Stocks } from "../types";
+import { type DocumentData } from "firebase/firestore";
+import { type Stock, type Position, type Stocks } from "../types";
 
 interface PortfolioProps {
   user: DocumentData;

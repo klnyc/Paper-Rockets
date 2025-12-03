@@ -1,12 +1,12 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, type JSX, useEffect, useState } from "react";
 import styles from "./styles/Company.module.scss";
-import { Stock, Position } from "../types";
+import { type Stock, type Position } from "../types";
 import { firestore } from "../firebase";
 import {
   doc,
   getDoc,
   updateDoc,
-  DocumentData,
+  type DocumentData,
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";

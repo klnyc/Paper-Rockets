@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useState, useEffect, type JSX } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { firestore } from "../firebase";
-import { doc, getDoc, DocumentData } from "firebase/firestore";
+import { doc, getDoc, type DocumentData } from "firebase/firestore";
 import styles from "./styles/App.module.scss";
 import { Login } from "./Login";
 import { Home } from "./Home";
@@ -45,9 +45,9 @@ export const App = (): JSX.Element => {
   return (
     <Router>
       <div className={styles.app}>
-        <Switch>
-          <Route path="/">{renderApp()}</Route>
-        </Switch>
+        <Routes>
+          <Route path="*" element={renderApp()} />
+        </Routes>
       </div>
     </Router>
   );
