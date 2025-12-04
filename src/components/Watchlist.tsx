@@ -44,7 +44,7 @@ export const Watchlist = ({
   useEffect(queryWatchlist, [user.watchlist, stockList]);
 
   return (
-    <div className={styles.watchlist}>
+    <div id={styles.watchlist}>
       <div className={styles.watchlistHeader}>Watchlist</div>
       {watchlist.map((company, index) => (
         <div

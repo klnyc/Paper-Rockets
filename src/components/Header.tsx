@@ -1,6 +1,6 @@
+import { type ChangeEvent, type JSX, useEffect, useState } from "react";
 import styles from "./styles/Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { type ChangeEvent, type JSX, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
 import { type Stock, type Stocks } from "../types";
@@ -40,7 +40,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
     navigate(`/${input}`);
   };
 
-  const enterKeyOnPress = () => {
+  const enterKeyOnPress = (): void => {
     document.addEventListener("keydown", function (event) {
       const simulateClick = (element: any) => {
         const click = new MouseEvent("click", {
@@ -63,7 +63,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
   }, [input]);
 
   return (
-    <div className={styles.header}>
+    <div id={styles.header}>
       <IoIosRocket className={styles.rocketLogo} />
       <span className={styles.headerLink}>
         <Link to="/">Market</Link>

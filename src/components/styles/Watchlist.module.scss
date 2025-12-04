@@ -1,14 +1,9 @@
-.watchlist {
-  background-color: #2b343e;
-  position: absolute;
-  right: 0;
-  top: 60px;
+#watchlist {
+  height: 100%;
   width: 160px;
-  margin: 15px;
+  background-color: #2b343e;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding-bottom: 20px;
-  min-height: calc(100% - 80px);
 }
 
 .watchlistHeader {
@@ -33,7 +28,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .watchlist {
+  #watchlist {
     position: revert;
     width: revert;
     margin: 15px 0;

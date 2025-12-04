@@ -75,7 +75,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
   return (
     <>
       <Header stockList={stockList} setCompany={setCompany} />
-      <div className={styles.home}>
+      <div id={styles.home}>
         <Routes>
           {company?.ticker && (
             <Route
@@ -103,7 +103,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
           />
 
           <Route
-            path="*"
+            path="/"
             element={<Market stockList={stockList} goToCompany={goToCompany} />}
           />
         </Routes>

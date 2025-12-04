@@ -1,3 +1,9 @@
-.home {
-  padding: 15px;
+@use "./variables" as *;
+
+#home {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  height: calc(100% - $header-height);
+  padding: 16px;
 }
