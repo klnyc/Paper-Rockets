@@ -5,7 +5,7 @@ import { doc, getDoc, type DocumentData } from "firebase/firestore";
 import styles from "./styles/App.module.scss";
 import { Login } from "./Login";
 import { Home } from "./Home";
-import { Loading } from "./Loading";
+import { Loader } from "./Loader";
 
 export const App = (): JSX.Element => {
   const [user, setUser] = useState<DocumentData | undefined>();
@@ -31,7 +31,7 @@ export const App = (): JSX.Element => {
 
   const renderApp = (): JSX.Element => {
     if (loading) {
-      return <Loading />;
+      return <Loader />;
     } else if (user?.userID) {
       return <Home user={user} setUser={setUser} />;
     } else {

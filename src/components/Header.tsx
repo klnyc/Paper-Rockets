@@ -64,7 +64,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
 
   return (
     <div className={styles.header}>
-      <IoIosRocket className={styles.rocketSymbol} />
+      <IoIosRocket className={styles.rocketLogo} />
       <span className={styles.headerLink}>
         <Link to="/">Market</Link>
       </span>

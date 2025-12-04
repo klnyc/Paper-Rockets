@@ -80,14 +80,14 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
   };
 
   return (
-    <>
-      <h3 className="text-center font-weight-bold p-4">Paper Rockets</h3>
-      <div className={styles.rocketSymbol}>
+    <div className="d-flex flex-column gap-3 pt-5">
+      <h3 className="text-center fw-bold m-0">Paper Rockets</h3>
+      <div id={styles.rocketLogo}>
         <IoIosRocket />
       </div>
 
       <form
-        className={styles.loginForm}
+        className="mx-auto w-50 d-flex flex-column gap-3"
         onSubmit={handleSubmit}
         name={loginState ? "logIn" : "signUp"}
       >
@@ -111,13 +111,13 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
             placeholder="Password"
           />
         </div>
-        <div className="text-center">
+        <div className="text-center d-flex flex-row gap-3 mx-auto">
           <button type="submit" className="btn btn-primary">
             {loginState ? "Login" : "Sign Up"}
           </button>
           <button
             type="button"
-            className="btn btn-info mx-2"
+            className="btn btn-info"
             onClick={() => setLoginState(!loginState)}
           >
             {loginState ? "Create account" : "I have an account"}
@@ -125,7 +125,7 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
         </div>
       </form>
 
-      <div className={styles.loginError}>{error}</div>
-    </>
+      <div className="text-center text-danger p-3">{error}</div>
+    </div>
   );
 };
