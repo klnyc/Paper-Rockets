@@ -75,7 +75,7 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
   return (
     <>
       <Header stockList={stockList} setCompany={setCompany} />
-      <div id={styles.home}>
+      <div className={styles.home}>
         <Routes>
           {company?.ticker && (
             <Route

@@ -82,7 +82,7 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
   return (
     <div className="d-flex flex-column gap-3 pt-5">
       <h3 className="text-center fw-bold m-0">Paper Rockets</h3>
-      <div id={styles.rocketLogo}>
+      <div className={styles.rocketLogo}>
         <IoIosRocket />
       </div>
 

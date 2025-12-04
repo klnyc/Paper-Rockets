@@ -1,40 +1,33 @@
-#watchlist {
+@use "./variables" as *;
+
+.watchlist {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $spacing-primary;
   height: 100%;
   width: 160px;
-  background-color: #2b343e;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding: 16px;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $spacing-primary;
   overflow-y: auto;
   scrollbar-width: none;
 }
 
-.watchlistHeader {
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .watchlistRow {
-  font-size: 12px;
-  text-align: center;
   display: flex;
+  justify-content: space-between;
+  font-size: $font-size-small;
+  text-align: center;
   cursor: pointer;
 
   &:hover {
-    color: salmon;
+    color: $font-color-secondary;
   }
 }
 
-.watchlistRowSection {
-  flex: 1;
-}
-
 @media only screen and (max-width: 767px) {
-  #watchlist {
+  .watchlist {
     position: revert;
     width: revert;
     margin: 15px 0;

@@ -19,3 +19,7 @@ Paper Rockets is a web application for paper trading stocks in the U.S. stock ma
 
 ## :rocket: Deployment
 https://paperrockets.web.app/
+
+## Notes
+* Initially integrated with IEX Cloud API to get real-time stock price data. IEX Cloud API is no longer available as of August 31, 2024.
+* In CSS/SCSS Modules, IDs don’t get scoped or exported. Therefore only classes are used.

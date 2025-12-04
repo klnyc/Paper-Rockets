@@ -1,7 +1,9 @@
+@use "./variables" as *;
+
 .app {
   height: 100vh;
   color: ghostwhite;
-  background-color: #282c34;
+  background-color: $background-color;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)),
     url("../../assets/background.jpeg");
   background-size: cover;

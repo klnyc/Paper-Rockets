@@ -151,7 +151,7 @@ export const Company = ({
 
   const renderOrderBox = (): JSX.Element => (
     <div className={styles.buySellContainer}>
-      <div className={styles.buySellTabContainer}>
+      <div className="d-flex">
         <div
           className={
             orderMode === Order.BUY
@@ -173,7 +173,7 @@ export const Company = ({
           Sell
         </div>
       </div>
-      <div>
+      <div className="pt-4">
         <input
           id="quantityInput"
           className={styles.quantityInput}
@@ -237,9 +237,9 @@ export const Company = ({
   useEffect(findPosition, [user.portfolio, company.ticker]);
 
   return (
-    <div>
-      <h4 className="p-4">{company.name}</h4>
-      <h5 className="px-4">${displayNumber(company.latestPrice)}</h5>
+    <div className="w-100">
+      <h4 className="m-0">{company.name}</h4>
+      <h5 className="m-0 pt-2">${displayNumber(company.latestPrice)}</h5>
       {position?.ticker && renderPosition()}
       {renderOrderBox()}
       {user.watchlist.includes(company.ticker) ? (

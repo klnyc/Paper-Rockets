@@ -33,18 +33,18 @@ export const Portfolio = ({
   const renderColumnNames = (): JSX.Element => (
     <div className={`${styles.positionRow} ${styles.positionTableTop}`}>
       <div className={styles.positionColumn}>Ticker</div>
-      <div className={styles.positionColumn + " " + styles.positionColumnHide}>
+      <div className={`${styles.positionColumn} ${styles.positionColumnHide}`}>
         Quantity
       </div>
       <div className={styles.positionColumn}>Current Price</div>
-      <div className={styles.positionColumn + " " + styles.positionColumnHide}>
+      <div className={`${styles.positionColumn} ${styles.positionColumnHide}`}>
         Average Price
       </div>
       <div className={styles.positionColumn}>Profit</div>
-      <div className={styles.positionColumn + " " + styles.positionColumnHide}>
+      <div className={`${styles.positionColumn} ${styles.positionColumnHide}`}>
         Percent
       </div>
-      <div className={styles.positionColumn + " " + styles.positionColumnHide}>
+      <div className={`${styles.positionColumn} ${styles.positionColumnHide}`}>
         Equity
       </div>
     </div>
@@ -68,7 +68,7 @@ export const Portfolio = ({
         >
           <div className={styles.positionColumn}>{position.ticker}</div>
           <div
-            className={styles.positionColumn + " " + styles.positionColumnHide}
+            className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
             {position.quantity}
           </div>
@@ -76,18 +76,18 @@ export const Portfolio = ({
             ${displayNumber(prices[index].latestPrice)}
           </div>
           <div
-            className={styles.positionColumn + " " + styles.positionColumnHide}
+            className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
             ${displayNumber(averagePrice)}
           </div>
           <div className={styles.positionColumn}>${displayNumber(profit)}</div>
           <div
-            className={styles.positionColumn + " " + styles.positionColumnHide}
+            className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
             {displayNumber(percent)}%
           </div>
           <div
-            className={styles.positionColumn + " " + styles.positionColumnHide}
+            className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
             ${displayNumber(currentEquity)}
           </div>
@@ -97,7 +97,7 @@ export const Portfolio = ({
   };
 
   const renderEmptyState = (): JSX.Element => {
-    return <div className={styles.empty}>You do not own any stocks.</div>;
+    return <div className="portfolio-empty">You do not own any stocks.</div>;
   };
 
   const queryPrices = (): void => {
@@ -128,7 +128,7 @@ export const Portfolio = ({
   useEffect(queryPrices, [user.portfolio, stockList]);
 
   return (
-    <div style={{ overflowY: "auto" }}>
+    <div className="w-100 d-flex flex-column">
       <div className={styles.balance}>
         ${displayNumber(user.balance + totalProfit)}
       </div>

@@ -1,10 +1,10 @@
 @use "./variables" as *;
 
-#header {
-  height: $header-height;
-  background-color: #282c34;
+.header {
   display: flex;
   align-items: center;
+  height: $header-height;
+  background-color: $background-color;
   border-bottom: 1px solid silver;
   box-sizing: border-box;
 }
@@ -16,9 +16,8 @@
 }
 
 .headerLink {
-  padding: 0 10px;
-  font-size: 14px;
-  color: salmon;
+  padding: 0 $spacing-primary;
+  color: $font-color-secondary;
 }
 
 .searchInput {
@@ -26,8 +25,8 @@
   right: 36px;
   height: 26px;
   width: 134px;
-  font-size: 12px;
-  border-radius: 6px;
+  font-size: $font-size-small;
+  border-radius: $border-radius;
   padding: 10px;
   background-color: ghostwhite;
 }

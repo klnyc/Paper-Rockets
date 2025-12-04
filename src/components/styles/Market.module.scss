@@ -1,33 +1,35 @@
+@use "./variables" as *;
+
 .market {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  background-color: #2b343e;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  gap: $spacing-primary;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
   width: 100%;
   overflow-y: auto;
   scrollbar-width: none;
-  padding: 16px;
+  padding: $spacing-primary;
 }
 
 .stockRow {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 12px;
-  gap: 16px;
+  gap: $spacing-primary;
+  font-size: $font-size-small;
   cursor: pointer;
 
   &.stockTableTop {
-    font-size: 14px;
+    font-size: $font-size-default;
     font-weight: bold;
     cursor: default;
   }
 
   &:not(.stockTableTop) {
     &:hover {
-      color: salmon;
+      color: $font-color-secondary;
     }
   }
 }

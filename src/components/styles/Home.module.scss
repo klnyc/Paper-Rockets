@@ -1,9 +1,10 @@
 @use "./variables" as *;
 
-#home {
+.home {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: $spacing-primary;
   height: calc(100% - $header-height);
-  padding: 16px;
+  padding: $spacing-primary;
+  font-size: $font-size-default;
 }

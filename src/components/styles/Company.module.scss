@@ -1,20 +1,17 @@
+@use "./variables" as *;
+
 .buySellContainer,
 .positionContainer {
-  width: calc(100% - 190px);
   text-align: center;
-  background-color: #2b343e;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 40px 0 0 10px;
-  padding: 10px;
-}
-
-.buySellTabContainer {
-  display: flex;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $spacing-primary;
+  margin-top: $spacing-primary;
 }
 
 .buySellTab {
-  padding: 10px;
+  padding: $spacing-primary;
   flex: 1;
   border-bottom: 1px solid darkturquoise;
   cursor: pointer;
@@ -26,27 +23,24 @@
 }
 
 .quantityInput {
-  margin: 40px 0 0;
+  padding: $spacing-primary;
   background-color: transparent;
   text-align: center;
   color: ghostwhite;
   border: none;
   border-bottom: 1px solid ghostwhite;
-  padding: 10px;
 }
 
 .positionRow {
-  height: 60px;
-  padding: 10px;
+  padding: $spacing-primary;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 12px;
 }
 
 .positionColumn {
-  width: 100%;
   text-align: center;
+  width: 100%;
 }
 
 @media only screen and (max-width: 767px) {

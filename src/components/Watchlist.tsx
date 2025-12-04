@@ -1,6 +1,6 @@
+import { useState, useEffect, type JSX } from "react";
 import { type DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
-import { useState, useEffect, type JSX } from "react";
 import { type Stock, type Stocks } from "../types";
 
 interface WatchListProps {
@@ -44,18 +44,16 @@ export const Watchlist = ({
   useEffect(queryWatchlist, [user.watchlist, stockList]);
 
   return (
-    <div id={styles.watchlist}>
-      <div className={styles.watchlistHeader}>Watchlist</div>
+    <div className={styles.watchlist}>
+      <div className="text-center fw-bold">Watchlist</div>
       {watchlist.map((company, index) => (
         <div
           key={index}
           className={styles.watchlistRow}
           onClick={() => goToCompany(company.ticker)}
         >
-          <div className={styles.watchlistRowSection}>{company.ticker}</div>
-          <div className={styles.watchlistRowSection}>
-            ${company.latestPrice.toFixed(2)}
-          </div>
+          <div>{company.ticker}</div>
+          <div>${company.latestPrice.toFixed(2)}</div>
         </div>
       ))}
     </div>

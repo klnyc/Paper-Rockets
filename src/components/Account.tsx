@@ -34,7 +34,7 @@ export const Account = ({ user, setUser }: AccountProps): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className="w-100">
       <h5 className="p-4">{user.email}</h5>
       <button
         className="btn btn-secondary btn-sm mx-4 my-4"
