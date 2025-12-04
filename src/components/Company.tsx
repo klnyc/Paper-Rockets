@@ -242,10 +242,11 @@ export const Company = ({
       <h5 className="m-0 pt-2">${displayNumber(company.latestPrice)}</h5>
       {position?.ticker && renderPosition()}
       {renderOrderBox()}
+
       {user.watchlist.includes(company.ticker) ? (
         <div className={styles.watchlistButton}>
           <button
-            className="btn btn-outline-info btn-sm m-4"
+            className="btn btn-outline-info btn-sm mt-3"
             onClick={() => removeFromWatchlist()}
           >
             Remove from Watchlist
@@ -254,7 +255,7 @@ export const Company = ({
       ) : (
         <div className={styles.watchlistButton}>
           <button
-            className="btn btn-outline-info btn-sm m-4"
+            className="btn btn-outline-info btn-sm mt-3"
             onClick={() => addToWatchlist()}
           >
             Add to Watchlist

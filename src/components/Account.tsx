@@ -35,15 +35,15 @@ export const Account = ({ user, setUser }: AccountProps): JSX.Element => {
 
   return (
     <div className="w-100">
-      <h5 className="p-4">{user.email}</h5>
+      <h5 className="m-0 pb-3">{user.email}</h5>
       <button
-        className="btn btn-secondary btn-sm mx-4 my-4"
+        className="btn btn-secondary btn-sm"
         onClick={() => signOut()}
       >
         <Link to="/">Sign Out</Link>
       </button>
       <button
-        className="btn btn-danger btn-sm mx-2 my-4"
+        className="btn btn-danger btn-sm ms-3"
         onClick={() => reset()}
       >
         <Link to="/">Reset Account</Link>

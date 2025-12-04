@@ -2,6 +2,7 @@
 
 .header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: $header-height;
   background-color: $background-color;
@@ -10,7 +11,7 @@
 }
 
 .rocketLogo {
-  height: 32px;
+  height: 30px;
   width: 80px;
   color: darkturquoise;
 }
@@ -21,21 +22,15 @@
 }
 
 .searchInput {
-  position: absolute;
-  right: 36px;
-  height: 26px;
-  width: 134px;
   font-size: $font-size-small;
   border-radius: $border-radius;
-  padding: 10px;
   background-color: ghostwhite;
+  padding: 4px;
 }
 
 .searchSymbol {
-  position: absolute;
-  right: 12px;
-  top: 22px;
   cursor: pointer;
+  
   &:hover {
     color: silver;
   }

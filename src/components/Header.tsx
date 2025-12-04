@@ -64,28 +64,32 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
 
   return (
     <div className={styles.header}>
-      <IoIosRocket className={styles.rocketLogo} />
-      <span className={styles.headerLink}>
-        <Link to="/">Market</Link>
-      </span>
-      <span className={styles.headerLink}>
-        <Link to="/portfolio">Portfolio</Link>
-      </span>
-      <span className={styles.headerLink}>
-        <Link to="/account">Account</Link>
-      </span>
-      <input
-        className={styles.searchInput}
-        name="input"
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Ticker Symbol"
-      />
       <div>
-        <BsSearch
-          className={styles.searchSymbol}
-          onClick={() => searchCompany()}
+        <IoIosRocket className={styles.rocketLogo} />
+        <span className={styles.headerLink}>
+          <Link to="/">Market</Link>
+        </span>
+        <span className={styles.headerLink}>
+          <Link to="/portfolio">Portfolio</Link>
+        </span>
+        <span className={styles.headerLink}>
+          <Link to="/account">Account</Link>
+        </span>
+      </div>
+      <div className="d-flex gap-2 pe-3">
+        <input
+          className={styles.searchInput}
+          name="input"
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Ticker Symbol"
         />
+        <div>
+          <BsSearch
+            className={styles.searchSymbol}
+            onClick={() => searchCompany()}
+          />
+        </div>
       </div>
     </div>
   );
