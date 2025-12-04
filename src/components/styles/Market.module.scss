@@ -1,8 +1,14 @@
 .market {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   background-color: #2b343e;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   width: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 16px;
 }
 
 .stockRow {
@@ -10,10 +16,11 @@
   justify-content: space-around;
   align-items: center;
   font-size: 12px;
-  padding: 10px;
+  gap: 16px;
   cursor: pointer;
 
   &.stockTableTop {
+    font-size: 14px;
     font-weight: bold;
     cursor: default;
   }

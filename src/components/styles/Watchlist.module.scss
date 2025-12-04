@@ -1,20 +1,26 @@
 #watchlist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   height: 100%;
   width: 160px;
   background-color: #2b343e;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .watchlistHeader {
+  font-size: 14px;
+  font-weight: bold;
   text-align: center;
-  padding: 32px;
 }
 
 .watchlistRow {
   font-size: 12px;
   text-align: center;
-  padding: 10px;
   display: flex;
   cursor: pointer;
 
