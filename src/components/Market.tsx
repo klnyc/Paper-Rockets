@@ -1,17 +1,15 @@
+import { useEffect, useState, type JSX } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./styles/Market.module.scss";
 import { type Stock, type Stocks } from "../types";
-import { useEffect, useState, type JSX } from "react";
 import { displayNumber } from "../utility";
 
 interface MarketProps {
   stockList?: Stocks;
-  goToCompany: (ticker: string) => void;
 }
 
-export const Market = ({
-  stockList,
-  goToCompany,
-}: MarketProps): JSX.Element => {
+export const Market = ({ stockList }: MarketProps): JSX.Element => {
+  const navigate = useNavigate();
   const [stocks, setStocks] = useState<Stock[] | undefined>();
 
   useEffect(() => {
@@ -29,7 +27,7 @@ export const Market = ({
       {stocks?.map((stock, index) => (
         <div
           className={styles.stockRow}
-          onClick={() => goToCompany(stock.ticker)}
+          onClick={() => navigate(`/stock/${stock.ticker}`)}
           key={index}
         >
           <div className={styles.stockColumn}>{stock.ticker}</div>

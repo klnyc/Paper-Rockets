@@ -1,19 +1,16 @@
 import { useState, useEffect, type JSX } from "react";
+import { useNavigate } from "react-router-dom";
 import { type DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
 import { type Stock, type Stocks } from "../types";
 
 interface WatchListProps {
   user: DocumentData;
-  goToCompany: (ticker: string) => void;
   stockList?: Stocks;
 }
 
-export const Watchlist = ({
-  user,
-  goToCompany,
-  stockList,
-}: WatchListProps): JSX.Element => {
+export const Watchlist = ({ user, stockList }: WatchListProps): JSX.Element => {
+  const navigate = useNavigate();
   const [watchlist, setWatchlist] = useState<Stock[]>([]);
 
   const queryWatchlist = () => {
@@ -50,7 +47,7 @@ export const Watchlist = ({
         <div
           key={index}
           className={styles.watchlistRow}
-          onClick={() => goToCompany(company.ticker)}
+          onClick={() => navigate(`/stock/${company.ticker}`)}
         >
           <div>{company.ticker}</div>
           <div>${company.latestPrice.toFixed(2)}</div>

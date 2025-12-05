@@ -1,6 +1,7 @@
 import { type ChangeEvent, type JSX, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./styles/Company.module.scss";
-import { type Stock, type Position } from "../types";
+import { type Stocks, type Stock, type Position } from "../types";
 import { firestore } from "../firebase";
 import {
   doc,
@@ -14,32 +15,50 @@ import { displayNumber } from "../utility";
 import { Order } from "../constants";
 
 interface CompanyProps {
-  company: Stock;
   user: DocumentData;
   setUser: (user: DocumentData) => void;
+  stockList?: Stocks;
 }
 
 export const Company = ({
-  company,
   user,
   setUser,
+  stockList,
 }: CompanyProps): JSX.Element => {
+  const [company, setCompany] = useState<Stock | undefined>();
   const [orderMode, setOrderMode] = useState<Order>(Order.BUY);
   const [quantity, setQuantity] = useState<string>("");
   const [position, setPosition] = useState<Position | undefined>();
+  const { ticker } = useParams<{ ticker: string }>();
+
+  useEffect(() => {
+    // const version = process.env.REACT_APP_IEX_VERSION;
+    // const token = process.env.REACT_APP_IEX_API_KEY;
+    // const url = (ticker) =>
+    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
+    // const response = await fetch(url(ticker));
+    // const companyData = await response.json();
+    // setCompany(companyData);
+
+    if (!ticker || !stockList) return;
+    setCompany(stockList[ticker]);
+  }, [ticker, stockList]);
+
+  useEffect(() => {
+    if (!company) return;
+    const userPosition = user.portfolio.find(
+      (position: Position) => position.ticker === company.ticker
+    );
+    if (userPosition) setPosition(userPosition);
+  }, [user.portfolio, company]);
+
+  if (!company) return <></>;
 
   const cost: number = Number(quantity) * company.latestPrice;
   const userRef = doc(firestore, `users/${user.userID}`);
 
   const handleQuantityInput = (event: ChangeEvent<HTMLInputElement>): void =>
     setQuantity(event.target.value);
-
-  const findPosition = (): void => {
-    const userPosition = user.portfolio.find(
-      (position: Position) => position.ticker === company.ticker
-    );
-    if (userPosition) setPosition(userPosition);
-  };
 
   const addToWatchlist = (): void => {
     updateDoc(userRef, {
@@ -233,8 +252,6 @@ export const Company = ({
       </div>
     );
   };
-
-  useEffect(findPosition, [user.portfolio, company.ticker]);
 
   return (
     <div className="w-100">

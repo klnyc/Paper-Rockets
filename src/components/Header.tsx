@@ -3,14 +3,13 @@ import styles from "./styles/Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRocket } from "react-icons/io";
-import { type Stock, type Stocks } from "../types";
+import { type Stocks } from "../types";
 
 interface HeaderProps {
   stockList?: Stocks;
-  setCompany: (company: Stock) => void;
 }
 
-export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
+export const Header = ({ stockList }: HeaderProps): JSX.Element => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
@@ -27,7 +26,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
     //   .then((companyData) => {
     //     setCompany(companyData);
     //     setInput("");
-    //     navigate(`/${companyData.symbol}`);
+    //     navigate(`/ticker/${companyData.symbol}`);
     //   })
     //   .catch(() => setInput("Invalid Symbol"));
 
@@ -36,8 +35,7 @@ export const Header = ({ stockList, setCompany }: HeaderProps): JSX.Element => {
       alert(`This stock ${input} is not supported!`);
       return;
     }
-    setCompany(stockList[input]);
-    navigate(`/${input}`);
+    navigate(`/stock/${input}`);
   };
 
   const enterKeyOnPress = (): void => {

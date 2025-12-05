@@ -1,4 +1,5 @@
 import { useEffect, useState, type JSX } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./styles/Portfolio.module.scss";
 import { displayNumber } from "../utility";
 import { type DocumentData } from "firebase/firestore";
@@ -6,15 +7,11 @@ import { type Stock, type Position, type Stocks } from "../types";
 
 interface PortfolioProps {
   user: DocumentData;
-  goToCompany: (ticker: string) => void;
   stockList?: Stocks;
 }
 
-export const Portfolio = ({
-  user,
-  goToCompany,
-  stockList,
-}: PortfolioProps): JSX.Element => {
+export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
+  const navigate = useNavigate();
   const [prices, setPrices] = useState<Stock[]>([]);
   const [totalProfit, setTotalProfit] = useState<number>(0);
 
@@ -64,7 +61,7 @@ export const Portfolio = ({
         <div
           key={index}
           className={styles.positionRow}
-          onClick={() => goToCompany(position.ticker)}
+          onClick={() => navigate(`/stock/${position.ticker}`)}
         >
           <div className={styles.positionColumn}>{position.ticker}</div>
           <div

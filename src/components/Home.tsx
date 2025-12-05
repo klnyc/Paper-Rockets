@@ -1,20 +1,20 @@
 import { useEffect, useState, type JSX } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import styles from "./styles/Home.module.scss";
+import { type DocumentData } from "firebase/firestore";
+import { type Stocks } from "../types";
 import { Header } from "./Header";
+import { priceChangeInterval } from "../constants";
 import { Portfolio } from "./Portfolio";
 import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
 import { Company } from "./Company";
-import { type DocumentData } from "firebase/firestore";
-import { type Stock, type Stocks } from "../types";
-import { priceChangeInterval } from "../constants";
+import { Market } from "./Market";
 import {
   generateInitialPrice,
   stocks as defaultStocks,
   generatePriceChange,
 } from "../stocks";
-import { Market } from "./Market";
 
 interface HomeProps {
   user: DocumentData;
@@ -24,8 +24,14 @@ interface HomeProps {
 export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
   const [stockList, setStockList] = useState<Stocks | undefined>();
   const [stocksLoaded, setStocksLoaded] = useState<boolean>(false);
-  const [company, setCompany] = useState<Stock | undefined>();
-  const navigate = useNavigate();
+
+  const updatePrices = () => {
+    const stocks = { ...stockList };
+    for (const stock in stocks) {
+      stocks[stock].latestPrice += generatePriceChange();
+    }
+    setStockList(stocks);
+  };
 
   useEffect(() => {
     const stocks = { ...defaultStocks };
@@ -38,14 +44,6 @@ export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const updatePrices = () => {
-      const stocks = { ...stockList };
-      for (const stock in stocks) {
-        stocks[stock].latestPrice += generatePriceChange();
-      }
-      setStockList(stocks);
-    };
-
     if (stocksLoaded) {
       setTimeout(() => {
         setInterval(updatePrices, priceChangeInterval);
@@ -53,44 +51,16 @@ export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
     }
   }, [stocksLoaded]);
 
-  const goToCompany = async (ticker: string) => {
-    // const version = process.env.REACT_APP_IEX_VERSION;
-    // const token = process.env.REACT_APP_IEX_API_KEY;
-    // const url = (ticker) =>
-    //   `https://${version}.iexapis.com/stable/stock/${ticker}/quote?token=${token}`;
-    // const response = await fetch(url(ticker));
-    // const companyData = await response.json();
-    // setCompany(companyData);
-    // navigate(`/${companyData.symbol}`);
-
-    if (!stockList) return;
-    if (!stockList[ticker]) {
-      console.log("Stock not found");
-      return;
-    }
-    setCompany(stockList[ticker]);
-    navigate(`/${ticker}`);
-  };
-
   return (
     <>
-      <Header stockList={stockList} setCompany={setCompany} />
+      <Header stockList={stockList} />
       <div className={styles.home}>
         <Routes>
-          <Route
-            path="/"
-            element={<Market stockList={stockList} goToCompany={goToCompany} />}
-          />
+          <Route path="/" element={<Market stockList={stockList} />} />
 
           <Route
             path="/portfolio"
-            element={
-              <Portfolio
-                user={user}
-                goToCompany={goToCompany}
-                stockList={stockList}
-              />
-            }
+            element={<Portfolio user={user} stockList={stockList} />}
           />
 
           <Route
@@ -98,21 +68,15 @@ export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
             element={<Account user={user} setUser={setUser} />}
           />
 
-          {company?.ticker && (
-            <Route
-              path={`/${company.ticker}`}
-              element={
-                <Company company={company} user={user} setUser={setUser} />
-              }
-            />
-          )}
+          <Route
+            path="/stock/:ticker"
+            element={
+              <Company user={user} setUser={setUser} stockList={stockList} />
+            }
+          />
         </Routes>
 
-        <Watchlist
-          user={user}
-          goToCompany={goToCompany}
-          stockList={stockList}
-        />
+        <Watchlist user={user} stockList={stockList} />
       </div>
     </>
   );
