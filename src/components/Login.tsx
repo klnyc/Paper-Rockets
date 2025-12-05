@@ -10,6 +10,7 @@ import styles from "./styles/Login.module.scss";
 
 interface HomeProps {
   setUser: (user: DocumentData) => void;
+  setLoading: (loading: boolean) => void;
 }
 
 interface FormProps {
@@ -17,12 +18,13 @@ interface FormProps {
   password: string;
 }
 
-export const Login = ({ setUser }: HomeProps): JSX.Element => {
+export const Login = ({ setUser, setLoading }: HomeProps): JSX.Element => {
   const [input, setInput] = useState<FormProps>({ email: "", password: "" });
   const [loginState, setLoginState] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   const logIn = (): void => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
         if (!userCredential) return;
@@ -40,10 +42,12 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
             )
           );
       })
-      .catch((error) => setError(error.message));
+      .catch((error) => setError(error.message))
+      .finally(() => setLoading(false));
   };
 
   const signUp = (): void => {
+    setLoading(true);
     createUserWithEmailAndPassword(auth, input.email, input.password)
       .then((userCredential) => {
         const user = {
@@ -66,7 +70,8 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
           )
           .catch((error) => console.log(error));
       })
-      .catch((error) => setError(error.message));
+      .catch((error) => setError(error.message))
+      .finally(() => setLoading(false));
   };
 
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>): void => {

@@ -10,10 +10,7 @@ import { Loader } from "./Loader";
 export const App = (): JSX.Element => {
   const [user, setUser] = useState<DocumentData | undefined>();
   const [loading, setLoading] = useState(true);
-
-  const load = (): void => {
-    setTimeout(() => setLoading(false), 1000);
-  };
+  const [loaded, setLoaded] = useState(false);
 
   const checkSessionForUserID = (): void => {
     const sessionUserID = window.sessionStorage.getItem("userID");
@@ -25,12 +22,18 @@ export const App = (): JSX.Element => {
             setUser(userData.data());
           }
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => console.log(error.message))
+        .finally(() => {
+          setLoading(false);
+          setLoaded(true);
+        });
+    } else {
+      setLoading(false);
+      setLoaded(true);
     }
   };
 
-  useEffect(load, []);
-  useEffect(checkSessionForUserID, [user]);
+  useEffect(checkSessionForUserID, []);
 
   return (
     <BrowserRouter>
@@ -39,12 +42,12 @@ export const App = (): JSX.Element => {
           <Route
             path="*"
             element={
-              loading ? (
+              loading || !loaded ? (
                 <Loader />
-              ) : user?.userID ? (
+              ) : user ? (
                 <Home user={user} setUser={setUser} />
               ) : (
-                <Login setUser={setUser} />
+                <Login setUser={setUser} setLoading={setLoading} />
               )
             }
           />

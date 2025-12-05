@@ -6,13 +6,13 @@ import { doc, setDoc, type DocumentData } from "firebase/firestore";
 
 interface AccountProps {
   user: DocumentData;
-  setUser: (user: DocumentData) => void;
+  setUser: (user?: DocumentData) => void;
 }
 
 export const Account = ({ user, setUser }: AccountProps): JSX.Element => {
   const signOut = (): void => {
     firebaseSignOut(auth)
-      .then(() => setUser({}))
+      .then(() => setUser())
       .then(() => window.sessionStorage.removeItem("userID"))
       .catch((error) => console.log(error));
   };

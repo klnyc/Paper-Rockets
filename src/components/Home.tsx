@@ -16,12 +16,12 @@ import {
 } from "../stocks";
 import { Market } from "./Market";
 
-interface MainProps {
+interface HomeProps {
   user: DocumentData;
-  setUser: (user: DocumentData) => void;
+  setUser: (user?: DocumentData) => void;
 }
 
-export const Home = ({ user, setUser }: MainProps): JSX.Element => {
+export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
   const [stockList, setStockList] = useState<Stocks | undefined>();
   const [stocksLoaded, setStocksLoaded] = useState<boolean>(false);
   const [company, setCompany] = useState<Stock | undefined>();
@@ -77,18 +77,9 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
       <Header stockList={stockList} setCompany={setCompany} />
       <div className={styles.home}>
         <Routes>
-          {company?.ticker && (
-            <Route
-              path={`/${company.ticker}`}
-              element={
-                <Company company={company} user={user} setUser={setUser} />
-              }
-            />
-          )}
-
           <Route
-            path="/account"
-            element={<Account user={user} setUser={setUser} />}
+            path="/"
+            element={<Market stockList={stockList} goToCompany={goToCompany} />}
           />
 
           <Route
@@ -103,9 +94,18 @@ export const Home = ({ user, setUser }: MainProps): JSX.Element => {
           />
 
           <Route
-            path="/"
-            element={<Market stockList={stockList} goToCompany={goToCompany} />}
+            path="/account"
+            element={<Account user={user} setUser={setUser} />}
           />
+
+          {company?.ticker && (
+            <Route
+              path={`/${company.ticker}`}
+              element={
+                <Company company={company} user={user} setUser={setUser} />
+              }
+            />
+          )}
         </Routes>
 
         <Watchlist
