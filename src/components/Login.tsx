@@ -86,11 +86,7 @@ export const Login = ({ setUser }: HomeProps): JSX.Element => {
         <IoIosRocket />
       </div>
 
-      <form
-        className="mx-auto w-50 d-flex flex-column gap-3"
-        onSubmit={handleSubmit}
-        name={loginState ? "logIn" : "signUp"}
-      >
+      <form onSubmit={handleSubmit} name={loginState ? "logIn" : "signUp"}>
         <div className="form-group">
           <input
             type="email"

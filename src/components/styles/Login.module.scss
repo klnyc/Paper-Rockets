@@ -1,5 +1,15 @@
+@use "./variables" as *;
+
 .rocketLogo {
   font-size: 50px;
   text-align: center;
   color: darkturquoise;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-primary;
+  margin: 0 auto;
+  width: 260px;
 }
