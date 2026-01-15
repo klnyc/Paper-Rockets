@@ -1,7 +1,7 @@
 import { useEffect, useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Portfolio.module.scss";
-import { displayNumber } from "../utility";
+import { displayNumber, colorCodeNumber } from "../utility";
 import { type DocumentData } from "firebase/firestore";
 import { type Stock, type Position, type Stocks } from "../types";
 
@@ -77,12 +77,16 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
           >
             ${displayNumber(averagePrice)}
           </div>
-          <div className={styles.positionColumn}>${displayNumber(profit)}</div>
-          <div
-            className={`${styles.positionColumn} ${styles.positionColumnHide}`}
-          >
-            {displayNumber(percent)}%
-          </div>
+          {colorCodeNumber(
+            "$" + displayNumber(profit),
+            profit,
+            styles.positionColumn
+          )}
+          {colorCodeNumber(
+            displayNumber(percent) + "%",
+            percent,
+            `${styles.positionColumn} ${styles.positionColumnHide}`
+          )}
           <div
             className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >

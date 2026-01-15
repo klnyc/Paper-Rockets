@@ -31,12 +31,6 @@
     font-weight: bold;
     cursor: default;
   }
-
-  &:not(.positionTableTop) {
-    &:hover {
-      color: $font-color-secondary;
-    }
-  }
 }
 
 .positionColumn {

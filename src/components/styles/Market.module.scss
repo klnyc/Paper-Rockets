@@ -26,12 +26,6 @@
     font-weight: bold;
     cursor: default;
   }
-
-  &:not(.stockTableTop) {
-    &:hover {
-      color: $font-color-secondary;
-    }
-  }
 }
 
 .stockColumn {

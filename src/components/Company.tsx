@@ -11,7 +11,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-import { displayNumber } from "../utility";
+import { displayNumber, colorCodeNumber } from "../utility";
 import { Order } from "../constants";
 
 interface CompanyProps {
@@ -243,8 +243,16 @@ export const Company = ({
           <div className={styles.positionColumn}>
             {displayNumber(averagePrice)}
           </div>
-          <div className={styles.positionColumn}>{displayNumber(profit)}</div>
-          <div className={styles.positionColumn}>{displayNumber(percent)}</div>
+          {colorCodeNumber(
+            "$" + displayNumber(profit),
+            profit,
+            styles.positionColumn
+          )}
+          {colorCodeNumber(
+            displayNumber(percent) + "%",
+            percent,
+            styles.positionColumn
+          )}
           <div className={styles.positionColumn}>
             {displayNumber(currentEquity)}
           </div>
