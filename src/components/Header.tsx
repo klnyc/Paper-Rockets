@@ -30,9 +30,9 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
     //   })
     //   .catch(() => setInput("Invalid Symbol"));
 
-    if (!stockList) return;
+    if (!stockList || !input) return;
     if (!stockList[input]) {
-      alert(`This stock ${input} is not supported!`);
+      alert(`${input} is not supported!`);
       return;
     }
     navigate(`/stock/${input}`);
@@ -76,7 +76,9 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
       </div>
       <div className="d-flex gap-2 pe-3">
         <input
-          className={styles.searchInput}
+          className={`${styles.searchInput} ${
+            stockList && input && !stockList[input] ? styles.error : ""
+          }`}
           name="input"
           value={input}
           onChange={handleInputChange}

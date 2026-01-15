@@ -26,6 +26,10 @@
   border-radius: $border-radius;
   background-color: ghostwhite;
   padding: 4px;
+
+  &.error {
+    border: 1px solid red;
+  }
 }
 
 .searchSymbol {

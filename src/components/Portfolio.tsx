@@ -70,27 +70,27 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
             {position.quantity}
           </div>
           <div className={styles.positionColumn}>
-            ${displayNumber(prices[index].latestPrice)}
+            {displayNumber(prices[index].latestPrice, "$")}
           </div>
           <div
             className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
-            ${displayNumber(averagePrice)}
+            {displayNumber(averagePrice, "$")}
           </div>
           {colorCodeNumber(
-            "$" + displayNumber(profit),
+            displayNumber(profit, "$"),
             profit,
             styles.positionColumn
           )}
           {colorCodeNumber(
-            displayNumber(percent) + "%",
+            displayNumber(percent, "%"),
             percent,
             `${styles.positionColumn} ${styles.positionColumnHide}`
           )}
           <div
             className={`${styles.positionColumn} ${styles.positionColumnHide}`}
           >
-            ${displayNumber(currentEquity)}
+            {displayNumber(currentEquity, "$")}
           </div>
         </div>
       );
@@ -131,7 +131,7 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
   return (
     <div className="w-100 d-flex flex-column">
       <div className={styles.balance}>
-        ${displayNumber(user.balance + totalProfit)}
+        {displayNumber(user.balance + totalProfit)}
       </div>
       <div className={styles.portfolio}>
         {renderColumnNames()}

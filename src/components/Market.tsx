@@ -33,7 +33,7 @@ export const Market = ({ stockList }: MarketProps): JSX.Element => {
           <div className={styles.stockColumn}>{stock.ticker}</div>
           <div className={styles.stockColumn}>{stock.name}</div>
           <div className={styles.stockColumn}>
-            {displayNumber(stock.latestPrice)}
+            {displayNumber(stock.latestPrice, "$")}
           </div>
         </div>
       )) || <></>}

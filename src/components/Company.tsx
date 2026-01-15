@@ -202,7 +202,7 @@ export const Company = ({
           onChange={handleQuantityInput}
         />
         <div className="my-3">SHARES</div>
-        <div>${displayNumber(cost)}</div>
+        <div>{displayNumber(cost, "$")}</div>
         {position?.quantity !== undefined &&
         Number(quantity) > position.quantity &&
         orderMode === Order.SELL ? (
@@ -241,20 +241,20 @@ export const Company = ({
         <div className={styles.positionRow}>
           <div className={styles.positionColumn}>{position.quantity}</div>
           <div className={styles.positionColumn}>
-            {displayNumber(averagePrice)}
+            {displayNumber(averagePrice, "$")}
           </div>
           {colorCodeNumber(
-            "$" + displayNumber(profit),
+            displayNumber(profit, "$"),
             profit,
             styles.positionColumn
           )}
           {colorCodeNumber(
-            displayNumber(percent) + "%",
+            displayNumber(percent, "%"),
             percent,
             styles.positionColumn
           )}
           <div className={styles.positionColumn}>
-            {displayNumber(currentEquity)}
+            {displayNumber(currentEquity, "$")}
           </div>
         </div>
       </div>
@@ -264,7 +264,7 @@ export const Company = ({
   return (
     <div className="w-100">
       <h4 className="m-0">{company.name}</h4>
-      <h5 className="m-0 pt-2">${displayNumber(company.latestPrice)}</h5>
+      <h5 className="m-0 pt-2">{displayNumber(company.latestPrice, "$")}</h5>
       {position?.ticker && renderPosition()}
       {renderOrderBox()}
 
