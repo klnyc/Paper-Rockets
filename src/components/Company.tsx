@@ -168,58 +168,61 @@ export const Company = ({
     setQuantity("");
   };
 
-  const renderOrderBox = (): JSX.Element => (
-    <div className={styles.buySellContainer}>
-      <div className="d-flex">
-        <div
-          className={
-            orderMode === Order.BUY
-              ? styles.buySellTab
-              : `${styles.buySellTab} ${styles.notActive}`
-          }
-          onClick={() => setOrderMode(Order.BUY)}
-        >
-          Buy
+  const renderOrderBox = (): JSX.Element => {
+    if (!position?.quantity) {
+      return <></>;
+    }
+
+    return (
+      <div className={styles.buySellContainer}>
+        <div className="d-flex">
+          <div
+            className={
+              orderMode === Order.BUY
+                ? styles.buySellTab
+                : `${styles.buySellTab} ${styles.notActive}`
+            }
+            onClick={() => setOrderMode(Order.BUY)}
+          >
+            Buy
+          </div>
+          <div
+            className={
+              orderMode === Order.SELL
+                ? styles.buySellTab
+                : `${styles.buySellTab} ${styles.notActive}`
+            }
+            onClick={() => setOrderMode(Order.SELL)}
+          >
+            Sell
+          </div>
         </div>
-        <div
-          className={
-            orderMode === Order.SELL
-              ? styles.buySellTab
-              : `${styles.buySellTab} ${styles.notActive}`
-          }
-          onClick={() => setOrderMode(Order.SELL)}
-        >
-          Sell
-        </div>
-      </div>
-      <div className="pt-4">
-        <input
-          id="quantityInput"
-          className={styles.quantityInput}
-          type="number"
-          value={quantity}
-          placeholder="NUMBER"
-          onChange={handleQuantityInput}
-        />
-        <div className="my-3">SHARES</div>
-        <div>{displayNumber(cost, "$")}</div>
-        {position?.quantity !== undefined &&
-        Number(quantity) > position.quantity &&
-        orderMode === Order.SELL ? (
-          <button className="btn btn-secondary btn-sm my-4" disabled>
-            Invalid Order
-          </button>
-        ) : (
+        <div className="pt-4">
+          <input
+            id="quantityInput"
+            className={styles.quantityInput}
+            type="number"
+            value={quantity}
+            placeholder="NUMBER"
+            onChange={handleQuantityInput}
+          />
+          <div className="my-3">SHARES</div>
+          <div>Total cost: {displayNumber(cost, "$")}</div>
           <button
             className="btn btn-outline-info btn-sm my-4"
             onClick={() => submitOrder()}
+            disabled={
+              !quantity ||
+              Number(quantity) === 0 ||
+              (orderMode === Order.SELL && Number(quantity) > position.quantity)
+            }
           >
             Submit Order
           </button>
-        )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderPosition = (): JSX.Element => {
     if (!position) return <></>;
