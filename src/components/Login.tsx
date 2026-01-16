@@ -76,8 +76,15 @@ export const Login = ({ setUser, setLoading }: HomeProps): JSX.Element => {
 
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    if (!input.email || !input.password) {
+      setError("Email and password are required");
+      return;
+    }
+
     const loginState = event.target.name;
     loginState === "logIn" ? logIn() : signUp();
+    setError("");
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
