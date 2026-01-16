@@ -131,7 +131,7 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
   return (
     <div className="w-100 d-flex flex-column">
       <div className={styles.balance}>
-        {displayNumber(user.balance + totalProfit)}
+        {displayNumber(user.balance + totalProfit, "$")}
       </div>
       <div className={styles.portfolio}>
         {renderColumnNames()}
