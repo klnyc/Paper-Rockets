@@ -169,10 +169,6 @@ export const Company = ({
   };
 
   const renderOrderBox = (): JSX.Element => {
-    if (!position?.quantity) {
-      return <></>;
-    }
-
     return (
       <div className={styles.buySellContainer}>
         <div className="d-flex">
@@ -214,7 +210,10 @@ export const Company = ({
             disabled={
               !quantity ||
               Number(quantity) === 0 ||
-              (orderMode === Order.SELL && Number(quantity) > position.quantity)
+              (orderMode === Order.SELL && !position) ||
+              (orderMode === Order.SELL &&
+                position &&
+                Number(quantity) > position.quantity)
             }
           >
             Submit Order
