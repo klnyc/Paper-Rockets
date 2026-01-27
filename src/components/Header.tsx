@@ -38,9 +38,9 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
     navigate(`/stock/${input}`);
   };
 
-  const enterKeyOnPress = (): void => {
-    document.addEventListener("keydown", function (event) {
-      const simulateClick = (element: any) => {
+  useEffect(() => {
+    const enterKeyOnPress = (event: KeyboardEvent): void => {
+      const simulateClick = (element: Element) => {
         const click = new MouseEvent("click", {
           bubbles: true,
           cancelable: true,
@@ -51,14 +51,11 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
 
       if (event.key === "Enter")
         simulateClick(document.getElementsByClassName(styles.searchSymbol)[0]);
-    });
-  };
+    };
 
-  useEffect(() => {
-    if (input) {
-      enterKeyOnPress();
-    }
-  }, [input]);
+    document.addEventListener("keydown", enterKeyOnPress);
+    return () => document.removeEventListener("keydown", enterKeyOnPress);
+  }, []);
 
   return (
     <div className={styles.header}>

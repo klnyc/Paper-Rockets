@@ -6,7 +6,7 @@ export const generateInitialPrice = (price: number): number => {
   const initialPercent = randomNumber * randomSign * 0.2; // ranges between -20% and 20%
 
   const initialPrice = Number.parseFloat(
-    (price * (1 + initialPercent)).toFixed(2)
+    (price * (1 + initialPercent)).toFixed(2),
   );
 
   return initialPrice;
@@ -64,10 +64,10 @@ export const stocks: Stocks = {
     latestPrice: 5,
     name: "AMC Entertainment",
   },
-  FB: {
-    ticker: "FB",
-    latestPrice: 574,
-    name: "Facebook",
+  META: {
+    ticker: "META",
+    latestPrice: 600,
+    name: "Meta Platforms",
   },
   JPM: {
     ticker: "JPM",
@@ -88,5 +88,50 @@ export const stocks: Stocks = {
     ticker: "LCID",
     latestPrice: 6,
     name: "Lucid",
+  },
+  CRM: {
+    ticker: "CRM",
+    latestPrice: 228,
+    name: "Salesforce",
+  },
+  AMD: {
+    ticker: "AMD",
+    latestPrice: 250,
+    name: "Advanced Micro Devices",
+  },
+  WMT: {
+    ticker: "WMT",
+    latestPrice: 116,
+    name: "Walmart",
+  },
+  PLTR: {
+    ticker: "PLTR",
+    latestPrice: 170,
+    name: "Palantir",
+  },
+  ORCL: {
+    ticker: "ORCL",
+    latestPrice: 170,
+    name: "Oracle",
+  },
+  MU: {
+    ticker: "MU",
+    latestPrice: 400,
+    name: "Micron Technology",
+  },
+  INTC: {
+    ticker: "INTC",
+    latestPrice: 40,
+    name: "Intel",
+  },
+  BA: {
+    ticker: "BA",
+    latestPrice: 200,
+    name: "Boeing",
+  },
+  HOOD: {
+    ticker: "HOOD",
+    latestPrice: 100,
+    name: "Robinhood",
   },
 };
