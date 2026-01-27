@@ -11,7 +11,7 @@ import { Account } from "./Account";
 import { Company } from "./Company";
 import { Market } from "./Market";
 import { stocks as defaultStocks } from "../stocks";
-import { generateInitialPrice, generatePriceChange } from "../utility";
+import { generatePriceChange } from "../utility";
 
 interface HomeProps {
   user: DocumentData;
@@ -25,7 +25,9 @@ export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
   const updatePrices = () => {
     const stocks = { ...stockList };
     for (const stock in stocks) {
-      stocks[stock].latestPrice += generatePriceChange();
+      stocks[stock].latestPrice = generatePriceChange(
+        stocks[stock].latestPrice,
+      );
     }
     setStockList(stocks);
   };
@@ -33,8 +35,9 @@ export const Home = ({ user, setUser }: HomeProps): JSX.Element => {
   useEffect(() => {
     const stocks = { ...defaultStocks };
     for (const stock in stocks) {
-      const defaultPrice = stocks[stock].latestPrice;
-      stocks[stock].latestPrice = generateInitialPrice(defaultPrice);
+      stocks[stock].latestPrice = generatePriceChange(
+        stocks[stock].latestPrice,
+      );
     }
     setStockList(stocks);
     setStocksLoaded(true);

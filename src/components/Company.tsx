@@ -47,9 +47,9 @@ export const Company = ({
   useEffect(() => {
     if (!company) return;
     const userPosition = user.portfolio.find(
-      (position: Position) => position.ticker === company.ticker
+      (position: Position) => position.ticker === company.ticker,
     );
-    if (userPosition) setPosition(userPosition);
+    userPosition ? setPosition(userPosition) : setPosition(undefined);
   }, [user.portfolio, company]);
 
   if (!company) return <></>;
@@ -168,6 +168,29 @@ export const Company = ({
     setQuantity("");
   };
 
+  const disableSubmitOrder = (): boolean => {
+    if (!quantity || Number(quantity) === 0) {
+      return true;
+    }
+
+    if (orderMode === Order.BUY) {
+      if (cost > user.balance) {
+        return true;
+      }
+    }
+
+    if (orderMode === Order.SELL) {
+      if (!position) {
+        return true;
+      }
+      if (position && Number(quantity) > position.quantity) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const renderOrderBox = (): JSX.Element => {
     return (
       <div className={styles.buySellContainer}>
@@ -207,14 +230,7 @@ export const Company = ({
           <button
             className="btn btn-outline-info btn-sm my-4"
             onClick={() => submitOrder()}
-            disabled={
-              !quantity ||
-              Number(quantity) === 0 ||
-              (orderMode === Order.SELL && !position) ||
-              (orderMode === Order.SELL &&
-                position &&
-                Number(quantity) > position.quantity)
-            }
+            disabled={disableSubmitOrder()}
           >
             Submit Order
           </button>
@@ -248,12 +264,12 @@ export const Company = ({
           {colorCodeNumber(
             displayNumber(profit, "$"),
             profit,
-            styles.positionColumn
+            styles.positionColumn,
           )}
           {colorCodeNumber(
             displayNumber(percent, "%"),
             percent,
-            styles.positionColumn
+            styles.positionColumn,
           )}
           <div className={styles.positionColumn}>
             {displayNumber(currentEquity, "$")}

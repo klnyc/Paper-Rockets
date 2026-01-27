@@ -107,7 +107,7 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
   };
 
   const renderEmptyState = (): JSX.Element => {
-    return <div className="portfolio-empty">You do not own any stocks.</div>;
+    return <div className={styles.portfolioEmpty}>You do not own any stocks.</div>;
   };
 
   const queryPrices = (): void => {

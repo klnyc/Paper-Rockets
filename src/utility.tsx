@@ -6,17 +6,11 @@ const randomNumberSign = (): number => {
   return randomNumber * randomSign; // ranges between -1 and 1
 };
 
-export const generateInitialPrice = (price: number): number => {
-  const initialPercent = randomNumberSign() * 0.2; // ranges between -20% and 20%
-  const initialPrice = Number.parseFloat(
-    (price * (1 + initialPercent)).toFixed(2),
-  );
-
-  return initialPrice;
-};
-
-export const generatePriceChange = (): number => {
-  return Number.parseFloat((randomNumberSign()).toFixed(2));
+export const generatePriceChange = (price: number): number => {
+  const precentChange = randomNumberSign() * 0.02; // ranges between -2% and 2%
+  const priceChange = precentChange * price;
+  const newPrice = Number.parseFloat((price + priceChange).toFixed(2));
+  return newPrice;
 };
 
 export const displayNumber = (number: number, format?: string): string => {
