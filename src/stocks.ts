@@ -1,23 +1,5 @@
 import { type Stocks } from "./types";
 
-export const generateInitialPrice = (price: number): number => {
-  const randomNumber = Math.random();
-  const randomSign = randomNumber < 0.5 ? -1 : 1;
-  const initialPercent = randomNumber * randomSign * 0.2; // ranges between -20% and 20%
-
-  const initialPrice = Number.parseFloat(
-    (price * (1 + initialPercent)).toFixed(2),
-  );
-
-  return initialPrice;
-};
-
-export const generatePriceChange = (): number => {
-  const randomNumber = Math.random();
-  const randomSign = randomNumber < 0.5 ? -1 : 1;
-  return Number.parseFloat((randomNumber * randomSign).toFixed(2));
-};
-
 export const stocks: Stocks = {
   TSLA: {
     ticker: "TSLA",

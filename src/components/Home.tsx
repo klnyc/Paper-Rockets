@@ -10,11 +10,8 @@ import { Watchlist } from "./Watchlist";
 import { Account } from "./Account";
 import { Company } from "./Company";
 import { Market } from "./Market";
-import {
-  generateInitialPrice,
-  stocks as defaultStocks,
-  generatePriceChange,
-} from "../stocks";
+import { stocks as defaultStocks } from "../stocks";
+import { generateInitialPrice, generatePriceChange } from "../utility";
 
 interface HomeProps {
   user: DocumentData;

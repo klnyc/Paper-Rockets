@@ -28,13 +28,11 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
 
   useEffect(() => {
     if (!prices.length) return;
-    let portfolioProfit: number = 0;
+    let portfolioValue: number = 0;
     user.portfolio.forEach((position: Position, index: number) => {
-      const initialEquity = position.cost;
       const currentEquity = position.quantity * prices[index].latestPrice;
-      const profit = currentEquity - initialEquity;
-      portfolioProfit += profit;
-      setTotalProfit(portfolioProfit);
+      portfolioValue += currentEquity;
+      setTotalProfit(portfolioValue);
     });
   }, [prices]);
 
