@@ -34,10 +34,7 @@
 
 .searchSymbol {
   cursor: pointer;
-  
-  &:hover {
-    color: silver;
-  }
+  color: silver;
 }
 
 @media only screen and (max-width: 767px) {

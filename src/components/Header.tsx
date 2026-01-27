@@ -16,6 +16,15 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) =>
     setInput(event.target.value.toUpperCase());
 
+  const onSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      const button = document.querySelector(
+        `#${styles.searchSymbol}`,
+      ) as HTMLElement | null;
+      button?.click();
+    }
+  };
+
   const searchCompany = () => {
     // const version = process.env.REACT_APP_IEX_VERSION;
     // const token = process.env.REACT_APP_IEX_API_KEY;
@@ -37,25 +46,6 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
     }
     navigate(`/stock/${input}`);
   };
-
-  useEffect(() => {
-    const enterKeyOnPress = (event: KeyboardEvent): void => {
-      const simulateClick = (element: Element) => {
-        const click = new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-        });
-        element.dispatchEvent(click);
-      };
-
-      if (event.key === "Enter")
-        simulateClick(document.getElementsByClassName(styles.searchSymbol)[0]);
-    };
-
-    document.addEventListener("keydown", enterKeyOnPress);
-    return () => document.removeEventListener("keydown", enterKeyOnPress);
-  }, []);
 
   return (
     <div className={styles.header}>
@@ -80,13 +70,15 @@ export const Header = ({ stockList }: HeaderProps): JSX.Element => {
           value={input}
           onChange={handleInputChange}
           placeholder="Ticker Symbol"
+          onKeyDown={onSearchKeyDown}
         />
-        <div>
-          <BsSearch
-            className={styles.searchSymbol}
-            onClick={() => searchCompany()}
-          />
-        </div>
+        <button
+          id={styles.searchSymbol}
+          className="bg-transparent border-0 p-0 m-0"
+          onClick={() => searchCompany()}
+        >
+          <BsSearch className={styles.searchSymbol} />
+        </button>
       </div>
     </div>
   );
