@@ -1,6 +1,7 @@
 @use "./variables" as *;
 
 .market {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: $spacing-primary;

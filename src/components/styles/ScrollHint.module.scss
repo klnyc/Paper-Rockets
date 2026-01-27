@@ -1,0 +1,21 @@
+.scrollHint {
+  position: sticky;
+  bottom: 0;
+  opacity: 0.6;
+  animation: "bounce 1.4s infinite";
+}
+
+.scrollHintIcon {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}

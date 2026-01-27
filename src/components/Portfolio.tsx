@@ -1,9 +1,10 @@
-import { useEffect, useState, type JSX } from "react";
+import { useRef, useEffect, useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Portfolio.module.scss";
 import { displayNumber, colorCodeNumber } from "../utility";
 import { type DocumentData } from "firebase/firestore";
 import { type Stock, type Position, type Stocks } from "../types";
+import { ScrollHint, scrollHintHandler } from "./ScrollHint";
 
 interface PortfolioProps {
   user: DocumentData;
@@ -12,8 +13,18 @@ interface PortfolioProps {
 
 export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [prices, setPrices] = useState<Stock[]>([]);
   const [totalProfit, setTotalProfit] = useState<number>(0);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  const updateScrollHint = () => {
+    setShowScrollHint(scrollHintHandler(containerRef.current));
+  };
+
+  useEffect(() => {
+    updateScrollHint();
+  }, [user.portfolio]);
 
   useEffect(() => {
     if (!prices.length) return;
@@ -80,12 +91,12 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
           {colorCodeNumber(
             displayNumber(profit, "$"),
             profit,
-            styles.positionColumn
+            styles.positionColumn,
           )}
           {colorCodeNumber(
             displayNumber(percent, "%"),
             percent,
-            `${styles.positionColumn} ${styles.positionColumnHide}`
+            `${styles.positionColumn} ${styles.positionColumnHide}`,
           )}
           <div
             className={`${styles.positionColumn} ${styles.positionColumnHide}`}
@@ -121,7 +132,7 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
 
     if (!stockList || !user.portfolio?.length) return;
     const portfolioPrices: Stock[] = user.portfolio.map(
-      (position: Position) => stockList[position.ticker]
+      (position: Position) => stockList[position.ticker],
     );
     setPrices(portfolioPrices);
   };
@@ -137,6 +148,8 @@ export const Portfolio = ({ user, stockList }: PortfolioProps): JSX.Element => {
         {renderColumnNames()}
         {user.portfolio.length ? renderPositions() : renderEmptyState()}
       </div>
+
+      {showScrollHint && <ScrollHint />}
     </div>
   );
 };

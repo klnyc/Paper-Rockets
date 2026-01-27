@@ -7,6 +7,7 @@
 }
 
 .portfolio {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: $spacing-primary;

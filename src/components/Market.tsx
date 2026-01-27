@@ -1,8 +1,9 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState, useRef, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Market.module.scss";
 import { type Stock, type Stocks } from "../types";
 import { displayNumber } from "../utility";
+import { ScrollHint, scrollHintHandler } from "./ScrollHint";
 
 interface MarketProps {
   stockList?: Stocks;
@@ -10,15 +11,29 @@ interface MarketProps {
 
 export const Market = ({ stockList }: MarketProps): JSX.Element => {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [stocks, setStocks] = useState<Stock[] | undefined>();
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  const updateScrollHint = () => {
+    setShowScrollHint(scrollHintHandler(containerRef.current));
+  };
 
   useEffect(() => {
     if (!stockList) return;
     setStocks(Object.entries(stockList).map((stock) => stock[1]));
   }, [stockList]);
 
+  useEffect(() => {
+    updateScrollHint();
+  }, [stocks]);
+
   return (
-    <div className={styles.market}>
+    <div
+      className={styles.market}
+      ref={containerRef}
+      onScroll={updateScrollHint}
+    >
       <div className={`${styles.stockRow} ${styles.stockTableTop}`}>
         <div className={styles.stockColumn}>Ticker</div>
         <div className={styles.stockColumn}>Company</div>
@@ -37,6 +52,8 @@ export const Market = ({ stockList }: MarketProps): JSX.Element => {
           </div>
         </div>
       )) || <></>}
+
+      {showScrollHint && <ScrollHint />}
     </div>
   );
 };

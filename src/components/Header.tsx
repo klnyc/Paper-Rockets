@@ -1,4 +1,4 @@
-import { type ChangeEvent, type JSX, useEffect, useState } from "react";
+import { type ChangeEvent, type JSX, useState } from "react";
 import styles from "./styles/Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";

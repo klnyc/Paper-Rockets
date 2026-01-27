@@ -1,8 +1,9 @@
-import { useState, useEffect, type JSX } from "react";
+import { useState, useEffect, useRef, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import { type DocumentData } from "firebase/firestore";
 import styles from "./styles/Watchlist.module.scss";
 import { type Stock, type Stocks } from "../types";
+import { ScrollHint, scrollHintHandler } from "./ScrollHint";
 
 interface WatchListProps {
   user: DocumentData;
@@ -11,7 +12,13 @@ interface WatchListProps {
 
 export const Watchlist = ({ user, stockList }: WatchListProps): JSX.Element => {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [watchlist, setWatchlist] = useState<Stock[]>([]);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  const updateScrollHint = () => {
+    setShowScrollHint(scrollHintHandler(containerRef.current));
+  };
 
   const queryWatchlist = () => {
     // const version = process.env.REACT_APP_IEX_VERSION;
@@ -33,12 +40,16 @@ export const Watchlist = ({ user, stockList }: WatchListProps): JSX.Element => {
 
     if (!stockList || !user.watchlist.length) return;
     const watchlistPrices: Stock[] = user.watchlist.map(
-      (ticker: string) => stockList[ticker]
+      (ticker: string) => stockList[ticker],
     );
     setWatchlist(watchlistPrices);
   };
 
   useEffect(queryWatchlist, [user.watchlist, stockList]);
+
+  useEffect(() => {
+    updateScrollHint();
+  }, [user.watchlist]);
 
   return (
     <div className={styles.watchlist}>
@@ -53,6 +64,8 @@ export const Watchlist = ({ user, stockList }: WatchListProps): JSX.Element => {
           <div>${company.latestPrice.toFixed(2)}</div>
         </div>
       ))}
+
+      {showScrollHint && <ScrollHint />}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 @use "./variables" as *;
 
 .watchlist {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: $spacing-primary;
