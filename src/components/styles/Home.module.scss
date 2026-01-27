@@ -8,3 +8,10 @@
   padding: $spacing-primary;
   font-size: $font-size-default;
 }
+
+@media only screen and (max-width: 767px) {
+  .home {
+    flex-direction: column;
+    height: auto;
+  }
+}

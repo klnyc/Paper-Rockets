@@ -36,6 +36,7 @@
 
 @media only screen and (max-width: 767px) {
   .market {
-    width: auto;
+    height: auto;
+    max-height: 60vh;
   }
 }

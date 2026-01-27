@@ -1,14 +1,9 @@
 import type { JSX } from "react";
 
-const randomNumberSign = (): number => {
-  const randomNumber = Math.random();
-  const randomSign = randomNumber < 0.5 ? -1 : 1;
-  return randomNumber * randomSign; // ranges between -1 and 1
-};
-
 export const generatePriceChange = (price: number): number => {
-  const precentChange = randomNumberSign() * 0.02; // ranges between -2% and 2%
-  const priceChange = precentChange * price;
+  const randomNumber = Math.random() * 2 - 1; // -1 to 1
+  const percentChange = randomNumber * 0.001; // +/- 0.1%
+  const priceChange = percentChange * price;
   const newPrice = Number.parseFloat((price + priceChange).toFixed(2));
   return newPrice;
 };
