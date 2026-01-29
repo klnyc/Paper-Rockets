@@ -1,9 +1,16 @@
 @use "./variables" as *;
 
 .balance {
+  display: flex;
+  justify-content: space-between;
   font-weight: bold;
   font-size: 30px;
   padding: $spacing-primary;
+
+  span {
+    font-size: $font-size-small;
+    margin: auto 0;
+  }
 }
 
 .portfolio {

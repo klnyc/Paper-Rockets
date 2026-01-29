@@ -227,6 +227,7 @@ export const Company = ({
           />
           <div className="my-3">SHARES</div>
           <div>Total cost: {displayNumber(cost, "$")}</div>
+          <div>Buying power: {displayNumber(user.balance, "$")}</div>
           <button
             className="btn btn-outline-info btn-sm my-4"
             onClick={() => submitOrder()}
